@@ -1,12 +1,28 @@
 'use client';
 
-import React from 'react';
+import React, { useRef } from 'react';
 import Image from 'next/image';
 import { ArrowRight, Sparkles, Feather } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useScroll, useTransform } from 'motion/react';
 const heroImageUrl = "https://images.unsplash.com/photo-1505576399279-565b52d4ac71?q=80&w=1200&auto=format&fit=crop";
 
 export default function Hero() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
+  // Set up scroll tracking for parallax depth
+  const { scrollYProgress } = useScroll({
+    target: scrollRef,
+    offset: ['start start', 'end start'],
+  });
+
+  // Calculate parallax offsets to create custom layered depth transitions
+  const yText = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const yImage = useTransform(scrollYProgress, [0, 1], [0, 110]);
+  const yBackingPlate = useTransform(scrollYProgress, [0, 1], [0, -40]);
+  const rotateBackingPlate = useTransform(scrollYProgress, [0, 1], [-2, 8]);
+  const scaleImage = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
+  const opacityBadge = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -39,6 +55,7 @@ export default function Hero() {
   return (
     <section
       id="oria-hero-section"
+      ref={scrollRef}
       className="relative min-h-screen flex items-center justify-center bg-[#FBFBFA] pt-24 pb-16 overflow-hidden"
     >
       {/* Decorative architectural background grids */}
@@ -55,12 +72,14 @@ export default function Hero() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
+          style={{ y: yText }}
           className="lg:col-span-7 flex flex-col items-start space-y-8 text-left"
         >
           {/* Subtle eco-luxury tag */}
           <motion.div
             id="hero-brand-badge"
             variants={badgeVariants}
+            style={{ opacity: opacityBadge }}
             className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-brand-green/5 border border-brand-green/10 text-brand-purple text-[11px] font-bold uppercase tracking-widest"
           >
             <Sparkles size={11} className="text-brand-sprout animate-pulse" />
@@ -118,17 +137,17 @@ export default function Hero() {
             className="pt-6 border-t border-brand-green/10 w-full grid grid-cols-3 gap-4"
           >
             <div className="flex flex-col">
-              <span className="font-display text-sm font-semibold text-brand-green flex items-center gap-1.5">
+              <span className="font-display text-sm font-semibold text-[#10B981] flex items-center gap-1.5">
                 <Feather size={12} className="text-brand-sprout" /> 100%
               </span>
               <span className="text-[10px] text-brand-green/60 uppercase tracking-widest font-bold mt-1">Whole-Food</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-sm font-semibold text-brand-green">Ancient Millets</span>
+              <span className="font-display text-sm font-semibold text-[#10B981]">Ancient Millets</span>
               <span className="text-[10px] text-brand-green/60 uppercase tracking-widest font-bold mt-1">Sustained Energy</span>
             </div>
             <div className="flex flex-col">
-              <span className="font-display text-sm font-semibold text-brand-green">15-22g Pack</span>
+              <span className="font-display text-sm font-semibold text-[#10B981]">15-22g Pack</span>
               <span className="text-[10px] text-brand-green/60 uppercase tracking-widest font-bold mt-1">Clean Protein</span>
             </div>
           </motion.div>
@@ -143,11 +162,17 @@ export default function Hero() {
           className="lg:col-span-5 relative flex items-center justify-center"
         >
           {/* Aesthetic backing panel */}
-          <div className="absolute w-[95%] h-[95%] -bottom-4 -right-4 rounded-[40px] bg-brand-purple/5 -rotate-2 z-0 scale-95" />
+          <motion.div 
+            style={{ y: yBackingPlate, rotate: rotateBackingPlate }}
+            className="absolute w-[95%] h-[95%] -bottom-4 -right-4 rounded-[40px] bg-brand-purple/5 z-0 scale-95" 
+          />
           <div className="absolute w-[95%] h-[95%] -top-4 -left-4 rounded-[40px] border border-brand-green/5 rotate-1 z-0 scale-100" />
 
           {/* Primary image container */}
-          <div className="relative w-full max-w-md lg:max-w-none aspect-square lg:aspect-[4/5] xl:aspect-square overflow-hidden rounded-[32px] sm:rounded-[40px] bg-brand-cream border border-brand-green/5 shadow-2xl shadow-brand-green/10 z-10 group">
+          <motion.div 
+            style={{ y: yImage, scale: scaleImage }}
+            className="relative w-full max-w-md lg:max-w-none aspect-square lg:aspect-[4/5] xl:aspect-square overflow-hidden rounded-[32px] sm:rounded-[40px] bg-brand-cream border border-brand-green/5 shadow-2xl shadow-brand-green/10 z-10 group"
+          >
             <Image
               id="hero-macro-photo"
               src={heroImageUrl}
@@ -177,7 +202,7 @@ export default function Hero() {
                 <p className="text-[11px] text-brand-green/70">Densely packed essential mineral profile. Easily digestible. Smart agriculture.</p>
               </div>
             </motion.div>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

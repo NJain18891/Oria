@@ -8,25 +8,65 @@ import IngredientSpotlight from '@/components/IngredientSpotlight';
 import ProductCatalog from '@/components/ProductCatalog';
 import BottomStickyBar from '@/components/BottomStickyBar';
 import CartDrawer from '@/components/CartDrawer';
-import { Mail, Compass, HelpCircle, Heart, Anchor, Sun } from 'lucide-react';
-import { motion } from 'motion/react';
+import LoadingOverlay from '@/components/LoadingOverlay';
+import CommunityRituals from '@/components/CommunityRituals';
+import ConciergeFAQ from '@/components/ConciergeFAQ';
+import FindYourRitualQuiz from '@/components/FindYourRitualQuiz';
+import SourcingMap from '@/components/SourcingMap';
+import NutritionComparison from '@/components/NutritionComparison';
+import { Mail, Compass, HelpCircle, Heart, Anchor, Sun, X, CheckCircle } from 'lucide-react';
+import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
 
 export default function Home() {
   const [emailInput, setEmailInput] = useState('');
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
+  
+  // Custom elegant state to manage boutique notifications instead of window.alert()
+  const [notification, setNotification] = useState<{ show: boolean; msg: string; type: 'success' | 'info' | 'error' }>({
+    show: false,
+    msg: '',
+    type: 'info'
+  });
+
+  const triggerNotification = (msg: string, type: 'success' | 'info' | 'error' = 'info') => {
+    setNotification({ show: true, msg, type });
+    setTimeout(() => {
+      setNotification((prev) => (prev.msg === msg ? { ...prev, show: false } : prev));
+    }, 4500);
+  };
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     if (!emailInput || !emailInput.includes('@')) {
-      alert('Please enter a valid email address.');
+      triggerNotification('Please enter a valid cellular dispatch email address.', 'error');
       return;
     }
     setNewsletterSubscribed(true);
     setEmailInput('');
+    triggerNotification('You have successfully subscribed to Oria Dispatch.', 'success');
   };
 
+  // Scroll Progress logic using standard framer-motion setup
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 120,
+    damping: 30,
+    restDelta: 0.001
+  });
+
   return (
-    <main className="min-h-screen bg-[#FBFBFA] selection:bg-[#10B981] selection:text-[#FBFBFA] overflow-x-hidden">
+    <main className="min-h-screen bg-[#FBFBFA] selection:bg-[#10B981] selection:text-[#FBFBFA] overflow-x-hidden relative">
+      
+      {/* 1. Branded Loading Overlay */}
+      <LoadingOverlay />
+
+      {/* 2. Scroll Progress Bar */}
+      <motion.div
+        id="viewport-scroll-progress"
+        className="fixed top-0 left-0 right-0 h-1 bg-[#10B981] origin-left z-[90] pointer-events-none"
+        style={{ scaleX }}
+      />
+
       {/* Global Interactive Elements */}
       <Header />
       <CartDrawer />
@@ -36,13 +76,30 @@ export default function Home() {
       <Hero />
       
       <NarrativeHook />
+
+      {/* 1. Custom Interactive Daily Habit Matcher Quiz */}
+      <FindYourRitualQuiz />
       
-      <IngredientSpotlight />
-      
+      {/* 2. Primary Product Showcase */}
       <ProductCatalog />
 
+      {/* 3. Ingredient Biochemical Spotlight Science */}
+      <IngredientSpotlight />
+
+      {/* 4. Geographic Soil Sourcing Interactive Map */}
+      <SourcingMap />
+
+      {/* 5. Clean Nutrition vs Processing Comparison Metrics */}
+      <NutritionComparison />
+
+      {/* 6. Social Proof Collective Stories */}
+      <CommunityRituals />
+
+      {/* 7. Concierge Advisory and FAQs */}
+      <ConciergeFAQ />
+
       {/* Dynamic Brand Value Grid (Aesthetic Bento) */}
-      <section className="py-20 bg-[#FBFBFA] border-t border-brand-green/5 relative overflow-hidden">
+      <section className="py-20 bg-[#FBFBFA] border-t border-brand-green/5 relative overflow-hidden" id="oria-values-bento">
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 text-center">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             
@@ -151,19 +208,19 @@ export default function Home() {
               <div className="space-y-4">
                 <h5 className="text-[10px] uppercase tracking-widest font-bold text-[#FBFBFA]/40">Explorations</h5>
                 <ul className="space-y-2.5 text-xs font-light">
-                  <li><a href="#story" className="hover:text-[#10B981] transition-colors">Our Sourcing</a></li>
-                  <li><a href="#story" className="hover:text-[#10B981] transition-colors">Glycemic Science</a></li>
-                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Millet Bar</a></li>
-                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Rise Blend</a></li>
+                  <li><a href="#hero-section" className="hover:text-[#10B981] transition-colors">Our Sourcing</a></li>
+                  <li><a href="#ingredient-spotlight-section" className="hover:text-[#10B981] transition-colors">Glycemic Science</a></li>
+                  <li><a href="#product-catalog-section" className="hover:text-[#10B981] transition-colors">Millet Bar</a></li>
+                  <li><a href="#product-catalog-section" className="hover:text-[#10B981] transition-colors">Rise Blend</a></li>
                 </ul>
               </div>
               <div className="space-y-4">
                 <h5 className="text-[10px] uppercase tracking-widest font-bold text-[#FBFBFA]/40">Integrity</h5>
                 <ul className="space-y-2.5 text-xs font-light">
-                  <li><a onClick={() => alert('Assays: Heavy metal clean, 100% natural pesticide-free soil chromatography.')} className="hover:text-[#10B981] transition-colors cursor-pointer">Heavy Metal Assays</a></li>
-                  <li><a onClick={() => alert('Tracing: GPS coordinates available for organic Indus valley farms upon reservation.')} className="hover:text-[#10B981] transition-colors cursor-pointer">GPS Sourcing Maps</a></li>
-                  <li><a onClick={() => alert('Delivery: Zero-waste certified recyclable cardboard and plant-starch binders.')} className="hover:text-[#10B981] transition-colors cursor-pointer">Eco Logistics</a></li>
-                  <li><a onClick={() => alert('Support: Send questions to concierge@oria.wellness for immediate personal clinical assistance.')} className="hover:text-[#10B981] transition-colors cursor-pointer">Concierge Care</a></li>
+                  <li><a onClick={() => triggerNotification('Assays: Heavy metal clean, 100% natural pesticide-free soil chromatography.', 'info')} className="hover:text-[#10B981] transition-colors cursor-pointer">Heavy Metal Assays</a></li>
+                  <li><a onClick={() => triggerNotification('Tracing: GPS coordinates available for organic Indus valley farms upon reservation.', 'info')} className="hover:text-[#10B981] transition-colors cursor-pointer">GPS Sourcing Maps</a></li>
+                  <li><a onClick={() => triggerNotification('Delivery: Zero-waste certified recyclable cardboard and plant-starch binders.', 'info')} className="hover:text-[#10B981] transition-colors cursor-pointer">Eco Logistics</a></li>
+                  <li><a onClick={() => triggerNotification('Support: Send questions to concierge@oria.wellness for immediate personal clinical assistance.', 'info')} className="hover:text-[#10B981] transition-colors cursor-pointer">Concierge Care</a></li>
                 </ul>
               </div>
             </div>
@@ -189,6 +246,40 @@ export default function Home() {
 
         </div>
       </footer>
+
+      {/* Boutique Toast Notification UI */}
+      <AnimatePresence>
+        {notification.show && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, x: '-50%' }}
+            animate={{ opacity: 1, y: 0, x: '-50%' }}
+            exit={{ opacity: 0, y: 20, x: '-50%' }}
+            className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-sm"
+          >
+            <div className="bg-[#1E2D24] text-[#FBFBFA] p-4 rounded-2xl flex items-start gap-3.5 shadow-2xl border border-white/10">
+              <div className="mt-0.5">
+                {notification.type === 'success' ? (
+                  <CheckCircle size={16} className="text-[#10B981]" />
+                ) : (
+                  <Compass size={16} className="text-brand-yellow animate-spin-slow" />
+                )}
+              </div>
+              <div className="flex-1">
+                <p className="text-xs font-sans leading-relaxed text-[#FBFBFA]/90">
+                  {notification.msg}
+                </p>
+              </div>
+              <button
+                onClick={() => setNotification((prev) => ({ ...prev, show: false }))}
+                className="text-[#FBFBFA]/40 hover:text-[#FBFBFA] p-0.5 rounded transition-colors"
+                aria-label="Close notification"
+              >
+                <X size={14} />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
