@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-serif), ui-serif, Georgia, serif;
+  --font-display: var(--font-display), var(--font-sans), sans-serif;
+
+  --color-brand-cream: #FBFBFA;
+  --color-brand-green: #1E2D24;
+  --color-brand-purple: #4A3B4E;
+  --color-brand-sprout: #10B981;
+  --color-brand-sprout-hover: #059669;
+}
+
+/* Smooth Scrolling and Selections */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FBFBFA;
+  color: #1E2D24;
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background-color: #10B981;
+  color: #FBFBFA;
+}
+
+/* Mini fine-tune scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FBFBFA;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E2D24;
+  border-radius: 4px;
+}
+

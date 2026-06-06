@@ -1,0 +1,6 @@
+{
+  "name": "Oria",
+  "description": "Sophisticated, minimalist, whole-food morning nutrition powered by ancient millets.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
