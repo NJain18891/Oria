@@ -314,111 +314,143 @@ export default function FindYourRitualQuiz() {
             )}
 
             {/* Results Screen (Step 4) */}
-            {currentStep === 4 && (
-              <motion.div
-                key="results"
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.4 }}
-                className="space-y-8 text-left"
-              >
-                <div>
-                  <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-sprout/10 rounded-full text-[10px] font-bold text-brand-purple uppercase tracking-widest mb-3">
-                    <CheckCircle size={10} className="text-[#10B981]" /> Calibration Complete
-                  </span>
-                  <h3 className="font-serif text-3xl text-brand-green font-medium">Your Suggested Oria Ritual</h3>
-                  <p className="text-xs text-brand-green/60 mt-1 max-w-xl font-light">
-                    Our physiological matching algorithm successfully processed your morning energy pattern. This Oria formula is optimized for your schedule and muscle needs.
-                  </p>
-                </div>
+            {currentStep === 4 && (() => {
+              const q1 = answers[1] || 'cognitive';
+              const q2 = answers[2] || 'shake';
+              const q3 = answers[3] || 'stress';
 
-                {/* Result Recommendation Card */}
-                <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-brand-cream/30 p-6 sm:p-8 rounded-[36px] border border-brand-green/5">
-                  
-                  {/* Left Column product image wrapper */}
-                  <div className="md:col-span-4 relative aspect-square w-full rounded-[24px] overflow-hidden bg-white border border-brand-green/5">
-                    <Image
-                      src={recommendedProduct.image}
-                      alt={recommendedProduct.name}
-                      fill
-                      sizes="(max-w-7xl) 25vw, 250px"
-                      className="object-cover"
-                      referrerPolicy="no-referrer"
-                    />
-                    <div className="absolute top-3 left-3 z-10">
-                      <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest bg-brand-purple text-white font-bold font-mono">
-                        Optimal Match
+              let baseScore = 0;
+              if (q1 === 'physical') { baseScore += 34; }
+              else if (q1 === 'cognitive') { baseScore += 30; }
+              else { baseScore += 28; }
+
+              if (q2 === 'grab') { baseScore += 25; }
+              else { baseScore += 32; }
+
+              if (q3 === 'glycemic') { baseScore += 28; }
+              else if (q3 === 'stress') { baseScore += 34; }
+              else { baseScore += 30; }
+
+              let label = "High Synergy";
+              if (baseScore >= 95) {
+                label = "Bio-Synergy Maximum";
+              } else if (baseScore >= 90) {
+                label = "Optimal Metabolic Congruence";
+              } else {
+                label = "Balanced Physiological Alignment";
+              }
+
+              return (
+                <motion.div
+                  key="results"
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.4 }}
+                  className="space-y-8 text-left"
+                >
+                  <div>
+                    <div className="flex flex-wrap items-center gap-2 mb-3">
+                      <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-sprout/10 rounded-full text-[10px] font-bold text-brand-purple uppercase tracking-widest">
+                        <CheckCircle size={10} className="text-[#10B981]" /> Calibration Complete
+                      </span>
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#10B981]/10 rounded-full text-[10px] font-bold text-[#10B981] uppercase tracking-widest font-mono">
+                        System Biometric Score: {baseScore}/100 — {label}
                       </span>
                     </div>
+                    <h3 className="font-serif text-3xl text-brand-green font-medium">Your Suggested Oria Ritual</h3>
+                    <p className="text-xs text-brand-green/60 mt-1 max-w-xl font-light">
+                      Our physiological matching algorithm successfully processed your morning energy pattern. This Oria formula is optimized for your schedule and muscle needs.
+                    </p>
                   </div>
 
-                  {/* Right Column details */}
-                  <div className="md:col-span-8 space-y-4 flex flex-col justify-between h-full">
-                    <div>
-                      <div className="flex justify-between items-baseline">
-                        <h4 className="font-serif text-xl sm:text-2xl text-brand-green font-medium">
-                          {recommendedProduct.name}
-                        </h4>
-                        <span className="font-serif text-lg text-brand-green font-medium">
-                          ${recommendedProduct.price}
+                  {/* Result Recommendation Card */}
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-brand-cream/30 p-6 sm:p-8 rounded-[36px] border border-brand-green/5">
+                    
+                    {/* Left Column product image wrapper */}
+                    <div className="md:col-span-4 relative aspect-square w-full rounded-[24px] overflow-hidden bg-white border border-brand-green/5">
+                      <Image
+                        src={recommendedProduct.image}
+                        alt={recommendedProduct.name}
+                        fill
+                        sizes="(max-w-7xl) 25vw, 250px"
+                        className="object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                      <div className="absolute top-3 left-3 z-10">
+                        <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest bg-brand-purple text-white font-bold font-mono">
+                          Optimal Match
                         </span>
                       </div>
-                      
-                      <p className="text-[11px] uppercase tracking-widest text-brand-sprout font-bold">
-                        {recommendedProduct.subtitle}
-                      </p>
-
-                      <p className="text-xs text-brand-green/60 uppercase tracking-widest font-mono mt-1">
-                        {recommendedProduct.sizeDesc}
-                      </p>
-
-                      <p className="text-xs text-brand-green/80 mt-3 leading-relaxed font-sans italic border-l-2 border-[#10B981] pl-3 py-0.5">
-                        {recommendedProduct.matchReason}
-                      </p>
                     </div>
 
-                    {/* Integrated Add to Cart workflow */}
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-brand-green/5">
-                      <button
-                        id="quiz-add-to-cart-btn"
-                        onClick={() => {
-                          addToCart({
-                            id: recommendedProduct.productId,
-                            name: recommendedProduct.name,
-                            price: recommendedProduct.price,
-                            subtitle: recommendedProduct.subtitle,
-                            image: recommendedProduct.image,
-                          });
-                          setAddedPrompt(true);
-                        }}
-                        className="flex-1 inline-flex items-center justify-center space-x-2 py-3 px-6 rounded-full bg-[#10B981] text-white text-[11px] font-semibold uppercase tracking-widest hover:bg-[#059669] transform active:scale-98 transition-all"
-                      >
-                        <ShoppingBag size={12} />
-                        <span>Reserve Ritual</span>
-                      </button>
+                    {/* Right Column details */}
+                    <div className="md:col-span-8 space-y-4 flex flex-col justify-between h-full">
+                      <div>
+                        <div className="flex justify-between items-baseline">
+                          <h4 className="font-serif text-xl sm:text-2xl text-brand-green font-medium">
+                            {recommendedProduct.name}
+                          </h4>
+                          <span className="font-serif text-lg text-brand-green font-medium">
+                            ${recommendedProduct.price}
+                          </span>
+                        </div>
+                        
+                        <p className="text-[11px] uppercase tracking-widest text-brand-sprout font-bold">
+                          {recommendedProduct.subtitle}
+                        </p>
 
-                      <button
-                        id="quiz-reset-btn"
-                        onClick={startQuiz}
-                        className="inline-flex items-center justify-center space-x-2 py-3 px-6 rounded-full border border-brand-green/10 text-brand-green text-[11px] font-semibold uppercase tracking-widest hover:bg-brand-green/5 transition-colors"
-                      >
-                        <RefreshCw size={11} />
-                        <span>Re-test</span>
-                      </button>
+                        <p className="text-xs text-brand-green/60 uppercase tracking-widest font-mono mt-1">
+                          {recommendedProduct.sizeDesc}
+                        </p>
+
+                        <p className="text-xs text-brand-green/80 mt-3 leading-relaxed font-sans italic border-l-2 border-[#10B981] pl-3 py-0.5">
+                          {recommendedProduct.matchReason}
+                        </p>
+                      </div>
+
+                      {/* Integrated Add to Cart workflow */}
+                      <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-brand-green/5">
+                        <button
+                          id="quiz-add-to-cart-btn"
+                          onClick={() => {
+                            addToCart({
+                              id: recommendedProduct.productId,
+                              name: recommendedProduct.name,
+                              price: recommendedProduct.price,
+                              subtitle: recommendedProduct.subtitle,
+                              image: recommendedProduct.image,
+                            });
+                            setAddedPrompt(true);
+                          }}
+                          className="flex-1 inline-flex items-center justify-center space-x-2 py-3 px-6 rounded-full bg-[#10B981] text-white text-[11px] font-semibold uppercase tracking-widest hover:bg-[#059669] transform active:scale-98 transition-all"
+                        >
+                          <ShoppingBag size={12} />
+                          <span>Reserve Ritual</span>
+                        </button>
+
+                        <button
+                          id="quiz-reset-btn"
+                          onClick={startQuiz}
+                          className="inline-flex items-center justify-center space-x-2 py-3 px-6 rounded-full border border-brand-green/10 text-brand-green text-[11px] font-semibold uppercase tracking-widest hover:bg-brand-green/5 transition-colors"
+                        >
+                          <RefreshCw size={11} />
+                          <span>Re-test</span>
+                        </button>
+                      </div>
+
+                      {addedPrompt && (
+                        <p className="text-[11px] font-medium text-[#10B981] flex items-center gap-1.5 animate-fadeIn">
+                          <CheckCircle size={12} /> Added to Reserve Cart. Ready to checkout in upper drawer.
+                        </p>
+                      )}
                     </div>
 
-                    {addedPrompt && (
-                      <p className="text-[11px] font-medium text-[#10B981] flex items-center gap-1.5 animate-fadeIn">
-                        <CheckCircle size={12} /> Added to Reserve Cart. Ready to checkout in upper drawer.
-                      </p>
-                    )}
                   </div>
 
-                </div>
-
-              </motion.div>
-            )}
+                </motion.div>
+              );
+            })()}
           </AnimatePresence>
         </div>
       </div>

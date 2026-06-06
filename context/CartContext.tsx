@@ -9,12 +9,17 @@ export interface CartItem {
   quantity: number;
   image: string;
   subtitle: string;
+  size?: string;
+  type?: string;
 }
 
 interface CartContextProps {
   cart: CartItem[];
+  cartItems: CartItem[];
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  isCheckoutOpen: boolean;
+  setIsCheckoutOpen: (open: boolean) => void;
   addToCart: (item: Omit<CartItem, 'quantity'>) => void;
   removeFromCart: (id: string) => void;
   updateQuantity: (id: string, qty: number) => void;
@@ -28,6 +33,7 @@ const CartContext = createContext<CartContextProps | undefined>(undefined);
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -87,8 +93,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     <CartContext.Provider
       value={{
         cart,
+        cartItems: cart,
         isOpen,
         setIsOpen,
+        isCheckoutOpen,
+        setIsCheckoutOpen,
         addToCart,
         removeFromCart,
         updateQuantity,

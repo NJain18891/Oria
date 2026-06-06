@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import OriaLogo from './OriaLogo';
 
 export default function LoadingOverlay() {
   const [loading, setLoading] = useState(true);
@@ -37,26 +38,15 @@ export default function LoadingOverlay() {
               className="absolute w-44 h-44 rounded-full border border-brand-green/20"
             />
 
-            {/* Glowing Brand typography */}
-            <motion.h1
-              id="loader-brand-title"
-              initial={{ opacity: 0, letterSpacing: '0.2em' }}
-              animate={{ opacity: [0, 1, 1], letterSpacing: ['0.2em', '0.4em', '0.4em'] }}
-              transition={{ duration: 1.2, ease: 'easeOut' }}
-              className="font-serif text-3xl font-medium tracking-widest text-[#1E2D24] relative z-10"
-            >
-              ORIA
-            </motion.h1>
-
-            {/* Subtitle */}
-            <motion.p
+            {/* Glowing Brand layout */}
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-[10px] uppercase font-mono tracking-widest text-brand-green/40 relative z-10"
+              transition={{ duration: 1, ease: 'easeOut' }}
+              className="relative z-10 flex flex-col items-center"
             >
-              Aligning Cellular Balance
-            </motion.p>
+              <OriaLogo layout="vertical" className="w-28 h-auto text-[#1E2D24]" />
+            </motion.div>
           </div>
         </motion.div>
       )}

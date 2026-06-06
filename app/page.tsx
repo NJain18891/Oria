@@ -1,25 +1,44 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import OriaLogo from '@/components/OriaLogo';
 import NarrativeHook from '@/components/NarrativeHook';
 import IngredientSpotlight from '@/components/IngredientSpotlight';
 import ProductCatalog from '@/components/ProductCatalog';
+import HistoryTimeline from '@/components/HistoryTimeline';
 import BottomStickyBar from '@/components/BottomStickyBar';
 import CartDrawer from '@/components/CartDrawer';
+import CheckoutFlow from '@/components/CheckoutFlow';
 import LoadingOverlay from '@/components/LoadingOverlay';
 import CommunityRituals from '@/components/CommunityRituals';
 import ConciergeFAQ from '@/components/ConciergeFAQ';
 import FindYourRitualQuiz from '@/components/FindYourRitualQuiz';
 import SourcingMap from '@/components/SourcingMap';
 import NutritionComparison from '@/components/NutritionComparison';
+import ValueBentoGrid from '@/components/ValueBentoGrid';
 import { Mail, Compass, HelpCircle, Heart, Anchor, Sun, X, CheckCircle } from 'lucide-react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
 
 export default function Home() {
   const [emailInput, setEmailInput] = useState('');
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
+  const [highContrast, setHighContrast] = useState(false);
+
+  // Force scroll position to the top of the viewport on initial page load
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Synchronize the HTML document class for accessible styling overrides
+  useEffect(() => {
+    if (highContrast) {
+      document.documentElement.classList.add('theme-high-contrast');
+    } else {
+      document.documentElement.classList.remove('theme-high-contrast');
+    }
+  }, [highContrast]);
   
   // Custom elegant state to manage boutique notifications instead of window.alert()
   const [notification, setNotification] = useState<{ show: boolean; msg: string; type: 'success' | 'info' | 'error' }>({
@@ -70,6 +89,7 @@ export default function Home() {
       {/* Global Interactive Elements */}
       <Header />
       <CartDrawer />
+      <CheckoutFlow />
       <BottomStickyBar />
 
       {/* Narrative Section Sequence */}
@@ -86,6 +106,9 @@ export default function Home() {
       {/* 3. Ingredient Biochemical Spotlight Science */}
       <IngredientSpotlight />
 
+      {/* Historical progression of millet cultivation */}
+      <HistoryTimeline />
+
       {/* 4. Geographic Soil Sourcing Interactive Map */}
       <SourcingMap />
 
@@ -98,46 +121,8 @@ export default function Home() {
       {/* 7. Concierge Advisory and FAQs */}
       <ConciergeFAQ />
 
-      {/* Dynamic Brand Value Grid (Aesthetic Bento) */}
-      <section className="py-20 bg-[#FBFBFA] border-t border-brand-green/5 relative overflow-hidden" id="oria-values-bento">
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 text-center">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
-            <div className="p-8 rounded-[24px] border border-brand-green/5 bg-brand-green/5 hover:border-brand-green/10 transition-colors text-left space-y-4">
-              <span className="text-xl">🏔️</span>
-              <h4 className="font-serif text-base text-brand-green font-medium">Traceable Sourcing</h4>
-              <p className="text-xs text-brand-green/70 leading-relaxed font-light">
-                We contract harvest every millet batch directly from generational farmers in the ancient Indus soil belts, guaranteeing biological purity.
-              </p>
-            </div>
-
-            <div className="p-8 rounded-[24px] border border-brand-green/5 bg-brand-green/5 hover:border-brand-green/10 transition-colors text-left space-y-4">
-              <span className="text-xl">🛡️</span>
-              <h4 className="font-serif text-base text-brand-green font-medium">Zero Synthetic Compromise</h4>
-              <p className="text-xs text-brand-green/70 leading-relaxed font-light">
-                No artificial emulsifiers, soy, gums, heavy metal isolates, or chalky synthetics. Standardized nutrition cleanly extracted from true food structures.
-              </p>
-            </div>
-
-            <div className="p-8 rounded-[24px] border border-brand-green/5 bg-brand-green/5 hover:border-brand-green/10 transition-colors text-left space-y-4">
-              <span className="text-xl">🌿</span>
-              <h4 className="font-serif text-base text-brand-green font-medium">Carbon-Negative Footprint</h4>
-              <p className="text-xs text-brand-green/70 leading-relaxed font-light">
-                Millet crops are exceptionally resilient and carbon-locking, requiring zero global irrigation networks. We offset 120% of distribution gases.
-              </p>
-            </div>
-
-            <div className="p-8 rounded-[24px] border border-brand-green/5 bg-brand-green/5 hover:border-brand-green/10 transition-colors text-left space-y-4">
-              <span className="text-xl">🌾</span>
-              <h4 className="font-serif text-base text-brand-green font-medium">Digestive Resilience</h4>
-              <p className="text-xs text-brand-green/70 leading-relaxed font-light">
-                Infused with premium prebiotic fiber strands to nourish the human gut flora, optimize nutrient passage speed, and eliminate bloating.
-              </p>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      {/* Dynamic Brand Value Grid (Aesthetic Bento with custom animations and click expand details) */}
+      <ValueBentoGrid />
 
       {/* Premium Brand Editorial Footer */}
       <footer className="bg-[#1E2D24] text-[#FBFBFA]/90 pt-24 pb-12 border-t border-brand-green/15 relative overflow-hidden">
@@ -149,36 +134,40 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-[#FBFBFA]/10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 pb-16 border-b border-[#FBFBFA]/10">
             {/* Title / Slogan Column */}
-            <div className="lg:col-span-5 space-y-6">
-              <h3 className="font-serif text-4xl tracking-widest text-[#FBFBFA] font-medium">
-                ORIA
-              </h3>
-              <p className="text-sm text-[#FBFBFA]/70 leading-relaxed font-light max-w-sm">
+            <div className="lg:col-span-5 space-y-6 flex flex-col justify-start">
+              <div className="h-8 flex items-center">
+                <a href="#" className="inline-block select-none" aria-label="Oria Wellness Home">
+                  <OriaLogo className="w-32 h-8 text-[#FBFBFA] flex items-center justify-start" />
+                </a>
+              </div>
+              <p className="text-xs sm:text-sm text-[#FBFBFA]/70 leading-relaxed font-light max-w-sm">
                 Sustainably crafted whole-food morning rituals. Reclaiming human nutrition with the ancient, enduring intelligence of organic millets.
               </p>
               
-              <div className="flex items-center space-x-3 text-xs text-[#FBFBFA]/50 uppercase tracking-widest font-mono">
+              <div className="flex items-center space-x-3 text-xs text-[#FBFBFA]/50 uppercase tracking-widest font-mono pt-2">
                 <Compass size={14} className="text-[#10B981] animate-spin-slow" />
                 <span>Indus Valley • Organic Co-Op Harvest</span>
               </div>
             </div>
 
             {/* Newsletter Dispatch Component */}
-            <div className="lg:col-span-4 space-y-4">
-              <h4 className="font-serif text-lg font-medium text-[#FBFBFA]">
-                Subscribe to Oria Dispatch
-              </h4>
+            <div className="lg:col-span-4 space-y-4 flex flex-col justify-start">
+              <div className="h-8 flex items-center">
+                <h4 className="font-serif text-base sm:text-lg font-medium text-[#FBFBFA]">
+                  Subscribe to Oria Dispatch
+                </h4>
+              </div>
               <p className="text-xs text-[#FBFBFA]/60 leading-relaxed font-light">
-                Receive botanical research diaries, early limited-harvest product announcements, and nutritional assays. No spam. One email per month.
+                Receive botanical research diaries, early limited-harvest product announcements, and nutritional assays. One email per month.
               </p>
 
               {newsletterSubscribed ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
-                  className="p-4 rounded-xl border border-brand-sprout/20 bg-brand-sprout/10 flex items-center space-x-3 text-brand-sprout text-xs"
+                  className="p-4 rounded-xl border border-brand-sprout/20 bg-brand-sprout/10 flex items-center space-x-3 text-[#10B981] text-xs mt-2"
                 >
                   <Sun size={14} className="animate-pulse" />
                   <span>Assay dispatcher active. Welcome to Oria, friend.</span>
@@ -195,7 +184,7 @@ export default function Home() {
                   />
                   <button
                     type="submit"
-                    className="px-6 py-3 rounded-full bg-[#10B981] text-[#1E2D24] text-xs font-bold uppercase tracking-widest hover:bg-[#059669] hover:text-white transition-all transform hover:-translate-y-0.5 duration-300"
+                    className="px-6 py-3 rounded-full bg-[#10B981] text-[#1E2D24] text-xs font-bold uppercase tracking-widest hover:bg-[#059669] hover:text-white transition-all transform hover:-translate-y-0.5 duration-300 cursor-pointer"
                   >
                     Dispatch
                   </button>
@@ -204,19 +193,23 @@ export default function Home() {
             </div>
 
             {/* Directory Link Column */}
-            <div className="lg:col-span-3 grid grid-cols-2 gap-8 text-left">
-              <div className="space-y-4">
-                <h5 className="text-[10px] uppercase tracking-widest font-bold text-[#FBFBFA]/40">Explorations</h5>
-                <ul className="space-y-2.5 text-xs font-light">
-                  <li><a href="#hero-section" className="hover:text-[#10B981] transition-colors">Our Sourcing</a></li>
-                  <li><a href="#ingredient-spotlight-section" className="hover:text-[#10B981] transition-colors">Glycemic Science</a></li>
-                  <li><a href="#product-catalog-section" className="hover:text-[#10B981] transition-colors">Millet Bar</a></li>
-                  <li><a href="#product-catalog-section" className="hover:text-[#10B981] transition-colors">Rise Blend</a></li>
+            <div className="md:col-span-2 lg:col-span-3 grid grid-cols-2 gap-8 text-left">
+              <div className="space-y-4 flex flex-col justify-start">
+                <div className="h-8 flex items-center">
+                  <h5 className="text-[10px] uppercase tracking-widest font-bold text-[#FBFBFA]/40">Explorations</h5>
+                </div>
+                <ul className="space-y-2.5 text-xs font-light text-[#FBFBFA]/75">
+                  <li><a href="#story" className="hover:text-[#10B981] transition-colors">Our Sourcing</a></li>
+                  <li><a href="#ingredients" className="hover:text-[#10B981] transition-colors">Glycemic Science</a></li>
+                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Millet Bar</a></li>
+                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Rise Blend</a></li>
                 </ul>
               </div>
-              <div className="space-y-4">
-                <h5 className="text-[10px] uppercase tracking-widest font-bold text-[#FBFBFA]/40">Integrity</h5>
-                <ul className="space-y-2.5 text-xs font-light">
+              <div className="space-y-4 flex flex-col justify-start">
+                <div className="h-8 flex items-center">
+                  <h5 className="text-[10px] uppercase tracking-widest font-bold text-[#FBFBFA]/40">Integrity</h5>
+                </div>
+                <ul className="space-y-2.5 text-xs font-light text-[#FBFBFA]/75">
                   <li><a onClick={() => triggerNotification('Assays: Heavy metal clean, 100% natural pesticide-free soil chromatography.', 'info')} className="hover:text-[#10B981] transition-colors cursor-pointer">Heavy Metal Assays</a></li>
                   <li><a onClick={() => triggerNotification('Tracing: GPS coordinates available for organic Indus valley farms upon reservation.', 'info')} className="hover:text-[#10B981] transition-colors cursor-pointer">GPS Sourcing Maps</a></li>
                   <li><a onClick={() => triggerNotification('Delivery: Zero-waste certified recyclable cardboard and plant-starch binders.', 'info')} className="hover:text-[#10B981] transition-colors cursor-pointer">Eco Logistics</a></li>
@@ -228,10 +221,10 @@ export default function Home() {
 
           {/* Sub-footer Legalities */}
           <div className="pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-[#FBFBFA]/40 space-y-4 md:space-y-0">
-            <p className="order-2 md:order-1 font-light">
+            <p className="order-2 md:order-1 font-light col-span-1">
               &copy; {new Date().getFullYear()} Oria Wellness Corporation. All rights reserved. Sourced with deep respect.
             </p>
-            <div className="flex items-center space-x-6 order-1 md:order-2">
+            <div className="flex flex-wrap items-center justify-center gap-y-2 gap-x-6 order-1 md:order-2">
               <span className="flex items-center space-x-1 hover:text-[#FBFBFA] transition-colors select-none">
                 <Anchor size={11} />
                 <span>Indus Cooperative Co.</span>
@@ -241,6 +234,16 @@ export default function Home() {
                 <Heart size={11} className="text-brand-sprout" />
                 <span>Carbon Neutral</span>
               </span>
+              <span>•</span>
+              <button
+                id="footer-high-contrast-toggle"
+                onClick={() => setHighContrast(!highContrast)}
+                className="flex items-center space-x-1.5 px-3 py-1 bg-white/5 hover:bg-white/10 active:scale-95 border border-white/15 hover:border-white/30 text-white rounded-full transition-all cursor-pointer font-semibold uppercase tracking-widest text-[10px]"
+                aria-label="Toggle High Contrast Mode"
+              >
+                <span className={`w-1.5 h-1.5 rounded-full ${highContrast ? 'bg-[#10B981] animate-pulse' : 'bg-white/30'}`} />
+                <span>High Contrast</span>
+              </button>
             </div>
           </div>
 

@@ -40,3 +40,55 @@ body {
   border-radius: 4px;
 }
 
+/* Premium High Contrast Mode Overrides */
+html.theme-high-contrast {
+  --color-brand-cream: #FFFFFF;
+  --color-brand-green: #000000;
+  --color-brand-purple: #23122c;
+  --color-brand-sprout: #064e3b;
+  --color-brand-sprout-hover: #064032;
+}
+
+html.theme-high-contrast body {
+  background-color: #FFFFFF;
+  color: #000000;
+}
+
+/* Ensure maximum text contrast for accessibility on subtle brand containers */
+html.theme-high-contrast .text-brand-green\/70,
+html.theme-high-contrast .text-brand-green\/60,
+html.theme-high-contrast .text-brand-green\/75,
+html.theme-high-contrast .text-brand-green\/80,
+html.theme-high-contrast .text-brand-green\/85 {
+  color: #000000 !important;
+  opacity: 1 !important;
+}
+
+html.theme-high-contrast .text-white\/60,
+html.theme-high-contrast .text-white\/70,
+html.theme-high-contrast .text-white\/85,
+html.theme-high-contrast .text-[#FBFBFA]\/40,
+html.theme-high-contrast .text-[#FBFBFA]\/60,
+html.theme-high-contrast .text-[#FBFBFA]\/70,
+html.theme-high-contrast .text-[#FBFBFA]\/90 {
+  color: #FFFFFF !important;
+  opacity: 1 !important;
+}
+
+html.theme-high-contrast .border-brand-green\/5,
+html.theme-high-contrast .border-brand-green\/10,
+html.theme-high-contrast .border-brand-green\/15 {
+  border-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+html.theme-high-contrast .bg-brand-cream\/30,
+html.theme-high-contrast .bg-[#FAF9F5] {
+  background-color: #FFFFFF !important;
+  border: 1.5px solid #000000 !important;
+}
+
+html.theme-high-contrast .bg-brand-green\/5 {
+  background-color: #FFFFFF !important;
+  border: 1.5px solid #000000 !important;
+}
+

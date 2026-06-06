@@ -4,11 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { motion, AnimatePresence } from 'motion/react';
+import OriaLogo from './OriaLogo';
 
 export default function Header() {
   const { setIsOpen, cartCount } = useCart();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [activeSection, setActiveSection] = useState<string>('');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -17,10 +20,44 @@ export default function Header() {
       } else {
         setScrolled(false);
       }
+      
+      // Reset active spy to empty when we are right back at top (Hero section)
+      if (window.scrollY < 120) {
+        setActiveSection('');
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    // Modern IntersectionObserver scroll spy
+    const sectionIds = ['story', 'ingredients', 'shop'];
+    const elements = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-30% 0px -50% 0px', // triggers when section is in the middle 20% reader focus area
+      threshold: [0, 0.1]
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+    elements.forEach(el => {
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      elements.forEach(el => {
+        if (el) observer.unobserve(el);
+      });
+    };
   }, []);
 
   const navLinks = [
@@ -39,29 +76,39 @@ export default function Header() {
             : 'bg-transparent border-transparent py-6'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between h-12">
           {/* Logo */}
           <a
             id="header-logo-lnk"
             href="#"
-            className="font-serif text-2xl tracking-widest text-brand-green font-medium select-none"
+            className="flex items-center select-none h-full"
+            aria-label="Oria Wellness Home"
           >
-            ORIA
+            <OriaLogo className="text-brand-green" />
           </a>
 
           {/* Desktop Nav */}
           <nav id="desktop-nav-links" className="hidden md:flex items-center space-x-12">
-            {navLinks.map((link) => (
-              <a
-                id={`lnk-${link.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-                key={link.name}
-                href={link.href}
-                className="text-xs font-semibold uppercase tracking-widest text-brand-green/70 hover:text-brand-green transition-colors duration-300 relative group py-1"
-              >
-                {link.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-brand-sprout transition-all duration-300 group-hover:w-full" />
-              </a>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = activeSection === link.href.substring(1);
+              return (
+                <a
+                  id={`lnk-${link.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                  key={link.name}
+                  href={link.href}
+                  className={`text-xs font-semibold uppercase tracking-widest transition-colors duration-300 relative group py-1 ${
+                    isActive
+                      ? 'text-[#10B981] font-bold'
+                      : 'text-brand-green/70 hover:text-brand-green'
+                  }`}
+                >
+                  {link.name}
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-brand-sprout transition-all duration-300 ${
+                    isActive ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`} />
+                </a>
+              );
+            })}
           </nav>
 
           {/* Cart & Mobile Toggle */}
@@ -111,17 +158,22 @@ export default function Header() {
             className="fixed top-[72px] left-0 w-full bg-brand-cream border-b border-brand-green/5 shadow-lg z-30 md:hidden"
           >
             <nav className="flex flex-col space-y-4 px-8 py-6">
-              {navLinks.map((link) => (
-                <a
-                  id={`mobile-lnk-${link.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
-                  key={link.name}
-                  href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="text-sm font-semibold uppercase tracking-widest text-brand-green/80 hover:text-brand-green py-2 border-b border-brand-green/5"
-                >
-                  {link.name}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href.substring(1);
+                return (
+                  <a
+                    id={`mobile-lnk-${link.name.toLowerCase().replace(/[^a-z0-9]/g, '-')}`}
+                    key={link.name}
+                    href={link.href}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`text-sm font-semibold uppercase tracking-widest py-2 border-b border-brand-green/5 transition-colors duration-250 ${
+                      isActive ? 'text-[#10B981]' : 'text-brand-green/80 hover:text-brand-green'
+                    }`}
+                  >
+                    {link.name}
+                  </a>
+                );
+              })}
               <button
                 id="mobile-menu-cart-action"
                 onClick={() => {

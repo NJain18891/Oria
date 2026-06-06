@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 import { Leaf, Droplets, Smile, HelpCircle, Check, Compass, ShieldCheck } from 'lucide-react';
 
 interface IngredientTab {
@@ -18,6 +18,52 @@ interface IngredientTab {
 
 export default function IngredientSpotlight() {
   const [activeTab, setActiveTab] = useState<string>('millets');
+  const [inspectingData, setInspectingData] = useState<string | null>(null);
+
+  // Scroll measuring ref for circular reading progress indicator
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  // Native hardware-accelerated parent scroll coordinates
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start end", "end start"]
+  });
+
+  // Dual-plane parallax displacements to create realistic depth/layering
+  const yParallaxImage = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+  const yParallaxDetail = useTransform(scrollYProgress, [0, 1], [35, -35]);
+  const [isVisible, setIsVisible] = useState(false);
+  const [remainingSeconds, setRemainingSeconds] = useState(25);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      // Determine if a significant part of the section is inside viewport bounds
+      if (rect.top < viewportHeight && rect.bottom > 0) {
+        setIsVisible(true);
+        const sectionHeight = rect.height;
+        // Scroll entry progress mapped smoothly as we pan through the content heights
+        const totalScrolled = viewportHeight - rect.top;
+        const progress = Math.min(Math.max((totalScrolled / (sectionHeight + viewportHeight)) * 100, 0), 100);
+        setScrollProgress(progress);
+        
+        const totalEstimatedTime = 25; // 25s target read duration for this scientific spot
+        const countdown = Math.ceil(totalEstimatedTime * (1 - progress / 100));
+        setRemainingSeconds(Math.max(countdown, 0));
+      } else {
+        setIsVisible(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once to initialize
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const tabs: IngredientTab[] = [
     {
@@ -83,6 +129,7 @@ export default function IngredientSpotlight() {
 
   return (
     <section
+      ref={sectionRef}
       id="ingredients"
       className="relative py-24 sm:py-32 bg-[#FBFBFA] border-t border-brand-green/5 overflow-hidden"
     >
@@ -182,8 +229,39 @@ export default function IngredientSpotlight() {
               </div>
             </div>
 
-            {/* Right Stat Grid / Bento Highlights */}
+            {/* Right Stat Grid / Bento Highlights with Parallax Images */}
             <div className="lg:col-span-5 grid grid-cols-1 gap-6">
+              
+              {/* Premium Parallax Herbarium/Cereal Ingredient Plate */}
+              <div className="relative h-64 sm:h-72 rounded-[32px] overflow-hidden border border-brand-green/10 bg-brand-green/5 group shadow-sm">
+                <motion.img
+                  src={
+                    currentData.id === 'millets'
+                      ? 'https://images.unsplash.com/photo-1574323347407-f5e1ad6d020b?auto=format&fit=crop&q=80&w=700'
+                      : currentData.id === 'electrolytes'
+                      ? 'https://images.unsplash.com/photo-1518113001614-72c0f9949641?auto=format&fit=crop&q=80&w=700'
+                      : 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&q=80&w=700'
+                  }
+                  alt={currentData.name}
+                  style={{ y: yParallaxImage, scale: 1.18 }}
+                  className="absolute inset-0 w-full h-[135%] object-cover grayscale opacity-90 group-hover:grayscale-0 transition-all duration-700 ease-out"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-green/90 via-brand-green/35 to-transparent" />
+                
+                {/* Embedded dynamic indicators floating over the parallax lens */}
+                <motion.div 
+                  style={{ y: yParallaxDetail }}
+                  className="absolute bottom-6 left-6 right-6 text-left shrink-0"
+                >
+                  <span className="text-[9px] font-mono font-bold text-brand-sprout uppercase tracking-widest bg-brand-green/45 px-2.5 py-1 rounded-full border border-brand-sprout/20">
+                    Oria Assay Registered
+                  </span>
+                  <h4 className="text-lg font-serif text-white font-medium mt-2">{currentData.name}</h4>
+                  <p className="text-[10px] text-white/70 font-mono mt-0.5">{currentData.origin}</p>
+                </motion.div>
+              </div>
+
               <div className="p-8 rounded-[32px] bg-brand-green/5 border border-brand-green/10 space-y-6 flex flex-col justify-between">
                 <span className="text-[10px] font-mono uppercase text-brand-green/45">Metrics Summary // Verified Pure</span>
                 
@@ -216,8 +294,8 @@ export default function IngredientSpotlight() {
                 </div>
                 <button
                   id={`btn-analytics-${currentData.id}`}
-                  onClick={() => alert(`Showing Traceability and lab assay data for ${currentData.name}: Verified 100% heavy metals clean, certified pesticide-free, organic carbon harvest.`)}
-                  className="px-4 py-2.5 rounded-full bg-brand-green text-brand-cream text-[10px] font-semibold uppercase tracking-wider hover:bg-[#4A3B4E] transition-all"
+                  onClick={() => setInspectingData(currentData.name)}
+                  className="px-4 py-2.5 rounded-full bg-brand-green text-[#FBFBFA] text-[10px] font-semibold uppercase tracking-wider hover:bg-[#4A3B4E] transition-all cursor-pointer"
                 >
                   Inspect Assays
                 </button>
@@ -228,6 +306,115 @@ export default function IngredientSpotlight() {
         </AnimatePresence>
 
       </div>
+
+      {/* Immersive Trace Analysis Drawer Modal */}
+      <AnimatePresence>
+        {inspectingData && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm"
+          >
+            <motion.div 
+              initial={{ scale: 0.95, y: 15 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 15 }}
+              className="bg-white rounded-[32px] border border-brand-green/10 p-8 max-w-lg w-full shadow-2xl relative space-y-6"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <span className="text-[9px] uppercase font-mono tracking-widest text-[#10B981] font-bold">Traceability Assays</span>
+                  <h3 className="font-serif text-xl text-brand-green font-medium mt-1">Chemical Spectrum Analysis</h3>
+                </div>
+                <button 
+                  onClick={() => setInspectingData(null)}
+                  className="px-2 py-1 text-xs rounded-full hover:bg-brand-green/5 text-brand-green/50 hover:text-brand-green transition-colors cursor-pointer"
+                >
+                  Close [×]
+                </button>
+              </div>
+
+              <div className="space-y-4 text-xs text-left">
+                <p className="text-brand-green/80 leading-relaxed font-sans font-light">
+                  Showing official laboratory diagnostic assays for <strong className="text-brand-purple">{inspectingData}</strong>. Every Oria production campaign undergoes independent mass-spectrometer scrutiny.
+                </p>
+
+                <div className="bg-[#FAF9F5] p-5 rounded-2xl border border-brand-green/5 font-mono space-y-2 text-[11px] text-brand-green/80">
+                  <div className="flex justify-between">
+                    <span className="font-bold">Heavy Metals Assays:</span>
+                    <span className="text-[#10B981] font-bold">PASSED [ND]</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-bold">Pesticide Residue Assays:</span>
+                    <span className="text-[#10B981] font-bold">PASSED [0.00%]</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="font-bold">Mycotoxins Evaluation:</span>
+                    <span className="text-[#10B981] font-bold">PASSED [ND]</span>
+                  </div>
+                  <div className="flex justify-between border-t border-brand-green/10 pt-2 mt-2">
+                    <span className="font-bold">Ecological Footprint:</span>
+                    <span className="text-[#10B981] font-bold">-0.42 kg CO2e</span>
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-brand-green/50 leading-relaxed font-light">
+                  ND: Non-Detected. Verified clean of arsenic, mercury, lead, copper, glyphosate, and industrial runoff elements. Certified Carbon-Negative under Oria agrarian standard protocol.
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-brand-green/5 flex justify-end">
+                <button 
+                  onClick={() => setInspectingData(null)}
+                  className="px-6 py-2.5 rounded-full bg-brand-green text-[#FBFBFA] text-[11px] font-semibold uppercase tracking-widest hover:bg-[#4A3B4E] transition-colors cursor-pointer"
+                >
+                  Acknowledge Assays
+                </button>
+              </div>
+
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Circular reading progress indicator */}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 15 }}
+            className="fixed bottom-6 right-6 z-50 bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-brand-green/10 shadow-xl flex items-center gap-3 w-64 md:w-auto"
+          >
+            <div className="relative w-12 h-12 flex items-center justify-center flex-shrink-0">
+              {/* Background track */}
+              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                <circle cx="18" cy="18" r="15" fill="none" stroke="#FAF1E6" strokeWidth="2.5" />
+                <motion.circle 
+                  cx="18" 
+                  cy="18" 
+                  r="15" 
+                  fill="none" 
+                  stroke="#10B981" 
+                  strokeWidth="3" 
+                  strokeDasharray="94.24" // 2 * PI * r (approx 94.2)
+                  animate={{ strokeDashoffset: 94.24 - (94.24 * scrollProgress) / 100 }}
+                  transition={{ duration: 0.1, ease: 'easeOut' }}
+                />
+              </svg>
+              <span className="absolute text-[10px] font-mono font-bold text-brand-green">
+                {Math.round(scrollProgress)}%
+              </span>
+            </div>
+            <div className="text-left font-sans flex-1">
+              <p className="text-[9px] font-bold text-[#10B981] uppercase tracking-widest leading-none">Ingredient Spotlight</p>
+              <p className="text-[11px] font-medium text-brand-green/80 mt-1 leading-none">{remainingSeconds}s remaining read</p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
     </section>
   );
 }

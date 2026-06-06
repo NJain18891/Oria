@@ -124,6 +124,7 @@ export default function ConciergeFAQ() {
                       animate={{ height: 'auto', opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                      style={{ overflow: 'hidden' }}
                     >
                       <div className="px-6 pb-7 sm:px-7 sm:pb-8 text-xs text-brand-green/80 leading-relaxed font-sans border-t border-brand-green/5 pt-4">
                         {item.answer}

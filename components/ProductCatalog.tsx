@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import Image, { StaticImageData } from 'next/image';
+import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { ShoppingBag, Star, RefreshCw } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 
 interface Product {
   id: string;
@@ -18,8 +18,68 @@ interface Product {
   accentText: string;
 }
 
+// Custom parallax image dynamic viewport tracking component
+function ParallaxImage({ src, alt }: { src: string; alt: string }) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [offsetY, setOffsetY] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      const rect = containerRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      const elementMiddle = rect.top + rect.height / 2;
+      const viewportMiddle = viewportHeight / 2;
+      const distanceFromMiddle = elementMiddle - viewportMiddle;
+      
+      // Map normal scroll speed to a subtle offset vector (-50px to +50px shift)
+      const maxDistance = 600;
+      const clampedDistance = Math.min(Math.max(distanceFromMiddle, -maxDistance), maxDistance);
+      const parallaxShift = (clampedDistance / maxDistance) * 20; // 20px delta
+      setOffsetY(parallaxShift);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run initial alignment cycle
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  return (
+    <div ref={containerRef} className="relative w-full h-full overflow-hidden bg-brand-cream">
+      <motion.div
+        className="absolute inset-0 w-full h-[120%] -top-[10%]"
+        animate={{ y: offsetY }}
+        transition={{ type: 'spring', stiffness: 120, damping: 25 }}
+      >
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes="(max-w-7xl) 30vw, 350px"
+          className="object-cover"
+          referrerPolicy="no-referrer"
+        />
+      </motion.div>
+    </div>
+  );
+}
+
 export default function ProductCatalog() {
   const { addToCart } = useCart();
+  const [showSubDetails, setShowSubDetails] = React.useState(false);
+  const [toasts, setToasts] = React.useState<{ id: number; itemName: string }[]>([]);
+  const toastIdRef = React.useRef(0);
+
+  const triggerToast = (itemName: string) => {
+    toastIdRef.current += 1;
+    const id = toastIdRef.current;
+    setToasts((prev) => [...prev, { id, itemName }]);
+    setTimeout(() => {
+      setToasts((prev) => prev.filter((t) => t.id !== id));
+    }, 3500);
+  };
 
   const products: Product[] = [
     {
@@ -103,15 +163,9 @@ export default function ProductCatalog() {
             >
               {/* Image container with aspect overlay */}
               <div className="relative aspect-square w-full rounded-[24px] overflow-hidden bg-brand-cream border border-brand-green/5 mb-6">
-                <Image
-                  id={`img-comp-${product.id}`}
-                  src={product.image}
-                  alt={`${product.name} - ${product.subtitle}`}
-                  fill
-                  sizes="(max-w-7xl) 30vw, 350px"
-                  className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
-                  referrerPolicy="no-referrer"
-                />
+                
+                {/* Parallax Image Render */}
+                <ParallaxImage src={product.image} alt={product.name} />
                 
                 {/* Accent Tag */}
                 <span className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-brand-purple text-[10px] font-semibold text-brand-cream uppercase tracking-wider">
@@ -177,8 +231,9 @@ export default function ProductCatalog() {
                         subtitle: product.subtitle,
                         image: product.image,
                       });
+                      triggerToast(product.name);
                     }}
-                    className="w-full inline-flex items-center justify-center space-x-3.5 py-3.5 rounded-full bg-[#1E2D24] text-white text-xs font-semibold uppercase tracking-widest hover:bg-[#10B981] active:scale-98 transition-all duration-300 shadow-sm"
+                    className="w-full inline-flex items-center justify-center space-x-3.5 py-3.5 rounded-full bg-[#1E2D24] text-white text-xs font-semibold uppercase tracking-widest hover:bg-[#10B981] active:scale-98 transition-all duration-300 shadow-sm cursor-pointer"
                   >
                     <ShoppingBag size={13} />
                     <span>Instant Reserve</span>
@@ -203,14 +258,99 @@ export default function ProductCatalog() {
           </div>
           <button
             id="sub-learn-more"
-            onClick={() => alert('Oria Concierge: Standard subscriptions will ship fresh breakfast nutrients every 30 days automatically. You will receive email reminders 3 days before standard batch roasting begins.')}
-            className="px-5 py-2.5 rounded-full border border-brand-green/10 text-brand-green text-[10px] font-semibold uppercase tracking-wider hover:bg-[#1E2D24] hover:text-[#FBFBFA] transition-colors"
+            onClick={() => setShowSubDetails(true)}
+            className="px-5 py-2.5 rounded-full border border-brand-green/10 text-brand-green text-[10px] font-semibold uppercase tracking-wider hover:bg-[#1E2D24] hover:text-[#FBFBFA] transition-colors cursor-pointer text-center"
           >
             Learn More
           </button>
         </div>
 
       </div>
+
+      {/* Modern Subscription Drawer Modal */}
+      <AnimatePresence>
+        {showSubDetails && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              className="bg-white rounded-[32px] border border-brand-green/10 p-8 max-w-md w-full shadow-2xl relative space-y-6"
+            >
+              <div className="flex justify-between items-start">
+                <div>
+                  <span className="text-[9px] uppercase font-mono tracking-widest text-[#10B981] font-bold">Oria Auto-Shipment</span>
+                  <h3 className="font-serif text-xl text-brand-green font-medium mt-1">Sustenence Orchestrator</h3>
+                </div>
+                <button
+                  onClick={() => setShowSubDetails(false)}
+                  className="px-2 py-1 text-xs rounded-full hover:bg-brand-green/5 text-brand-green/50 hover:text-brand-green transition-colors cursor-pointer"
+                >
+                  Close [×]
+                </button>
+              </div>
+
+              <div className="space-y-4 text-xs font-light text-[#1E2D24]">
+                <p className="leading-relaxed">
+                  Our subscription delivers raw-grain fresh nutritional batches to your residence at a lock-in <strong className="text-brand-purple">15% reduction</strong>. 
+                </p>
+                <div className="bg-[#FAF9F5] p-5 rounded-2xl border border-brand-green/5 space-y-3 font-mono text-[11px]">
+                  <div className="flex gap-2">
+                    <span className="text-[#10B981]">✔</span>
+                    <span>Standard ships every 30 days</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-[#10B981]">✔</span>
+                    <span>Notify with 3 days reminder warnings</span>
+                  </div>
+                  <div className="flex gap-2">
+                    <span className="text-[#10B981]">✔</span>
+                    <span>Zero-fee cycles pause / cancellation</span>
+                  </div>
+                </div>
+                <p className="text-[10px] text-brand-green/65 leading-relaxed">
+                  Batch grinds occur inside our zero-waste mills. You retain absolute control over biological shipment cadences.
+                </p>
+              </div>
+
+              <div className="pt-4 border-t border-brand-green/5 flex justify-end">
+                <button
+                  onClick={() => setShowSubDetails(false)}
+                  className="px-6 py-2.5 rounded-full bg-[#1E2D24] text-white text-[11px] font-semibold uppercase tracking-widest hover:bg-[#10B981] transition-colors cursor-pointer"
+                >
+                  Confirm Understanding
+                </button>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Floating Toast Notification Stack */}
+      <div 
+        id="added-to-ritual-toasts-portal" 
+        className="fixed bottom-6 right-6 z-50 flex flex-col gap-3 pointer-events-none max-w-sm w-full px-4 sm:px-0"
+      >
+        <AnimatePresence>
+          {toasts.map((toast) => (
+            <motion.div
+              key={toast.id}
+              initial={{ opacity: 0, y: 30, scale: 0.92 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.88, transition: { duration: 0.22, ease: 'easeIn' } }}
+              layout
+              className="bg-[#1E2D24] text-[#FBFBFA] border border-[#10B981]/25 px-5 py-4 rounded-[22px] shadow-2xl flex items-center space-x-3.5 pointer-events-auto"
+            >
+              <div className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shrink-0" />
+              <div className="flex-1 flex flex-col items-start text-left">
+                <span className="text-[9px] text-[#10B981] uppercase tracking-widest font-mono font-bold">Added to Ritual</span>
+                <span className="text-xs font-serif font-medium mt-1">{toast.itemName} has been reserved.</span>
+              </div>
+            </motion.div>
+          ))}
+        </AnimatePresence>
+      </div>
+
     </section>
   );
 }

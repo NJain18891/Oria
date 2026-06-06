@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Check, X, Info, ShieldCheck, Flame, Scale, Activity } from 'lucide-react';
+import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 interface ComparisonMetric {
   name: string;
@@ -174,9 +175,68 @@ const COMPARISON_DATA: CompetitorProfile[] = [
   }
 ];
 
+const RADAR_DATA = [
+  {
+    subject: 'Digestibility',
+    Oria: 96,
+    Oats: 70,
+    Wheat: 55,
+    Corn: 40,
+    fullMark: 100,
+  },
+  {
+    subject: 'Glycemic Flow',
+    Oria: 92,
+    Oats: 62,
+    Wheat: 35,
+    Corn: 20,
+    fullMark: 100,
+  },
+  {
+    subject: 'Trace Minerals',
+    Oria: 98,
+    Oats: 65,
+    Wheat: 42,
+    Corn: 15,
+    fullMark: 100,
+  },
+  {
+    subject: 'Alkaline Balance',
+    Oria: 90,
+    Oats: 50,
+    Wheat: 30,
+    Corn: 25,
+    fullMark: 100,
+  },
+  {
+    subject: 'Prebiotic Buffer',
+    Oria: 94,
+    Oats: 55,
+    Wheat: 28,
+    Corn: 10,
+    fullMark: 100,
+  },
+  {
+    subject: 'Amino Completeness',
+    Oria: 88,
+    Oats: 60,
+    Wheat: 45,
+    Corn: 25,
+    fullMark: 100,
+  },
+];
+
 export default function NutritionComparison() {
   const [activeCompId, setActiveCompId] = useState<string>('whey');
   const [hoveredMetric, setHoveredMetric] = useState<string | null>(null);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, []);
 
   const activeComp = COMPARISON_DATA.find((c) => c.id === activeCompId) || COMPARISON_DATA[0];
 
@@ -340,6 +400,84 @@ export default function NutritionComparison() {
                 </p>
               </div>
             </div>
+          </div>
+        </div>
+
+        {/* Visual Radar Chart Section for Grain Profile Contrast */}
+        <div className="mt-16 bg-gradient-to-br from-[#FAF9F5] to-white border border-brand-green/10 rounded-[40px] p-8 lg:p-12 text-center relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-48 h-48 bg-[#10B981]/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-48 h-48 bg-brand-purple/5 rounded-full blur-3xl pointer-events-none" />
+          
+          <div className="max-w-2xl mx-auto mb-10 relative z-10">
+            <span className="text-[10px] font-mono font-bold text-brand-purple uppercase tracking-widest">Active Fingerprint Contrast</span>
+            <h3 className="font-serif text-2xl text-brand-green font-medium mt-1">Grain Bio-Composition Fingerprint</h3>
+            <p className="text-xs text-[#1E2D24]/75 mt-2.5 max-w-lg mx-auto leading-relaxed">
+              An objective assessment of our proprietary sprouted whole-grain millet compared to popular domestic cereal matrices along critical metabolic performance vectors.
+            </p>
+          </div>
+
+          <div className="max-w-3xl mx-auto flex items-center justify-center min-h-[380px] relative z-10 select-none">
+            {mounted ? (
+              <div id="recharts-radar-container" className="w-[300px] h-[300px] sm:w-[450px] sm:h-[400px] md:w-[600px] md:h-[400px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <RadarChart cx="50%" cy="50%" outerRadius="80%" data={RADAR_DATA}>
+                    <PolarGrid stroke="rgba(30, 45, 36, 0.1)" />
+                    <PolarAngleAxis 
+                      dataKey="subject" 
+                      tick={{ fill: '#1E2D24', fontSize: 10, fontWeight: 500, fontFamily: 'monospace' }}
+                    />
+                    <PolarRadiusAxis 
+                      angle={30} 
+                      domain={[0, 100]} 
+                      tick={{ fill: '#1E2D24', fontSize: 8 }}
+                      stroke="rgba(30, 45, 36, 0.15)"
+                    />
+                    <Radar 
+                      name="Oria Sprouted Millet" 
+                      dataKey="Oria" 
+                      stroke="#10B981" 
+                      fill="#10B981" 
+                      fillOpacity={0.25} 
+                    />
+                    <Radar 
+                      name="Whole Rolled Oats" 
+                      dataKey="Oats" 
+                      stroke="#4A3B4E" 
+                      fill="#4A3B4E" 
+                      fillOpacity={0.08} 
+                    />
+                    <Radar 
+                      name="Refined Wheat / Corn Cereal" 
+                      dataKey="Wheat" 
+                      stroke="#D97706" 
+                      fill="#D97706" 
+                      fillOpacity={0.04} 
+                    />
+                    <Tooltip 
+                      contentStyle={{ 
+                        backgroundColor: '#1E2D24', 
+                        color: '#FBFBFA', 
+                        borderRadius: '16px', 
+                        border: 'none', 
+                        fontSize: '11px',
+                        fontFamily: 'sans-serif'
+                      }} 
+                    />
+                    <Legend 
+                      verticalAlign="bottom" 
+                      height={32}
+                      iconType="circle"
+                      iconSize={8}
+                      wrapperStyle={{ fontSize: '11px', fontWeight: 500, paddingTop: '16px' }}
+                    />
+                  </RadarChart>
+                </ResponsiveContainer>
+              </div>
+            ) : (
+              <div className="h-[380px] flex items-center justify-center text-xs text-brand-green/40 font-mono">
+                Initializing Bio-Grain Radar Metrics...
+              </div>
+            )}
           </div>
         </div>
 
