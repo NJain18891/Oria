@@ -16,31 +16,31 @@ const FAQ_ITEMS: FAQItem[] = [
     id: 'faq-1',
     topic: 'Millet Processing',
     question: 'How is the raw, organic millet processed to preserve nutrients?',
-    answer: 'At Oria, we employ cold-milled, dynamic dehydration rather than standard structural roasting. We wash the whole grain twice, dehydrate it under warm solar temperatures to naturally sprout the micro-roots and activate the biological enzymes, then stone-grind it gently to avoid thermal expansion. This preserves cellular fiber chains.',
+    answer: 'We sprouted-dry and stone-grind our whole millets under gentle solar temperatures, completely avoiding high-temp roasting. This retains the native grain fiber structures and prevents enzyme degradation.',
   },
   {
     id: 'faq-2',
     topic: 'Shelf Life & Integrity',
     question: 'What is the shelf life, and are there artificial stabilizers?',
-    answer: 'None of our food formulations contain artificial preservatives, industrial emulsifiers, or fillers. We packaging using dry-nitrogen flushing in customized recycled-kraft pouches to naturally extend cellular integrity. The Morning Fuel bars remain completely fresh for 6 months, and our dry Rise Shake powder stays active for 12 months when stored in a cool place away from humidity.',
+    answer: 'We utilize dry-nitrogen flushing without chemical preservatives to naturally preserve freshness. The Morning Fuel bars remain fresh for 6 months, and our dry blend shake powder stays active for 12 months.',
   },
   {
     id: 'faq-3',
     topic: 'Packaging & Sustainability',
     question: 'Are your glass jars and shipping containers fully recyclable?',
-    answer: 'Absolutely. Environmental stewardship is aligned with human health. Our Rise Blend comes in frosted glass premium jars intended for zero-waste repurposing, and our bulk dry powders are shipped in compostable PLA pouches. Cartons are bound with water-activated starch paper instead of synthetic adhesive films.',
+    answer: 'Yes, our jars are premium frosted glass intended for reusable storage, and bulk powders ship in fully compostable pouches. Even our shipping boxes are sealed with non-synthetic, water-activated starch paper.',
   },
   {
     id: 'faq-4',
     topic: 'Shipping & Transport',
     question: 'What are your delivery times, and do you ship globally?',
-    answer: 'We mix and pack orders fresh twice a week in our boutique kitchen. Standard domestic carbon-neutral transit takes 2-4 business days. International direct priority takes 5-9 business days depending on customs protocols. High-end shipping tracking codes are provided instantly via SMS or email.',
+    answer: 'Orders are blended and shipped fresh twice per week. Domestic carbon-neutral shipping takes 2-4 business days, while international priority takes 5-9 days.',
   },
   {
     id: 'faq-5',
     topic: 'Cellular Digestibility',
     question: 'Is raw millet safe for highly sensitive autoimmune systems?',
-    answer: 'Whole grain millet is alkaline, entirely gluten-free, and lacks standard seed-defense proteins like lectins or high saponins. Our warm dehydration sprouting phase breaks down complex phytates and release micro-nutrients, resulting in an ultra-smooth, hypoallergenic digestive integration.',
+    answer: 'Sprouted millet is naturally alkaline, hypoallergenic, and entirely gluten-free. The warm sprouting process breaks down phytates, making it exceptionally light on the digestion.',
   },
 ];
 

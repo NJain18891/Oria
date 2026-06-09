@@ -15,6 +15,7 @@ interface Question {
     value: string;
     description: string;
     icon: React.ComponentType<{ className?: string; size?: number }>;
+    bgImage: string;
   }[];
 }
 
@@ -22,69 +23,77 @@ const QUIZ_QUESTIONS: Question[] = [
   {
     id: 1,
     title: "How does your body typically enter the morning?",
-    subTitle: "Select the setting that best reflects your morning baseline.",
+    subTitle: "Select your morning baseline.",
     options: [
       {
-        label: "Intense Physical Effort",
+        label: "Intense Training",
         value: "physical",
-        description: "Heavy weightlifting sessions, sprint runs, high-tempo cycling, or demanding dynamic training.",
+        description: "Heavy athletic output.",
         icon: Dumbbell,
+        bgImage: "https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=400&auto=format&fit=crop",
       },
       {
-        label: "Desk-bound Cognitive Sprints",
+        label: "Cognitive Focus",
         value: "cognitive",
-        description: "Deep coding tasks, long creative design, rapid financial analysis, or writing under intense deadlines.",
+        description: "Deep mental output.",
         icon: Coffee,
+        bgImage: "https://images.unsplash.com/photo-1499750310107-5fef28a66643?q=80&w=400&auto=format&fit=crop",
       },
       {
-        label: "Gentle Mindful Warmup",
+        label: "Mindful Warmup",
         value: "mindful",
-        description: "Slower entries consisting of restorative yoga, quiet breathwork, stretch flows, or deep meditation.",
+        description: "Quiet, restorative entry.",
         icon: Sun,
+        bgImage: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=400&auto=format&fit=crop",
       }
     ]
   },
   {
     id: 2,
     title: "What represents your optimal morning workflow?",
-    subTitle: "Let’s calibrate based on your available morning preparation windows.",
+    subTitle: "Select your preparation window.",
     options: [
       {
-        label: "Grab-and-Go Convenience",
+        label: "Grab & Go",
         value: "grab",
-        description: "I need dense organic nutrients requiring absolutely zero seconds of setup or cleanup.",
+        description: "Zero prep time.",
         icon: Sparkles,
+        bgImage: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=400&auto=format&fit=crop",
       },
       {
-        label: "Swift Liquid Fueling",
+        label: "Quick Blend",
         value: "shake",
-        description: "Under 30 seconds of elegant blending with filtered water or organic nut milk is perfect.",
+        description: "Under 30 seconds.",
         icon: Flame,
+        bgImage: "https://images.unsplash.com/photo-1553530666-ba11a7da3888?q=80&w=400&auto=format&fit=crop",
       }
     ]
   },
   {
     id: 3,
     title: "Choose your primary physiological focus.",
-    subTitle: "What is your main biological goal for the hours leading to midday?",
+    subTitle: "What is your main biological goal?",
     options: [
       {
-        label: "Glycemic Stability & Hunger Control",
+        label: "Sustained Energy",
         value: "glycemic",
-        description: "Eliminating the classic 11:00 AM insulin crash and avoiding brain fog.",
+        description: "No sugar crash.",
         icon: Sparkles,
+        bgImage: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?q=80&w=400&auto=format&fit=crop",
       },
       {
-        label: "Advanced Stress Adaptation",
+        label: "Stress Defense",
         value: "stress",
-        description: "Managing systemic cortisol spikes and maintaining clean focus.",
+        description: "Maintain calm focus.",
         icon: Coffee,
+        bgImage: "https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?q=80&w=400&auto=format&fit=crop",
       },
       {
-        label: "Intracellular Hydration & Recovery",
+        label: "Deep Hydration",
         value: "hydration",
-        description: "Replenishing trace minerals and maintaining lean fluid homeostasis.",
+        description: "Restore trace minerals.",
         icon: Dumbbell,
+        bgImage: "https://images.unsplash.com/photo-1555133742-2fd74db76a26?q=80&w=400&auto=format&fit=crop",
       }
     ]
   }
@@ -109,8 +118,8 @@ const PRODUCTS_MAP: Record<string, QuizRecommendation> = {
     price: 28,
     image: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=600&auto=format&fit=crop",
     sizeDesc: 'Box of 12 Gourmet Bars',
-    description: 'A dense, satisfying solid bar combining rolled organic millet grains, cold-extracted almond oil, raw botanical lavender, and wild honey.',
-    matchReason: 'Based on your desire for zero-friction grab-and-go energy and glycemic stability, the Morning Fuel Bar provides intact raw millet fiber structures that digest slowly, preventing mid-morning cognitive fatigue.'
+    description: 'Sustainably harvested whole-food millet grains refined with cardamom, lavender, and cold-pressed honey.',
+    matchReason: 'A slow-digesting, slow-release fiber structure that prevents mid-morning cognitive fatigue and keeps your glucose stable.'
   },
   shake: {
     productId: 'oria-rise-blend-shake',
@@ -119,8 +128,8 @@ const PRODUCTS_MAP: Record<string, QuizRecommendation> = {
     price: 34,
     image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
     sizeDesc: '15 Servings Recyclable Jar',
-    description: 'Sleek botanical shake formulation featuring 10 ancient whole millet species supercharged with adaptogens to manage stress and sustain energy.',
-    matchReason: 'Given your morning focus on adaptogenic defense and active nutritional blending, the Rise Blend Shake uses Ashwagandha to modulate stress levels while delivering 22g of clean protein.'
+    description: 'A sophisticated organic shake with 10 ancient whole grains and powerful ashwagandha.',
+    matchReason: 'Crafted with essential adaptogens and sustainable protein to naturally control stress while providing clean energy.'
   },
   water: {
     productId: 'oria-hydra-protein-water',
@@ -129,8 +138,8 @@ const PRODUCTS_MAP: Record<string, QuizRecommendation> = {
     price: 32,
     image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=600&auto=format&fit=crop",
     sizeDesc: 'Pack of 12 Glass Bottles',
-    description: 'A crystal-clear, refreshing coconut water base containing trace marine minerals and plant-based isolated protein structure.',
-    matchReason: 'Since your habits focus on intense physical output and cellular electrolyte hydration, the Hydra-Protein Water delivers 72+ volcanic ionic trace elements alongside bioavailable vegan proteins to immediately restore cellular reserves.'
+    description: 'Isotonic coconut water reinforced with botanical proteins and 72 trace volcanic minerals.',
+    matchReason: 'Instantly delivers marine minerals and easily absorbable organic proteins to support physical replenishment.'
   }
 };
 
@@ -274,7 +283,7 @@ export default function FindYourRitualQuiz() {
                 </div>
 
                 {/* Option Toggles */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 items-stretch text-left">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch text-left">
                   {QUIZ_QUESTIONS[currentStep - 1].options.map((opt) => {
                     const OptIcon = opt.icon;
                     return (
@@ -282,18 +291,33 @@ export default function FindYourRitualQuiz() {
                         key={opt.value}
                         id={`quiz-option-${opt.value}`}
                         onClick={() => handleSelectOption(currentStep, opt.value)}
-                        className="p-6 rounded-[24px] border border-brand-green/10 bg-[#FBFBFA] hover:border-[#10B981] hover:bg-white text-left transition-all duration-300 flex flex-col justify-between space-y-4 group cursor-pointer hover:shadow-xl hover:shadow-brand-green/5"
+                        className="p-4 rounded-[28px] border border-brand-green/10 bg-[#FBFBFA] hover:border-[#10B981] hover:bg-white text-left transition-all duration-300 flex flex-col justify-between space-y-4 group cursor-pointer hover:shadow-xl hover:shadow-brand-green/5 overflow-hidden"
                       >
-                        <div className="w-9 h-9 rounded-xl bg-brand-green/[0.03] border border-brand-green/5 flex items-center justify-center text-brand-green group-hover:bg-[#10B981]/10 group-hover:text-[#10B981] transition-all">
-                          <OptIcon size={16} />
+                        {/* Option Image Background Header */}
+                        <div className="relative w-full aspect-[16/10] rounded-[20px] overflow-hidden bg-brand-cream border border-brand-green/5">
+                          <Image
+                            src={opt.bgImage}
+                            alt={opt.label}
+                            fill
+                            sizes="(max-w-7xl) 30vw, 250px"
+                            className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                            referrerPolicy="no-referrer"
+                          />
+                          <div className="absolute inset-0 bg-brand-green/5 mix-blend-multiply" />
                         </div>
-                        <div>
-                          <h4 className="text-sm font-serif font-medium text-brand-green group-hover:text-brand-purple transition-colors">
-                            {opt.label}
-                          </h4>
-                          <p className="text-[11px] text-brand-green/60 mt-2 leading-relaxed">
-                            {opt.description}
-                          </p>
+
+                        <div className="flex items-start gap-3 px-1">
+                          <div className="w-8 h-8 rounded-lg bg-brand-green/[0.04] border border-brand-green/5 flex items-center justify-center text-brand-green group-hover:bg-[#10B981]/15 group-hover:text-[#10B981] transition-all flex-shrink-0 mt-0.5">
+                            <OptIcon size={14} />
+                          </div>
+                          <div>
+                            <h4 className="text-sm font-serif font-medium text-brand-green group-hover:text-brand-purple transition-colors">
+                              {opt.label}
+                            </h4>
+                            <p className="text-[11px] text-brand-green/60 mt-1 leading-relaxed">
+                              {opt.description}
+                            </p>
+                          </div>
                         </div>
                       </button>
                     );

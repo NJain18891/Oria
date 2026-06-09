@@ -39,14 +39,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     /* eslint-disable-next-line react-hooks/set-state-in-effect */
     setIsMounted(true);
-    const savedCart = localStorage.getItem('oria_cart');
-    if (savedCart) {
-      try {
-        setCart(JSON.parse(savedCart));
-      } catch (e) {
-        console.error('Error parsing cart localStorage', e);
-      }
-    }
+    // Force reset shopping cart on new page load to prevent cross-user order contamination
+    localStorage.removeItem('oria_cart');
+    setCart([]);
   }, []);
 
   useEffect(() => {

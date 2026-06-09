@@ -58,7 +58,7 @@ function ParallaxImage({ src, alt }: { src: string; alt: string }) {
           alt={alt}
           fill
           sizes="(max-w-7xl) 30vw, 350px"
-          className="object-cover"
+          className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
           referrerPolicy="no-referrer"
         />
       </motion.div>

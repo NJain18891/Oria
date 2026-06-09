@@ -4,10 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import OriaLogo from '@/components/OriaLogo';
-import NarrativeHook from '@/components/NarrativeHook';
-import IngredientSpotlight from '@/components/IngredientSpotlight';
 import ProductCatalog from '@/components/ProductCatalog';
-import HistoryTimeline from '@/components/HistoryTimeline';
 import BottomStickyBar from '@/components/BottomStickyBar';
 import CartDrawer from '@/components/CartDrawer';
 import CheckoutFlow from '@/components/CheckoutFlow';
@@ -15,7 +12,6 @@ import LoadingOverlay from '@/components/LoadingOverlay';
 import CommunityRituals from '@/components/CommunityRituals';
 import ConciergeFAQ from '@/components/ConciergeFAQ';
 import FindYourRitualQuiz from '@/components/FindYourRitualQuiz';
-import SourcingMap from '@/components/SourcingMap';
 import NutritionComparison from '@/components/NutritionComparison';
 import ValueBentoGrid from '@/components/ValueBentoGrid';
 import { Mail, Compass, HelpCircle, Heart, Anchor, Sun, X, CheckCircle } from 'lucide-react';
@@ -94,26 +90,15 @@ export default function Home() {
 
       {/* Narrative Section Sequence */}
       <Hero />
-      
-      <NarrativeHook />
-
-      {/* 1. Custom Interactive Daily Habit Matcher Quiz */}
-      <FindYourRitualQuiz />
-      
-      {/* 2. Primary Product Showcase */}
-      <ProductCatalog />
-
-      {/* 3. Ingredient Biochemical Spotlight Science */}
-      <IngredientSpotlight />
-
-      {/* Historical progression of millet cultivation */}
-      <HistoryTimeline />
-
-      {/* 4. Geographic Soil Sourcing Interactive Map */}
-      <SourcingMap />
 
       {/* 5. Clean Nutrition vs Processing Comparison Metrics */}
       <NutritionComparison />
+
+      {/* 2. Primary Product Showcase */}
+      <ProductCatalog />
+
+      {/* 1. Custom Interactive Daily Habit Matcher Quiz */}
+      <FindYourRitualQuiz />
 
       {/* 6. Social Proof Collective Stories */}
       <CommunityRituals />
