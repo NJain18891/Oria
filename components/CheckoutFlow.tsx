@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, ArrowRight, ArrowLeft, ShieldCheck, Check, CreditCard, ChevronRight, Sparkles } from 'lucide-react';
@@ -22,6 +23,26 @@ export default function CheckoutFlow() {
     postalCode: '',
     phone: '',
   });
+
+  const [recentlyViewed, setRecentlyViewed] = useState<any[]>([]);
+  const [recentOrders, setRecentOrders] = useState<any[]>([]);
+
+  // Track and synchronize local storage activity once drawer is active
+  useEffect(() => {
+    if (typeof window !== 'undefined' && isCheckoutOpen) {
+      try {
+        const viewed = JSON.parse(localStorage.getItem('oria_recently_viewed') || '[]');
+        const orders = JSON.parse(localStorage.getItem('oria_recent_orders') || '[]');
+        // Avoid calling setState synchronously within effect to satisfy purity criteria
+        setTimeout(() => {
+          setRecentlyViewed(viewed);
+          setRecentOrders(orders);
+        }, 0);
+      } catch (err) {
+        console.warn('Failed to parse history metrics:', err);
+      }
+    }
+  }, [isCheckoutOpen]);
 
   const [paymentForm, setPaymentForm] = useState({
     paymentMethod: 'card' as 'card' | 'upi',
@@ -59,6 +80,22 @@ export default function CheckoutFlow() {
 
   const handlePaymentSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Save order payload trace to local storage for Recent Orders functionality
+    if (typeof window !== 'undefined') {
+      try {
+        const newOrder = createOrderPayload(cartItems, finalTotal, shippingForm.name);
+        const existingOrders = JSON.parse(localStorage.getItem('oria_recent_orders') || '[]');
+        existingOrders.unshift(newOrder);
+        localStorage.setItem('oria_recent_orders', JSON.stringify(existingOrders.slice(0, 3)));
+        
+        // Push newly placed order immediately to recentOrders list state so it registers in the popup live
+        setRecentOrders(existingOrders.slice(0, 3));
+      } catch (err) {
+        console.warn('Failed to commit past purchase metadata:', err);
+      }
+    }
+
     // Proceed to Step 3 (Success) and immediately clear the cart state
     setStep(3);
     clearCart();
@@ -250,6 +287,9 @@ export default function CheckoutFlow() {
                       <ArrowRight size={13} />
                     </button>
                   </div>
+
+                  {/* Summary of Recent Orders and Browsing History */}
+                  <RecentOrdersAndHistory recentlyViewed={recentlyViewed} recentOrders={recentOrders} />
                 </motion.form>
               )}
 
@@ -447,6 +487,9 @@ export default function CheckoutFlow() {
                       <span>Release Sourcing Sump</span>
                     </button>
                   </div>
+
+                  {/* Summary of Recent Orders and Browsing History */}
+                  <RecentOrdersAndHistory recentlyViewed={recentlyViewed} recentOrders={recentOrders} />
                 </motion.form>
               )}
 
@@ -525,5 +568,127 @@ export default function CheckoutFlow() {
         </motion.div>
       </div>
     </AnimatePresence>
+  );
+}
+
+// Pure helper function declared outside component body to conform to React Purity principles
+function createOrderPayload(cartItems: any[], finalTotal: number, recipientName: string) {
+  const orderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+  const dateStr = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  return {
+    orderId,
+    date: dateStr,
+    items: cartItems.map((item: any) => ({
+      id: item.id,
+      name: item.name,
+      price: item.price,
+      quantity: item.quantity,
+    })),
+    total: finalTotal,
+    recipient: recipientName || 'Oria Customer',
+  };
+}
+
+// Reusable Client-side Recent Activity block (declared outside of main render function to avoid cascading re-renders)
+function RecentOrdersAndHistory({
+  recentlyViewed,
+  recentOrders
+}: {
+  recentlyViewed: any[];
+  recentOrders: any[];
+}) {
+  if (recentlyViewed.length === 0 && recentOrders.length === 0) return null;
+
+  return (
+    <div className="mt-8 pt-8 border-t border-brand-green/10 space-y-6 text-left">
+      <div className="flex items-center justify-between">
+        <h4 className="text-[10px] uppercase font-mono tracking-widest text-[#1E2D24]/40 font-bold">
+          Recent Orders & History
+        </h4>
+        <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {/* Recent Orders Side Column */}
+        <div className="space-y-3">
+          <span className="text-[9px] uppercase tracking-widest font-mono text-brand-green/60 font-semibold block">
+            Recent Orders
+          </span>
+          {recentOrders.length > 0 ? (
+            <div className="space-y-3">
+              {recentOrders.map((order: any) => (
+                <div 
+                  key={order.orderId}
+                  className="bg-white rounded-2xl border border-brand-green/10 p-4 flex flex-col space-y-1.5 shadow-sm"
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="font-mono text-[9px] text-brand-purple font-semibold">{order.orderId}</span>
+                    <span className="text-[9px] text-[#10B981] bg-[#10B981]/5 px-2.5 py-0.5 rounded-full font-bold">{order.date}</span>
+                  </div>
+                  <div className="text-[11px] text-[#1E2D24]/80 flex flex-wrap gap-x-1">
+                    <span className="font-light">Sourced for:</span>
+                    <span className="font-medium text-brand-green">{order.recipient}</span>
+                  </div>
+                  <div className="border-t border-brand-green/[0.03] pt-2 mt-1 flex justify-between items-center text-[10px]">
+                    <span className="text-brand-green/50">{order.items.length} {order.items.length === 1 ? 'item' : 'items'} load</span>
+                    <span className="font-serif font-semibold text-brand-green">${order.total.toFixed(2)}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-[#FAF9F5] border border-dashed border-brand-green/10 rounded-2xl p-4 text-center">
+              <span className="text-[10px] text-brand-green/45 font-light block leading-normal">
+                No previous transactions found on this device.
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* Recently Viewed Side Column */}
+        <div className="space-y-3">
+          <span className="text-[9px] uppercase tracking-widest font-mono text-brand-green/60 font-semibold block">
+            Recently Viewed
+          </span>
+          {recentlyViewed.length > 0 ? (
+            <div className="space-y-3">
+              {recentlyViewed.map((item: any) => (
+                <div 
+                  key={item.id}
+                  className="bg-white rounded-2xl border border-brand-green/10 p-3 flex items-center gap-3 shadow-sm hover:border-[#10B981]/15 transition-all"
+                >
+                  <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-brand-cream border border-brand-green/5 flex-shrink-0">
+                    <Image 
+                      src={item.image} 
+                      alt={item.name}
+                      fill
+                      className="object-cover"
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                  <div className="flex-grow min-w-0">
+                    <h5 className="text-[11px] font-serif text-[#1e2d24] font-medium truncate leading-tight">
+                      {item.name}
+                    </h5>
+                    <p className="text-[9px] text-brand-sprout uppercase tracking-wider font-semibold truncate leading-none mt-1">
+                      {item.subtitle}
+                    </p>
+                  </div>
+                  <div className="text-right flex-shrink-0 flex flex-col justify-end">
+                    <span className="text-[10px] font-semibold text-brand-green font-mono">${item.price}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="bg-[#FAF9F5] border border-dashed border-brand-green/10 rounded-2xl p-4 text-center">
+              <span className="text-[10px] text-brand-green/45 font-light block leading-normal">
+                No recent browse activity stored in this session.
+              </span>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
   );
 }

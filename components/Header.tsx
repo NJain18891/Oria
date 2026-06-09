@@ -30,7 +30,7 @@ export default function Header() {
     window.addEventListener('scroll', handleScroll);
 
     // Modern IntersectionObserver scroll spy
-    const sectionIds = ['story', 'ingredients', 'shop'];
+    const sectionIds = ['shop', 'oria-nutrition-comparison', 'oria-values-bento'];
     const elements = sectionIds.map(id => document.getElementById(id)).filter(Boolean);
 
     const observerOptions = {
@@ -61,9 +61,9 @@ export default function Header() {
   }, []);
 
   const navLinks = [
-    { name: 'Our Story', href: '#story' },
-    { name: 'Micro-Nutrients', href: '#ingredients' },
     { name: 'Shop Nutrition', href: '#shop' },
+    { name: 'Micro-nutrients', href: '#oria-nutrition-comparison' },
+    { name: 'Our Story', href: '#oria-values-bento' },
   ];
 
   return (

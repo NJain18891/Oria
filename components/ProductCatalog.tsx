@@ -72,6 +72,59 @@ export default function ProductCatalog() {
   const [toasts, setToasts] = React.useState<{ id: number; itemName: string }[]>([]);
   const toastIdRef = React.useRef(0);
 
+  const registerItemView = (p: Product) => {
+    if (typeof window === 'undefined') return;
+    try {
+      const historyJson = localStorage.getItem('oria_recently_viewed');
+      let currentHistory: Array<any> = [];
+      if (historyJson) {
+        currentHistory = JSON.parse(historyJson);
+      }
+      currentHistory = currentHistory.filter((item: any) => item.id !== p.id);
+      currentHistory.unshift({
+        id: p.id,
+        name: p.name,
+        price: p.price,
+        subtitle: p.subtitle,
+        image: p.image,
+        viewedAt: new Date().toISOString()
+      });
+      localStorage.setItem('oria_recently_viewed', JSON.stringify(currentHistory.slice(0, 3)));
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    try {
+      const historyJson = localStorage.getItem('oria_recently_viewed');
+      if (!historyJson) {
+        const initialHistory = [
+          {
+            id: 'oria-morning-fuel-bar',
+            name: 'Morning Fuel Bar',
+            price: 28,
+            subtitle: 'Ancient Millet & Cardamom Pods',
+            image: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=600&auto=format&fit=crop",
+            viewedAt: new Date().toISOString()
+          },
+          {
+            id: 'oria-rise-blend-shake',
+            name: 'Rise Blend Shake',
+            price: 34,
+            subtitle: 'Cardamom Vanilla & Ashwagandha',
+            image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+            viewedAt: new Date().toISOString()
+          }
+        ];
+        localStorage.setItem('oria_recently_viewed', JSON.stringify(initialHistory));
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
+
   const triggerToast = (itemName: string) => {
     toastIdRef.current += 1;
     const id = toastIdRef.current;
@@ -159,6 +212,8 @@ export default function ProductCatalog() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-5% 0px' }}
               transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+              onMouseEnter={() => registerItemView(product)}
+              onFocus={() => registerItemView(product)}
               className="group flex flex-col justify-between rounded-[32px] bg-[#FBFBFA] border border-brand-green/10 hover:border-brand-green/20 hover:shadow-2xl hover:shadow-brand-green/5 overflow-hidden transition-all duration-500 text-left p-6 relative"
             >
               {/* Image container with aspect overlay */}

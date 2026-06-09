@@ -91,23 +91,23 @@ export default function Home() {
       {/* Narrative Section Sequence */}
       <Hero />
 
-      {/* 5. Clean Nutrition vs Processing Comparison Metrics */}
-      <NutritionComparison />
-
       {/* 2. Primary Product Showcase */}
       <ProductCatalog />
 
+      {/* 5. Clean Nutrition vs Processing Comparison Metrics */}
+      <NutritionComparison />
+
       {/* 1. Custom Interactive Daily Habit Matcher Quiz */}
       <FindYourRitualQuiz />
+
+      {/* Dynamic Brand Value Grid (Aesthetic Bento with custom animations and click expand details) */}
+      <ValueBentoGrid />
 
       {/* 6. Social Proof Collective Stories */}
       <CommunityRituals />
 
       {/* 7. Concierge Advisory and FAQs */}
       <ConciergeFAQ />
-
-      {/* Dynamic Brand Value Grid (Aesthetic Bento with custom animations and click expand details) */}
-      <ValueBentoGrid />
 
       {/* Premium Brand Editorial Footer */}
       <footer className="bg-[#1E2D24] text-[#FBFBFA]/90 pt-24 pb-12 border-t border-brand-green/15 relative overflow-hidden">
