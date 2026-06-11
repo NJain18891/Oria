@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { Check, Minus, Sparkles, ShieldCheck } from 'lucide-react';
+import { Check, Minus, Sparkles, ShieldCheck, X } from 'lucide-react';
 import OriaLogo from '@/components/OriaLogo';
 
 interface TextMetric {
@@ -95,38 +95,35 @@ export default function NutritionComparison() {
         </div>
 
         {/* Matrix Container */}
-        <div className="w-full overflow-x-auto scrollbar-none rounded-3xl border border-brand-green/10 bg-[#FBFBFA]/40 backdrop-blur-sm">
-          <div className="min-w-[800px] p-6 sm:p-10">
+        <div className="w-full overflow-x-auto scrollbar-none rounded-3xl border-2 border-brand-green/15 bg-[#FBFBFA]/60 backdrop-blur-sm shadow-xl">
+          <div className="min-w-[800px]">
             {/* Table Header */}
-            <div className="grid grid-cols-12 gap-6 items-center pb-8 border-b border-brand-green/10 text-left">
-              <div className="col-span-3">
-                <span className="text-[10px] font-mono text-brand-green/40 uppercase tracking-widest block">Metric Comparison</span>
+            <div className="grid grid-cols-12 items-stretch border-b-2 border-brand-green/15 text-left bg-brand-green/[0.02]">
+              <div className="col-span-3 pt-5 px-6 flex flex-col justify-center items-center text-center border-r border-brand-green/15">
+                <span className="text-sm font-sans font-extrabold text-brand-green/90 uppercase tracking-wider block">Metric Comparison</span>
               </div>
-              <div className="col-span-3 bg-brand-green/[0.03] border border-[#10B981]/15 rounded-2xl p-4 flex flex-col items-center justify-center text-center relative shadow-sm">
-                <span className="absolute -top-3 left-1/2 transform -translate-x-1/2 inline-flex items-center gap-1 text-[8px] uppercase tracking-widest font-bold text-white bg-[#10B981] py-0.5 px-2.5 rounded-full">
-                  <ShieldCheck size={8} /> Golden Standard
-                </span>
-                <OriaLogo showText={false} iconOnly={true} className="h-7 w-auto mt-1" />
-                <span className="text-xs font-serif font-semibold text-brand-green mt-1.5 tracking-wide">Oria (Millet Base)</span>
+              <div className="col-span-3 bg-[#10B981]/5 pt-5 px-6 flex flex-col items-center justify-start text-center relative border-r-2 border-[#10B981]/20">
+                <span className="text-sm font-sans font-extrabold text-brand-green uppercase tracking-wider block">Oria (Millet Base)</span>
+                <OriaLogo showText={false} iconOnly={true} className="h-16 w-auto" />
               </div>
-              <div className="col-span-3 text-center flex flex-col items-center">
-                <span className="text-xs font-semibold text-brand-green/80 uppercase tracking-wider">Synthetic Powders</span>
-                <span className="text-[10px] text-brand-green/40 mt-1 font-mono">Standard Whey / Isolates</span>
+              <div className="col-span-3 text-center flex flex-col items-center justify-start pt-5 px-6 border-r border-brand-green/15">
+                <span className="text-sm font-sans font-extrabold text-brand-green/90 uppercase tracking-wider block">Synthetic Powders</span>
+                <span className="text-xs sm:text-[13px] text-brand-green/80 mt-5 font-sans font-bold tracking-wide">Standard Whey / Isolates</span>
               </div>
-              <div className="col-span-3 text-center flex flex-col items-center">
-                <span className="text-xs font-semibold text-brand-green/80 uppercase tracking-wider">Sugary Bars</span>
-                <span className="text-[10px] text-brand-green/40 mt-1 font-mono">Commercial Oats / Wheat</span>
+              <div className="col-span-3 text-center flex flex-col items-center justify-start pt-5 px-6">
+                <span className="text-sm font-sans font-extrabold text-brand-green/90 uppercase tracking-wider block">Sugary Bars</span>
+                <span className="text-xs sm:text-[13px] text-brand-green/80 mt-5 font-sans font-bold tracking-wide">Commercial Oats / Wheat</span>
               </div>
             </div>
 
             {/* Table Body rows */}
-            <div className="divide-y divide-brand-green/[0.05]">
+            <div className="divide-y border-b border-brand-green/15 divide-brand-green/15">
               {MATRIX_METRICS.map((row) => (
-                <div key={row.name} className="grid grid-cols-12 gap-6 items-center py-6.5 text-left transition-all duration-150 hover:bg-brand-green/[0.01]">
+                <div key={row.name} className="grid grid-cols-12 items-stretch text-left transition-all duration-150 hover:bg-brand-green/[0.02]">
                   
                   {/* Metric Name */}
-                  <div className="col-span-3">
-                    <span className="text-xs sm:text-sm font-semibold text-brand-green uppercase tracking-wider block font-sans">
+                  <div className="col-span-3 p-6 flex items-center justify-center text-center border-r border-brand-green/15 bg-brand-green/[0.01]">
+                    <span className="text-xs sm:text-sm font-bold text-brand-green uppercase tracking-wider block font-sans w-full text-center">
                       {row.name}
                     </span>
                   </div>
@@ -135,107 +132,74 @@ export default function NutritionComparison() {
                   {row.type === 'text' ? (
                     <>
                       {/* Oria value */}
-                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4">
-                        {row.oria.positive ? (
-                          <div className="flex items-center justify-center gap-1.5 text-[#10B981]">
-                            <span className="w-5 h-5 rounded-full bg-[#10B981]/10 flex items-center justify-center">
-                              <Check size={11} strokeWidth={3} />
-                            </span>
-                            <span className="text-xs font-medium text-brand-green">{row.oria.value}</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center justify-center gap-1.5 text-brand-green/40">
-                            <Minus size={14} className="text-brand-green/30" />
-                            <span className="text-xs">{row.oria.value}</span>
-                          </div>
-                        )}
+                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4 py-6 border-r-2 border-[#10B981]/20 bg-[#10B981]/[0.02]">
+                        <div className="flex items-center justify-center text-[#10B981]">
+                          <span className="w-10 h-10 rounded-full bg-[#10B981]/20 flex items-center justify-center shadow-md hover:scale-110 transition-transform duration-200" title={row.oria.value}>
+                            <Check size={22} strokeWidth={4} />
+                          </span>
+                        </div>
                       </div>
-
+ 
                       {/* Synthetic value */}
-                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4">
-                        {row.synthetic.positive ? (
-                          <div className="flex items-center justify-center gap-1.5 text-[#10B981]">
-                            <span className="w-5 h-5 rounded-full bg-[#10B981]/10 flex items-center justify-center">
-                              <Check size={11} strokeWidth={3} />
-                            </span>
-                            <span className="text-xs font-medium text-brand-green">{row.synthetic.value}</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center justify-center gap-1.5 text-brand-green/45">
-                            <Minus size={14} className="text-brand-green/30" />
-                            <span className="text-xs font-light">{row.synthetic.value}</span>
-                          </div>
-                        )}
+                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4 py-6 border-r border-brand-green/15">
+                        <div className="flex items-center justify-center text-rose-500/90 hover:scale-105 transition-transform duration-200" title={row.synthetic.value}>
+                          <span className="w-9 h-9 rounded-full bg-rose-500/10 flex items-center justify-center border border-rose-500/20">
+                            <X size={18} strokeWidth={3.5} />
+                          </span>
+                        </div>
                       </div>
-
+ 
                       {/* Sugary value */}
-                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4">
-                        {row.sugary.positive ? (
-                          <div className="flex items-center justify-center gap-1.5 text-[#10B981]">
-                            <span className="w-5 h-5 rounded-full bg-[#10B981]/10 flex items-center justify-center">
-                              <Check size={11} strokeWidth={3} />
-                            </span>
-                            <span className="text-xs font-medium text-brand-green">{row.sugary.value}</span>
-                          </div>
-                        ) : (
-                          <div className="flex items-center justify-center gap-1.5 text-brand-green/45">
-                            <Minus size={14} className="text-brand-green/30" />
-                            <span className="text-xs font-light">{row.sugary.value}</span>
-                          </div>
-                        )}
+                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4 py-6">
+                        <div className="flex items-center justify-center text-rose-500/90 hover:scale-105 transition-transform duration-200" title={row.sugary.value}>
+                          <span className="w-9 h-9 rounded-full bg-rose-500/10 flex items-center justify-center border border-rose-500/20">
+                            <X size={18} strokeWidth={3.5} />
+                          </span>
+                        </div>
                       </div>
                     </>
                   ) : (
                     <>
-                      {/* Oria bar */}
-                      <div className="col-span-3 flex flex-col justify-center px-4">
-                        <div className="flex justify-between items-center mb-1.5">
-                          <span className="text-[10px] font-mono font-bold text-[#10B981] uppercase tracking-wider">Optimal</span>
-                          <span className="text-[10px] font-mono text-brand-green/70">{row.oriaValue}%</span>
-                        </div>
-                        <div className="w-full bg-brand-green/5 h-1.5 rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${row.oriaValue}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.2, ease: 'easeOut' }}
-                            className="bg-gradient-to-r from-[#10B981] to-brand-sprout h-full rounded-full"
-                          />
-                        </div>
+                      {/* Oria score */}
+                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4 py-6 border-r-2 border-[#10B981]/20 bg-[#10B981]/[0.02]">
+                        <motion.span
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.5, delay: 0.1 }}
+                          className="text-3xl sm:text-4xl font-serif font-bold text-[#10B981] tracking-tight block"
+                        >
+                          {row.oriaValue}%
+                        </motion.span>
+                        <span className="text-[10px] font-mono font-extrabold text-[#10B981]/90 uppercase tracking-widest mt-1">Optimal</span>
                       </div>
-
-                      {/* Synthetic bar */}
-                      <div className="col-span-3 flex flex-col justify-center px-4">
-                        <div className="flex justify-between items-center mb-1.5 text-brand-green/40">
-                          <span className="text-[10px] font-mono uppercase tracking-wider">Muted</span>
-                          <span className="text-[10px] font-mono">{row.syntheticValue}%</span>
-                        </div>
-                        <div className="w-full bg-brand-green/5 h-1.5 rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${row.syntheticValue}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.2, ease: 'easeOut' }}
-                            className="bg-brand-green/20 h-full rounded-full"
-                          />
-                        </div>
+ 
+                      {/* Synthetic score */}
+                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4 py-6 border-r border-brand-green/15">
+                        <motion.span
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.5, delay: 0.2 }}
+                          className="text-2xl sm:text-3xl font-serif font-bold text-brand-green/60 tracking-tight block"
+                        >
+                          {row.syntheticValue}%
+                        </motion.span>
+                        <span className="text-[9px] font-mono font-bold text-brand-green/45 uppercase tracking-widest mt-1">Muted</span>
                       </div>
-
-                      {/* Sugary bar */}
-                      <div className="col-span-3 flex flex-col justify-center px-4">
-                        <div className="flex justify-between items-center mb-1.5 text-brand-green/40">
-                          <span className="text-[10px] font-mono uppercase tracking-wider">Muted</span>
-                          <span className="text-[10px] font-mono">{row.sugaryValue}%</span>
-                        </div>
-                        <div className="w-full bg-brand-green/5 h-1.5 rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${row.sugaryValue}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 1.2, ease: 'easeOut' }}
-                            className="bg-brand-green/20 h-full rounded-full"
-                          />
-                        </div>
+ 
+                      {/* Sugary score */}
+                      <div className="col-span-3 flex flex-col items-center justify-center text-center px-4 py-6">
+                        <motion.span
+                          initial={{ opacity: 0, scale: 0.8 }}
+                          whileInView={{ opacity: 1, scale: 1 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.5, delay: 0.3 }}
+                          className="text-2xl sm:text-3xl font-serif font-bold text-brand-green/60 tracking-tight block"
+                        >
+                          {row.sugaryValue}%
+                        </motion.span>
+                        <span className="text-[9px] font-mono font-bold text-brand-green/45 uppercase tracking-widest mt-1">Muted</span>
                       </div>
                     </>
                   )}

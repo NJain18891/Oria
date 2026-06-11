@@ -14,18 +14,39 @@ import ConciergeFAQ from '@/components/ConciergeFAQ';
 import FindYourRitualQuiz from '@/components/FindYourRitualQuiz';
 import NutritionComparison from '@/components/NutritionComparison';
 import ValueBentoGrid from '@/components/ValueBentoGrid';
-import { Mail, Compass, HelpCircle, Heart, Anchor, Sun, X, CheckCircle } from 'lucide-react';
+import { Mail, Compass, HelpCircle, Heart, Anchor, Sun, X, CheckCircle, ArrowUp } from 'lucide-react';
 import { motion, useScroll, useSpring, AnimatePresence } from 'motion/react';
 
 export default function Home() {
   const [emailInput, setEmailInput] = useState('');
   const [newsletterSubscribed, setNewsletterSubscribed] = useState(false);
   const [highContrast, setHighContrast] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Force scroll position to the top of the viewport on initial page load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Monitor scroll height to show/hide bottom right scroll button
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 400) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
 
   // Synchronize the HTML document class for accessible styling overrides
   useEffect(() => {
@@ -110,7 +131,7 @@ export default function Home() {
       <ConciergeFAQ />
 
       {/* Premium Brand Editorial Footer */}
-      <footer className="bg-[#1E2D24] text-[#FBFBFA]/90 pt-24 pb-12 border-t border-brand-green/15 relative overflow-hidden">
+      <footer className="bg-[#1E2D24] text-[#FBFBFA]/90 pt-12 pb-12 border-t border-brand-green/15 relative overflow-hidden">
         
         {/* Soft abstract graphic background */}
         <div className="absolute inset-0 pointer-events-none opacity-5">
@@ -124,7 +145,7 @@ export default function Home() {
             <div className="lg:col-span-5 space-y-6 flex flex-col justify-start">
               <div className="h-8 flex items-center">
                 <a href="#" className="inline-block select-none" aria-label="Oria Wellness Home">
-                  <OriaLogo className="w-32 h-8 text-[#FBFBFA] flex items-center justify-start" />
+                  <OriaLogo className="w-32 h-16 text-[#FBFBFA] flex items-center justify-start" />
                 </a>
               </div>
               <p className="text-xs sm:text-sm text-[#FBFBFA]/70 leading-relaxed font-light max-w-sm">
@@ -265,6 +286,28 @@ export default function Home() {
                 <X size={14} />
               </button>
             </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* Global Scroll to Top (Bottom Right) */}
+      <AnimatePresence>
+        {showScrollTop && (
+          <motion.div
+            id="oria-scroll-to-top-container"
+            initial={{ opacity: 0, scale: 0.8, y: 15 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.8, y: 15 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-45"
+          >
+            <button
+              onClick={scrollToTop}
+              className="p-4 rounded-full bg-[#1E2D24] hover:bg-[#10B981] text-[#FBFBFA] shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer border border-[#FBFBFA]/10 group"
+              aria-label="Scroll to top of Oria page"
+            >
+              <ArrowUp size={20} className="group-hover:-translate-y-0.5 transition-transform duration-300" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>

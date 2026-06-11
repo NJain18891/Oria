@@ -348,10 +348,10 @@ export default function FindYourRitualQuiz() {
 
   return (
     <>
-      {/* 2. Global Chatbot-Style Circular Launcher Launcher (Bottom Right) */}
+      {/* 2. Global Chatbot-Style Circular Launcher (Bottom Left) */}
       <div 
         id="oria-quiz-chatbot-launcher"
-        className="fixed bottom-6 right-6 sm:bottom-8 sm:right-8 z-45"
+        className="fixed bottom-6 left-6 sm:bottom-8 sm:left-8 z-45"
       >
         <button
           onClick={() => {
@@ -374,8 +374,8 @@ export default function FindYourRitualQuiz() {
             <span className="w-1 h-1 bg-white rounded-full animate-ping" />
           </span>
 
-          {/* Floating label that peaks out on hover */}
-          <span className="absolute right-14 bg-[#1E2D24] text-white text-[10px] uppercase tracking-widest font-bold py-1.5 px-3 rounded-full opacity-0 translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md whitespace-nowrap hidden sm:inline">
+          {/* Floating label that peaks out on hover to the right */}
+          <span className="absolute left-14 bg-[#1E2D24] text-white text-[10px] uppercase tracking-widest font-bold py-1.5 px-3 rounded-full opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md whitespace-nowrap hidden sm:inline">
             Ritual Engine
           </span>
         </button>

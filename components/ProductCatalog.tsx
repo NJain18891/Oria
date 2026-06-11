@@ -353,20 +353,20 @@ export default function ProductCatalog() {
       ]
     },
     {
-      id: 'oria-hydra-protein-water',
-      name: 'Hydra-Protein Water',
-      subtitle: 'Sprout-Green & Coconut Marine',
-      price: 32,
-      sizeDesc: 'Pack of 12 Glass Bottles',
-      description: 'A crystal-clear, refreshing coconut water base containing trace marine minerals and plant-based isolated protein structure.',
-      image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=600&auto=format&fit=crop",
-      video: "/Millet blend vid.mp4",
-      accentText: 'New Launch',
-      urgencyTag: 'Limited Harvest',
+      id: 'oria-millet-shards',
+      name: 'Ancient Grain Shards',
+      subtitle: 'Smoked Sea Salt & Toasted Cumin',
+      price: 28,
+      sizeDesc: 'Box of 6 Stay-Fresh Pouches',
+      description: 'Stone-ground millet and popped grain crisps, light baked in cold-pressed avocado oil and finished with a pinch of fire-smoked hand-harvested sea salt.',
+      image: "https://images.unsplash.com/photo-1599490659213-e2b9527bb087?q=80&w=600&auto=format&fit=crop", // A premium crisp/cracker Unsplash image placeholder
+      video: "/Millet Crackers vid.mp4", // Be sure to update your Canva clip name here if different!
+      accentText: 'Best Seller',
+      urgencyTag: 'Stone-Ground Harvest',
       nutrients: [
-        { label: 'Clean Hydration', val: '12g' },
-        { label: 'Potassium / Salt', val: '470mg' },
-        { label: 'Sugar Molecules', val: '0g' }
+        { label: 'Slow Carbs / Fiber', val: '5g' },
+        { label: 'Plant Protein', val: '6g' },
+        { label: 'Trans-Fats / Sugars', val: '0g' }
       ]
     }
   ];
