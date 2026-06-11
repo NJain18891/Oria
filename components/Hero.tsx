@@ -8,27 +8,10 @@ import { motion, AnimatePresence, useScroll, useTransform } from 'motion/react';
 const SLIDES = [
   {
     id: 0,
-    tag: "Redefining Wellness",
-    headline: "Pure Grain. <br className=\"hidden sm:inline\" /><span class=\"italic text-[#10B981]\">Sustained Energy.</span>",
-    subheading: "Ancient organic millets refined for deep focus and zero metabolic crash.",
-    imageUrl: "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?q=80&w=1200&auto=format&fit=crop",
-    floatingBadgeEmoji: "🌾",
-    floatingBadgeTitle: "Millet Nutrition",
-    floatingBadgeText: "Ancient grains, grown sustainably. Clean energy, just add water.",
-    primaryCta: { text: "Start Your Morning", href: "#shop" },
-    secondaryCta: { text: "Our Story", href: "#story" },
-    valueProps: [
-      { top: "100%", bottom: "Whole-Food" },
-      { top: "Ancient Millets", bottom: "Sustained Energy" },
-      { top: "15-22g Pack", bottom: "Clean Protein" }
-    ]
-  },
-  {
-    id: 1,
     tag: "30-Second Ritual",
     headline: "Absolute Ease. <br className=\"hidden sm:inline\" /><span class=\"italic text-[#10B981]\">Active Ritual.</span>",
     subheading: "Simply unwrap or blend in 30 seconds. Balanced, whole-food nutrition designed for busy, high-intensity days.",
-    imageUrl: "https://images.unsplash.com/photo-1572490122747-3968b75cc699?q=80&w=1200&auto=format&fit=crop",
+    imageUrl: "https://images.unsplash.com/photo-1600718374662-0483d2b9da44?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     floatingBadgeEmoji: "⏰",
     floatingBadgeTitle: "Effortless Prep",
     floatingBadgeText: "No shaker clumping, no blender cleanup. Truly instant.",
@@ -38,6 +21,23 @@ const SLIDES = [
       { top: "30 Sec", bottom: "Prep Time" },
       { top: "Active Life", bottom: "On-the-go" },
       { top: "Zero Mess", bottom: "No Cleaning" }
+    ]
+  },
+  {
+    id: 1,
+    tag: "Redefining Wellness",
+    headline: "Pure Grain. <br className=\"hidden sm:inline\" /><span class=\"italic text-[#10B981]\">Sustained Energy.</span>",
+    subheading: "Ancient organic millets refined for deep focus and zero metabolic crash.",
+    imageUrl: "https://plus.unsplash.com/premium_photo-1726767418821-769d675129d9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    floatingBadgeEmoji: "🌾",
+    floatingBadgeTitle: "Millet Nutrition",
+    floatingBadgeText: "Ancient grains, grown sustainably. Clean energy, just add water.",
+    primaryCta: { text: "Start Your Morning", href: "#shop" },
+    secondaryCta: { text: "Our Story", href: "#story" },
+    valueProps: [
+      { top: "100%", bottom: "Whole-Food" },
+      { top: "Ancient Millets", bottom: "Sustained Energy" },
+      { top: "15-22g Pack", bottom: "Clean Protein" }
     ]
   },
   {

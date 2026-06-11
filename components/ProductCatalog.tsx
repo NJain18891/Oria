@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
-import { ShoppingBag, Star, RefreshCw } from 'lucide-react';
+import { ShoppingBag, Star, RefreshCw, ChevronRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface Product {
@@ -14,12 +14,14 @@ interface Product {
   sizeDesc: string;
   description: string;
   image: string;
+  video?: string;
   nutrients: { label: string; val: string }[];
   accentText: string;
+  urgencyTag?: string;
 }
 
-// Custom parallax image dynamic viewport tracking component
-function ParallaxImage({ src, alt }: { src: string; alt: string }) {
+// Custom parallax media (image/video) dynamic viewport tracking component
+function ParallaxMedia({ src, videoSrc, alt }: { src: string; videoSrc?: string; alt: string }) {
   const containerRef = React.useRef<HTMLDivElement>(null);
   const [offsetY, setOffsetY] = React.useState(0);
 
@@ -53,16 +55,180 @@ function ParallaxImage({ src, alt }: { src: string; alt: string }) {
         animate={{ y: offsetY }}
         transition={{ type: 'spring', stiffness: 120, damping: 25 }}
       >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes="(max-w-7xl) 30vw, 350px"
-          className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
-          referrerPolicy="no-referrer"
-        />
+        {videoSrc ? (
+          <video
+            src={videoSrc}
+            autoPlay
+            loop
+            muted
+            playsInline
+            controls={false}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
+          />
+        ) : (
+          <Image
+            src={src}
+            alt={alt}
+            fill
+            sizes="(max-w-7xl) 30vw, 350px"
+            className="object-cover group-hover:scale-110 transition-transform duration-1000 ease-out"
+            referrerPolicy="no-referrer"
+          />
+        )}
       </motion.div>
     </div>
+  );
+}
+
+// Individual Product Card Component for strict isolated local states
+interface ProductCardProps {
+  product: Product;
+  index: number;
+  scrollProgress: number;
+  addToCart: (item: any) => void;
+  triggerToast: (name: string) => void;
+  registerItemView: (product: Product) => void;
+}
+
+function ProductCard({
+  product,
+  index,
+  scrollProgress,
+  addToCart,
+  triggerToast,
+  registerItemView,
+}: ProductCardProps) {
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  const cardY = index === 0 ? scrollProgress * -15 : index === 1 ? scrollProgress * 18 : scrollProgress * -8;
+
+  return (
+    <motion.div
+      id={`catalog-card-${product.id}`}
+      initial={{ opacity: 0, y: 25 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-5% 0px' }}
+      transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+      onMouseEnter={() => registerItemView(product)}
+      onFocus={() => registerItemView(product)}
+      style={{ y: cardY }}
+      className="group flex flex-col justify-between rounded-[32px] bg-[#FBFBFA]/90 backdrop-blur-[2px] border border-brand-green/10 hover:border-brand-purple/20 hover:shadow-2xl hover:shadow-[#10B981]/5 overflow-hidden transition-all duration-500 text-left p-6 relative"
+    >
+      {/* Image container with aspect overlay and micro-zoom hover interactive response */}
+      <div className="relative aspect-square w-full rounded-[24px] overflow-hidden bg-brand-cream border border-brand-green/5 mb-6 group-hover:scale-[1.025] transition-transform duration-700 ease-out shadow-inner">
+        
+        {/* Parallax Media Render */}
+        <ParallaxMedia src={product.image} videoSrc={product.video} alt={product.name} />
+        
+        {/* Accent Tag */}
+        <span className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-brand-purple text-[10px] font-semibold text-brand-cream uppercase tracking-wider">
+          {product.accentText}
+        </span>
+
+        {/* Overlaid nutrition chip metrics */}
+        <div className="absolute bottom-4 left-4 right-4 flex justify-between gap-1.5 z-10">
+          {product.nutrients.map((nut, idx) => (
+            <div
+              key={idx}
+              className="px-2.5 py-1.5 rounded-xl bg-[#FBFBFA]/90 backdrop-blur-sm border border-brand-green/5 flex flex-col items-center flex-1"
+            >
+              <span className="text-[9px] text-[#4A3B4E] uppercase tracking-wide leading-none">{nut.label}</span>
+              <span className="text-xs font-bold text-brand-green mt-1">{nut.val}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Text Contexts */}
+      <div className="flex-grow flex flex-col justify-between space-y-4">
+        <div>
+          <div className="flex justify-between items-baseline mb-1">
+            <h3 className="font-serif text-xl text-brand-green font-medium group-hover:text-brand-purple transition-colors duration-300">
+              {product.name}
+            </h3>
+            <span className="font-serif text-lg font-medium text-brand-green leading-none">
+              ${product.price}
+            </span>
+          </div>
+          
+          <p className="text-[11px] uppercase tracking-widest text-brand-sprout font-bold mb-2">
+            {product.subtitle}
+          </p>
+
+          {product.urgencyTag && (
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 text-[10px] uppercase font-mono font-bold tracking-wider mb-3">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
+              <span>{product.urgencyTag}</span>
+            </div>
+          )}
+
+          <div className="mt-1">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsExpanded(prev => !prev);
+              }}
+              className="text-[10px] text-brand-green/65 hover:text-brand-purple transition-colors font-bold uppercase tracking-wider inline-flex items-center gap-1 cursor-pointer focus:outline-none"
+            >
+              <span>{isExpanded ? "Hide Description" : "View Description"}</span>
+              <ChevronRight 
+                size={11} 
+                className={`transform transition-transform duration-300 ${isExpanded ? 'rotate-90' : 'rotate-0'}`}
+              />
+            </button>
+            
+            <AnimatePresence initial={false}>
+              {isExpanded && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: "auto", opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  className="overflow-hidden"
+                >
+                  <p className="pt-2 text-xs text-brand-green/75 leading-relaxed font-light">
+                    {product.description}
+                  </p>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Footer and Actions */}
+        <div className="pt-4 border-t border-brand-green/5 space-y-4">
+          <div className="flex justify-between items-center">
+            <span className="text-[10px] text-brand-green/50 uppercase tracking-widest font-mono">
+              {product.sizeDesc}
+            </span>
+            <div className="flex items-center space-x-1">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <Star key={s} size={11} fill="#10B981" stroke="#10B981" />
+              ))}
+            </div>
+          </div>
+
+          {/* Add to Cart button */}
+          <button
+            id={`cart-add-${product.id}`}
+            onClick={() => {
+              addToCart({
+                id: product.id,
+                name: product.name,
+                price: product.price,
+                subtitle: product.subtitle,
+                image: product.image,
+              });
+              triggerToast(product.name);
+            }}
+            className="w-full inline-flex items-center justify-center space-x-3.5 py-3.5 rounded-full bg-[#1E2D24] text-white text-xs font-semibold uppercase tracking-widest hover:bg-[#10B981] active:scale-98 transition-all duration-300 shadow-sm cursor-pointer"
+          >
+            <ShoppingBag size={13} />
+            <span>Add to Cart</span>
+          </button>
+        </div>
+      </div>
+
+    </motion.div>
   );
 }
 
@@ -71,6 +237,23 @@ export default function ProductCatalog() {
   const [showSubDetails, setShowSubDetails] = React.useState(false);
   const [toasts, setToasts] = React.useState<{ id: number; itemName: string }[]>([]);
   const toastIdRef = React.useRef(0);
+
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = React.useState(0);
+
+  React.useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 800;
+      const elementMiddle = rect.top + rect.height / 2;
+      const progress = (elementMiddle - viewportHeight / 2) / viewportHeight;
+      setScrollProgress(progress);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const registerItemView = (p: Product) => {
     if (typeof window === 'undefined') return;
@@ -143,7 +326,9 @@ export default function ProductCatalog() {
       sizeDesc: 'Box of 12 Gourmet Bars',
       description: 'A dense, satisfying solid bar combining rolled organic millet grains, cold-extracted almond oil, raw botanical lavender, and wild honey.',
       image: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=600&auto=format&fit=crop",
+      video: "/Millet Product vid.mp4",
       accentText: 'Most Popular',
+      urgencyTag: 'Limited Harvest',
       nutrients: [
         { label: 'Whole Protein', val: '15g' },
         { label: 'Dietary Fiber', val: '6g' },
@@ -158,7 +343,9 @@ export default function ProductCatalog() {
       sizeDesc: '15 Servings Recyclable Jar',
       description: 'Sleek botanical shake formulation featuring 10 ancient whole millet species supercharged with adaptogens to manage stress and sustain energy.',
       image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
+      video: "/Millet Shake vid.mp4",
       accentText: 'Wellness Pick',
+      urgencyTag: 'Low Stock - 14 Jars Left',
       nutrients: [
         { label: 'Organic Protein', val: '22g' },
         { label: 'Active Adaptogen', val: '600mg' },
@@ -173,7 +360,9 @@ export default function ProductCatalog() {
       sizeDesc: 'Pack of 12 Glass Bottles',
       description: 'A crystal-clear, refreshing coconut water base containing trace marine minerals and plant-based isolated protein structure.',
       image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=600&auto=format&fit=crop",
+      video: "/Millet blend vid.mp4",
       accentText: 'New Launch',
+      urgencyTag: 'Limited Harvest',
       nutrients: [
         { label: 'Clean Hydration', val: '12g' },
         { label: 'Potassium / Salt', val: '470mg' },
@@ -185,9 +374,24 @@ export default function ProductCatalog() {
   return (
     <section
       id="shop"
+      ref={sectionRef}
       className="relative py-24 sm:py-32 bg-[#FBFBFA] border-t border-brand-green/5 overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16">
+      {/* Dynamic Parallax Background Watermarks */}
+      <div 
+        className="absolute -left-12 top-1/4 text-[12vw] font-serif font-black text-brand-green/[0.015] select-none pointer-events-none tracking-tighter transition-transform ease-out duration-100"
+        style={{ transform: `translateY(${scrollProgress * -70}px)` }}
+      >
+        METABOLIC
+      </div>
+      <div 
+        className="absolute -right-12 bottom-1/4 text-[12vw] font-serif font-black text-brand-purple/[0.015] select-none pointer-events-none tracking-tighter transition-transform ease-out duration-100"
+        style={{ transform: `translateY(${scrollProgress * 50}px)` }}
+      >
+        BIO-RITUAL
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
         
         {/* Section Intro Heading */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-24">
@@ -202,101 +406,18 @@ export default function ProductCatalog() {
           </p>
         </div>
 
-        {/* Product Cards Row */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-stretch">
-          {products.map((product) => (
-            <motion.div
-              id={`catalog-card-${product.id}`}
+        {/* Product Cards Row with multi-layered depth parallax translation */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+          {products.map((product, index) => (
+            <ProductCard
               key={product.id}
-              initial={{ opacity: 0, y: 25 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-5% 0px' }}
-              transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-              onMouseEnter={() => registerItemView(product)}
-              onFocus={() => registerItemView(product)}
-              className="group flex flex-col justify-between rounded-[32px] bg-[#FBFBFA] border border-brand-green/10 hover:border-brand-green/20 hover:shadow-2xl hover:shadow-brand-green/5 overflow-hidden transition-all duration-500 text-left p-6 relative"
-            >
-              {/* Image container with aspect overlay */}
-              <div className="relative aspect-square w-full rounded-[24px] overflow-hidden bg-brand-cream border border-brand-green/5 mb-6">
-                
-                {/* Parallax Image Render */}
-                <ParallaxImage src={product.image} alt={product.name} />
-                
-                {/* Accent Tag */}
-                <span className="absolute top-4 left-4 z-10 px-3 py-1 rounded-full bg-brand-purple text-[10px] font-semibold text-brand-cream uppercase tracking-wider">
-                  {product.accentText}
-                </span>
-
-                {/* Overlaid nutrition chip metrics */}
-                <div className="absolute bottom-4 left-4 right-4 flex justify-between gap-1.5 z-10">
-                  {product.nutrients.map((nut, index) => (
-                    <div
-                      key={index}
-                      className="px-2.5 py-1.5 rounded-xl bg-[#FBFBFA]/90 backdrop-blur-sm border border-brand-green/5 flex flex-col items-center flex-1"
-                    >
-                      <span className="text-[9px] text-[#4A3B4E] uppercase tracking-wide leading-none">{nut.label}</span>
-                      <span className="text-xs font-bold text-brand-green mt-1">{nut.val}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Text Contexts */}
-              <div className="flex-grow flex flex-col justify-between space-y-4">
-                <div>
-                  <div className="flex justify-between items-baseline mb-1">
-                    <h3 className="font-serif text-xl text-brand-green font-medium group-hover:text-brand-purple transition-colors duration-300">
-                      {product.name}
-                    </h3>
-                    <span className="font-serif text-lg font-medium text-brand-green leading-none">
-                      ${product.price}
-                    </span>
-                  </div>
-                  
-                  <p className="text-[11px] uppercase tracking-widest text-brand-sprout font-bold mb-3">
-                    {product.subtitle}
-                  </p>
-
-                  <p className="text-xs text-brand-green/75 leading-relaxed font-light">
-                    {product.description}
-                  </p>
-                </div>
-
-                {/* Footer and Actions */}
-                <div className="pt-4 border-t border-brand-green/5 space-y-4">
-                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] text-brand-green/50 uppercase tracking-widest font-mono">
-                      {product.sizeDesc}
-                    </span>
-                    <div className="flex items-center space-x-1">
-                      {[1, 2, 3, 4, 5].map((s) => (
-                        <Star key={s} size={11} fill="#10B981" stroke="#10B981" />
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Add to Cart button */}
-                  <button
-                    id={`cart-add-${product.id}`}
-                    onClick={() => {
-                      addToCart({
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        subtitle: product.subtitle,
-                        image: product.image,
-                      });
-                      triggerToast(product.name);
-                    }}
-                    className="w-full inline-flex items-center justify-center space-x-3.5 py-3.5 rounded-full bg-[#1E2D24] text-white text-xs font-semibold uppercase tracking-widest hover:bg-[#10B981] active:scale-98 transition-all duration-300 shadow-sm cursor-pointer"
-                  >
-                    <ShoppingBag size={13} />
-                    <span>Instant Reserve</span>
-                  </button>
-                </div>
-              </div>
-
-            </motion.div>
+              product={product}
+              index={index}
+              scrollProgress={scrollProgress}
+              addToCart={addToCart}
+              triggerToast={triggerToast}
+              registerItemView={registerItemView}
+            />
           ))}
         </div>
 
