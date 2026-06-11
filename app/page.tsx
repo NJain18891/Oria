@@ -121,9 +121,6 @@ export default function Home() {
       {/* 1. Custom Interactive Daily Habit Matcher Quiz */}
       <FindYourRitualQuiz />
 
-      {/* Dynamic Brand Value Grid (Aesthetic Bento with custom animations and click expand details) */}
-      <ValueBentoGrid />
-
       {/* 6. Social Proof Collective Stories */}
       <CommunityRituals />
 

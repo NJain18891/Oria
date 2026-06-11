@@ -54,7 +54,7 @@ export default function ConciergeFAQ() {
   return (
     <section
       id="concierge-faq-section"
-      className="py-24 bg-[#FBFBFA] border-t border-brand-green/5"
+      className="py-24 bg-[#E2D7E5] border-t border-brand-green/5"
     >
       <div className="max-w-4xl mx-auto px-6 sm:px-12">
         {/* Label Block */}
@@ -80,8 +80,8 @@ export default function ConciergeFAQ() {
                 id={`faq-item-card-${item.id}`}
                 className={`rounded-[24px] border transition-all duration-300 overflow-hidden ${
                   isOpen
-                    ? 'bg-brand-cream border-brand-green/15 shadow-sm'
-                    : 'bg-white border-brand-green/5 hover:border-brand-green/10'
+                    ? 'bg-[#1E2D24] border-brand-green/15 shadow-sm text-white font-mono'
+                    : 'bg-[#1E2D24] border-brand-green/5 hover:border-brand-green/10 text-white font-mono'
                 }`}
               >
                 {/* Header/Trigger */}
@@ -91,10 +91,10 @@ export default function ConciergeFAQ() {
                   className="w-full flex items-center justify-between p-6 sm:p-7 text-left gap-4 cursor-pointer group"
                 >
                   <div className="flex flex-col gap-1.5">
-                    <span className="text-[9px] font-mono tracking-widest uppercase text-brand-yellow/80 font-semibold">
+                    <span className="text-[9px] font-mono tracking-widest uppercase text-white/50 font-semibold">
                       {item.topic}
                     </span>
-                    <h3 className="text-xs sm:text-sm font-medium text-brand-green group-hover:text-[#10B981] transition-colors duration-250">
+                    <h3 className="text-xs sm:text-sm font-serif font-medium text-white group-hover:text-[#10B981] transition-colors duration-250">
                       {item.question}
                     </h3>
                   </div>
@@ -126,7 +126,7 @@ export default function ConciergeFAQ() {
                       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       style={{ overflow: 'hidden' }}
                     >
-                      <div className="px-6 pb-7 sm:px-7 sm:pb-8 text-xs text-brand-green/80 leading-relaxed font-sans border-t border-brand-green/5 pt-4">
+                      <div className="px-6 pb-7 sm:px-7 sm:pb-8 text-sm text-green/15 leading-relaxed font-mono border-t border-brand-green/15 pt-4">
                         {item.answer}
                       </div>
                     </motion.div>

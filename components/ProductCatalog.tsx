@@ -375,7 +375,7 @@ export default function ProductCatalog() {
     <section
       id="shop"
       ref={sectionRef}
-      className="relative py-24 sm:py-32 bg-[#FBFBFA] border-t border-brand-green/5 overflow-hidden"
+      className="w-full min-h-screen py-24 sm:py-32 relative overflow-hidden bg-[#1E2D24]"
     >
       {/* Dynamic Parallax Background Watermarks */}
       <div 
@@ -395,19 +395,19 @@ export default function ProductCatalog() {
         
         {/* Section Intro Heading */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-24">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-brand-purple mb-3">
+          <p className="text-[11px] font-bold uppercase tracking-widest text-[#FBFBFA]/60 mb-3">
             Oria Daily Essentials Catalog
           </p>
-          <h2 className="text-3xl sm:text-4xl font-serif text-brand-green leading-tight">
+          <h2 className="text-3xl sm:text-4xl font-serif text-[#FBFBFA] leading-tight">
             The Daily Protagonists
           </h2>
-          <p className="text-sm text-brand-green/75 max-w-xl mx-auto mt-4 font-light">
+          <p className="text-lg text-[#FBFBFA]/60 max-w-2xl mx-auto mt-6 font-light">
             Formulated to respect cellular health, eliminate morning friction, and supply exquisite, sustained metabolic energy throughout your entire day.
           </p>
         </div>
 
         {/* Product Cards Row with multi-layered depth parallax translation */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-12 items-start ">
           {products.map((product, index) => (
             <ProductCard
               key={product.id}
@@ -422,20 +422,20 @@ export default function ProductCatalog() {
         </div>
 
         {/* Subtle delivery message hook */}
-        <div className="mt-16 p-6 rounded-[24px] border border-brand-green/5 bg-brand-green/5 flex flex-col sm:flex-row sm:items-center sm:justify-between text-left gap-4 max-w-4xl mx-auto">
+        <div className="mt-16 p-6 rounded-[24px] border border-[#FBFBFA]/10 bg-[#FBFBFA]/5 backdrop-blur-sm flex flex-col sm:flex-row sm:items-center sm:justify-between text-left gap-4 max-w-4xl mx-auto">
           <div className="flex items-center space-x-3">
-            <span className="w-9 h-9 rounded-full bg-brand-sprout/15 text-brand-sprout flex items-center justify-center text-xs animate-spin-slow">
+            <span className="w-9 h-9 rounded-full bg-[#10B981]/20 text-[#10B981] flex items-center justify-center text-xs animate-spin-slow">
               <RefreshCw size={14} />
             </span>
             <div>
-              <h4 className="text-xs font-semibold text-brand-green uppercase tracking-wider">Flexible subscription options</h4>
-              <p className="text-[11px] text-brand-green/60">Subscribe to lock in recurring breakfast deliveries at 15% discount. Pause/cancel any cycle.</p>
+              <h4 className="text-xs font-semibold text-[#FBFBFA] uppercase tracking-wider">Flexible subscription options</h4>
+              <p className="text-[11px] text-[#FBFBFA]/70">Subscribe to lock in recurring breakfast deliveries at 15% discount. Pause/cancel any cycle.</p>
             </div>
           </div>
           <button
             id="sub-learn-more"
             onClick={() => setShowSubDetails(true)}
-            className="px-5 py-2.5 rounded-full border border-brand-green/10 text-brand-green text-[10px] font-semibold uppercase tracking-wider hover:bg-[#1E2D24] hover:text-[#FBFBFA] transition-colors cursor-pointer text-center"
+            className="px-5 py-2.5 rounded-full border border-[#FBFBFA]/20 text-[#FBFBFA] text-[10px] font-semibold uppercase tracking-wider hover:bg-[#FBFBFA] hover:text-[#1E2D24] transition-colors cursor-pointer text-center"
           >
             Learn More
           </button>
@@ -446,31 +446,31 @@ export default function ProductCatalog() {
       {/* Modern Subscription Drawer Modal */}
       <AnimatePresence>
         {showSubDetails && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
-              className="bg-white rounded-[32px] border border-brand-green/10 p-8 max-w-md w-full shadow-2xl relative space-y-6"
+              className="bg-[#25372C] rounded-[32px] border border-[#FBFBFA]/10 p-8 max-w-md w-full shadow-2xl relative space-y-6"
             >
               <div className="flex justify-between items-start">
                 <div>
                   <span className="text-[9px] uppercase font-mono tracking-widest text-[#10B981] font-bold">Oria Auto-Shipment</span>
-                  <h3 className="font-serif text-xl text-brand-green font-medium mt-1">Sustenence Orchestrator</h3>
+                  <h3 className="font-serif text-xl text-[#FBFBFA] font-medium mt-1">Sustenence Orchestrator</h3>
                 </div>
                 <button
                   onClick={() => setShowSubDetails(false)}
-                  className="px-2 py-1 text-xs rounded-full hover:bg-brand-green/5 text-brand-green/50 hover:text-brand-green transition-colors cursor-pointer"
+                  className="px-2 py-1 text-xs rounded-full hover:bg-[#FBFBFA]/10 text-[#FBFBFA]/50 hover:text-[#FBFBFA] transition-colors cursor-pointer"
                 >
                   Close [×]
                 </button>
               </div>
 
-              <div className="space-y-4 text-xs font-light text-[#1E2D24]">
+              <div className="space-y-4 text-xs font-light text-[#FBFBFA]/90">
                 <p className="leading-relaxed">
-                  Our subscription delivers raw-grain fresh nutritional batches to your residence at a lock-in <strong className="text-brand-purple">15% reduction</strong>. 
+                  Our subscription delivers raw-grain fresh nutritional batches to your residence at a lock-in <strong className="text-[#10B981]">15% reduction</strong>. 
                 </p>
-                <div className="bg-[#FAF9F5] p-5 rounded-2xl border border-brand-green/5 space-y-3 font-mono text-[11px]">
+                <div className="bg-[#FBFBFA]/5 p-5 rounded-2xl border border-[#FBFBFA]/10 space-y-3 font-mono text-[11px] text-[#FBFBFA]/80">
                   <div className="flex gap-2">
                     <span className="text-[#10B981]">✔</span>
                     <span>Standard ships every 30 days</span>
@@ -484,15 +484,15 @@ export default function ProductCatalog() {
                     <span>Zero-fee cycles pause / cancellation</span>
                   </div>
                 </div>
-                <p className="text-[10px] text-brand-green/65 leading-relaxed">
+                <p className="text-[10px] text-[#FBFBFA]/50 leading-relaxed">
                   Batch grinds occur inside our zero-waste mills. You retain absolute control over biological shipment cadences.
                 </p>
               </div>
 
-              <div className="pt-4 border-t border-brand-green/5 flex justify-end">
+              <div className="pt-4 border-t border-[#FBFBFA]/10 flex justify-end">
                 <button
                   onClick={() => setShowSubDetails(false)}
-                  className="px-6 py-2.5 rounded-full bg-[#1E2D24] text-white text-[11px] font-semibold uppercase tracking-widest hover:bg-[#10B981] transition-colors cursor-pointer"
+                  className="px-6 py-2.5 rounded-full bg-[#10B981] text-[#1E2D24] text-[11px] font-bold uppercase tracking-widest hover:bg-[#FBFBFA] hover:text-[#1E2D24] transition-colors cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.2)]"
                 >
                   Confirm Understanding
                 </button>

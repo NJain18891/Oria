@@ -1,17 +1,19 @@
 'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-import { motion, useScroll, useSpring } from 'motion/react';
-import { ArrowLeft, ArrowRight, Quote, Sparkles, Star } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { ArrowLeft, ArrowRight, Quote, Sparkles, Star, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 
 interface Ritual {
   id: string;
   name: string;
   location: string;
-  quote: string;
+  shortQuote: string; 
+  fullQuote: string;  
   energyChange: string;
-  image: string;
+  image: string;       // Author Profile Avatar
+  ritualImage: string; // High-prominence lifestyle photo
   rating: number;
   tags: string[];
 }
@@ -21,9 +23,11 @@ const RITUALS: Ritual[] = [
     id: 'ritual-1',
     name: 'Eleanor Vance',
     location: 'Copenhagen, DK',
-    quote: 'Replacing my high-caffeine espresso with the Morning Fuel bar felt revolutionary. My energy doesn’t spike and crash anymore; it’s a sustained, rhythmic baseline from sunrise to early afternoon.',
+    shortQuote: 'Replacing my morning espresso felt revolutionary.',
+    fullQuote: 'Replacing my high-caffeine espresso with the Morning Fuel bar felt revolutionary. My energy doesn’t spike and crash anymore; it’s a sustained, rhythmic baseline from sunrise to early afternoon.',
     energyChange: '+85% Rhythmic Focus',
     image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=600&auto=format&fit=crop',
+    ritualImage: 'https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600&auto=format&fit=crop', 
     rating: 5,
     tags: ['Aesthetic Rituals', 'Balanced Mind'],
   },
@@ -31,9 +35,11 @@ const RITUALS: Ritual[] = [
     id: 'ritual-2',
     name: 'Julian Thorne',
     location: 'Brooklyn, NY',
-    quote: 'The rise blend shake tastes like pure, organic nourishment. By 9 AM, I usually feel heavy, but millet and adaptogens have completely lightened my morning sluggishness.',
+    shortQuote: 'Tastes like pure, organic nourishment.',
+    fullQuote: 'The rise blend shake tastes like pure, organic nourishment. By 9 AM, I usually feel heavy, but millet and adaptogens have completely lightened my morning sluggishness.',
     energyChange: 'No Peak, Zero Slump',
     image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&auto=format&fit=crop',
+    ritualImage: 'https://images.unsplash.com/photo-1517817748493-49ec54a32465?q=80&w=600&auto=format&fit=crop', 
     rating: 5,
     tags: ['Daily Reset', 'Adaptogenic Lift'],
   },
@@ -41,9 +47,11 @@ const RITUALS: Ritual[] = [
     id: 'ritual-3',
     name: 'Marlowe Reed',
     location: 'Encinitas, CA',
-    quote: 'I take Hydra Protein Water immediately after my meditation practice. It tastes pristine, hydrates beautifully, and has completely refined my early morning digestive rhythm.',
+    shortQuote: 'Completely refined my early morning digestive rhythm.',
+    fullQuote: 'I take Hydra Protein Water immediately after my meditation practice. It tastes pristine, hydrates beautifully, and has completely refined my early morning digestive rhythm.',
     energyChange: 'Optimal Cellular Calm',
     image: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=600&auto=format&fit=crop',
+    ritualImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?q=80&w=600&auto=format&fit=crop', 
     rating: 5,
     tags: ['Hydration Artistry', 'Post-Yoga'],
   },
@@ -51,9 +59,11 @@ const RITUALS: Ritual[] = [
     id: 'ritual-4',
     name: 'Saskia van der Linden',
     location: 'Amsterdam, NL',
-    quote: 'Millet is so underrated. Oria has unlocked its molecular power in these gourmet food products. My body actually feels warm and highly vibrant immediately upon eating this dry-milled grain.',
+    shortQuote: 'My body feels warm and highly vibrant immediately.',
+    fullQuote: 'Millet is so underrated. Oria has unlocked its molecular power in these gourmet food products. My body actually feels warm and highly vibrant immediately upon eating this dry-milled grain.',
     energyChange: 'Accelerated Metabolic Warmth',
     image: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=600&auto=format&fit=crop',
+    ritualImage: 'https://images.unsplash.com/photo-1498804103079-a6351b050096?q=80&w=600&auto=format&fit=crop', 
     rating: 5,
     tags: ['Millet Superfood', 'Nordic Morning'],
   },
@@ -83,7 +93,7 @@ export default function CommunityRituals() {
   return (
     <section
       id="community-rituals-section"
-      className="py-24 bg-brand-cream border-t border-brand-green/5 overflow-hidden"
+      className="py-24 bg-[#38293C] border-t border-brand-green/5 overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-12">
         {/* Header Block */}
@@ -92,10 +102,10 @@ export default function CommunityRituals() {
             <span className="text-[11px] font-bold uppercase tracking-widest text-[#10B981] mb-3 flex items-center gap-1.5">
               <Sparkles size={12} className="text-brand-sprout animate-pulse" /> Community Rituals
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#1E2D24] font-medium leading-[1.15] tracking-tight">
+            <h2 className="font-serif text-3xl sm:text-4xl text-[#FBFBFA] font-medium leading-[1.15] tracking-tight">
               Honest Feedback from our Morning Collective
             </h2>
-            <p className="mt-4 text-xs sm:text-sm text-brand-green/75 leading-relaxed font-sans max-w-lg">
+            <p className="mt-4 text-xs sm:text-sm text-[#FBFBFA]/70 leading-relaxed font-sans max-w-lg">
               Hear from global creators, modern leaders, and wellness pioneers who trust Oria’s raw millet cellular energy baseline.
             </p>
           </div>
@@ -105,7 +115,7 @@ export default function CommunityRituals() {
             <button
               id="slider-control-left"
               onClick={() => scroll('left')}
-              className="w-11 h-11 rounded-full border border-brand-green/10 flex items-center justify-center text-brand-green hover:bg-[#1E2D24] hover:border-[#1E2D24] hover:text-white hover:scale-105 active:scale-95 transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-[#FBFBFA]/10 flex items-center justify-center text-[#FBFBFA] hover:bg-[#FBFBFA] hover:text-[#38293C] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
               aria-label="Scroll left"
             >
               <ArrowLeft size={16} />
@@ -113,7 +123,7 @@ export default function CommunityRituals() {
             <button
               id="slider-control-right"
               onClick={() => scroll('right')}
-              className="w-11 h-11 rounded-full border border-brand-green/10 flex items-center justify-center text-brand-green hover:bg-[#1E2D24] hover:border-[#1E2D24] hover:text-white hover:scale-105 active:scale-95 transition-all duration-300"
+              className="w-11 h-11 rounded-full border border-[#FBFBFA]/10 flex items-center justify-center text-[#FBFBFA] hover:bg-[#FBFBFA] hover:text-[#38293C] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
               aria-label="Scroll right"
             >
               <ArrowRight size={16} />
@@ -127,67 +137,16 @@ export default function CommunityRituals() {
             id="rituals-carousel-container"
             ref={containerRef}
             onScroll={handleScroll}
-            className="flex gap-6 sm:gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-none"
+            className="flex gap-6 sm:gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-none items-start"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {RITUALS.map((ritual) => (
-              <div
-                key={ritual.id}
-                id={`ritual-card-${ritual.id}`}
-                className="flex-none w-[320px] sm:w-[460px] snap-start bg-[#FBFBFA] rounded-[32px] p-6 sm:p-8 border border-brand-green/5 hover:border-brand-green/15 shadow-sm transition-all duration-500 hover:shadow-md flex flex-col justify-between"
-              >
-                <div>
-                  {/* Rating Stars and Energy stat */}
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(ritual.rating)].map((_, i) => (
-                        <Star key={i} size={14} className="fill-[#10B981] text-[#10B981]" />
-                      ))}
-                    </div>
-                    <span className="text-[10px] font-mono font-medium uppercase px-3 py-1 bg-[#1E2D24]/5 text-brand-green rounded-full">
-                      {ritual.energyChange}
-                    </span>
-                  </div>
-
-                  {/* Testimonial Quote */}
-                  <div className="relative mb-6">
-                    <Quote className="absolute -top-3 -left-2 text-brand-green/10 w-8 h-8 -z-0" />
-                    <p className="text-xs sm:text-sm text-brand-green/85 leading-relaxed font-sans italic relative z-10">
-                      &ldquo;{ritual.quote}&rdquo;
-                    </p>
-                  </div>
-                </div>
-
-                {/* Author Info */}
-                <div className="flex items-center gap-4 pt-6 border-t border-brand-green/5">
-                  <div className="relative w-12 h-12 rounded-full overflow-hidden border border-brand-green/10 flex-shrink-0">
-                    <Image
-                      src={ritual.image}
-                      alt={ritual.name}
-                      fill
-                      sizes="48px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-semibold text-brand-green">{ritual.name}</h4>
-                    <p className="text-[10px] font-mono text-brand-green/50 mt-0.5">{ritual.location}</p>
-                    {/* Tags */}
-                    <div className="flex gap-1.5 mt-2 flex-wrap">
-                      {ritual.tags.map((tag) => (
-                        <span key={tag} className="text-[8px] tracking-wide text-brand-green/60 bg-brand-cream/60 py-0.5 px-2 rounded border border-brand-green/5 uppercase font-medium">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <RitualCard key={ritual.id} ritual={ritual} />
             ))}
           </div>
 
           {/* Premium Progress Bar */}
-          <div className="w-full h-1 bg-[#1E2D24]/5 rounded-full mt-8 overflow-hidden max-w-sm mx-auto">
+          <div className="w-full h-1 bg-[#FBFBFA]/10 rounded-full mt-8 overflow-hidden max-w-sm mx-auto">
             <motion.div
               id="rituals-carousel-progress"
               className="h-full bg-[#10B981] rounded-full"
@@ -202,5 +161,112 @@ export default function CommunityRituals() {
         </div>
       </div>
     </section>
+  );
+}
+
+// Sub-component for individual card state control
+function RitualCard({ ritual }: { ritual: Ritual }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
+  return (
+    <motion.div
+      layout
+      id={`ritual-card-${ritual.id}`}
+      className="flex-none w-[320px] sm:w-[460px] snap-start bg-[#FBFBFA] rounded-[32px] p-6 sm:p-8 border-[3px] border-[#10B981] hover:border-[#059669] shadow-sm transition-colors duration-300 hover:shadow-md flex flex-col justify-between"
+      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+    >
+      <div>
+        {/* Rating Stars and Energy stat */}
+        <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center gap-0.5">
+            {[...Array(ritual.rating)].map((_, i) => (
+              <Star key={i} size={14} className="fill-[#10B981] text-[#10B981]" />
+            ))}
+          </div>
+          <span className="text-[10px] font-mono font-medium uppercase px-3 py-1 bg-[#1E2D24]/5 text-[#1E2D24] rounded-full">
+            {ritual.energyChange}
+          </span>
+        </div>
+
+        {/* Master Flex Container */}
+        <div className="flex gap-5 sm:gap-6 items-center justify-between mb-6">
+          
+          {/* Left Side Container: Dynamic text column adjustments */}
+          <motion.div layout="position" className="flex-1 relative">
+            <Quote className="absolute -top-3 -left-2 text-[#1E2D24]/10 w-8 h-8 -z-0" />
+            
+            {/* Swapping classes dynamically to shift weight and layout size instantly */}
+            <p className={`text-[#1E2D24]/85 leading-relaxed font-sans italic relative z-10 pr-1 transition-all duration-300 ${
+              isExpanded 
+                ? 'text-base sm:text-lg font-medium text-[#1E2D24]' 
+                : 'text-xs sm:text-sm'
+            }`}>
+              &ldquo;{isExpanded ? ritual.fullQuote : ritual.shortQuote}&rdquo;
+            </p>
+          </motion.div>
+
+          {/* Right Side Container: Ultra-Prominent Layout Lifestyle Media */}
+          <AnimatePresence mode="popLayout">
+            {!isExpanded && (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.9, x: 20 }}
+                animate={{ opacity: 1, scale: 1, x: 0 }}
+                exit={{ opacity: 0, scale: 0.85, x: 30, transition: { duration: 0.25 } }}
+                className="relative w-[130px] h-[150px] sm:w-[210px] sm:h-[220px] rounded-[24px] overflow-hidden shadow-md shrink-0 border border-[#1E2D24]/5"
+              >
+                <Image
+                  src={ritual.ritualImage}
+                  alt="Ritual detail aesthetic setup"
+                  fill
+                  sizes="(max-w-640px) 130px, 210px"
+                  className="object-cover transition-transform duration-700 hover:scale-105"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* Author Info & Interactive Toggle Row */}
+      <div className="flex items-center justify-between pt-6 border-t border-[#1E2D24]/5 mt-auto">
+        <div className="flex items-center gap-4">
+          <div className="relative w-12 h-12 rounded-full overflow-hidden border border-[#1E2D24]/10 flex-shrink-0">
+            <Image
+              src={ritual.image}
+              alt={ritual.name}
+              fill
+              sizes="48px"
+              className="object-cover"
+            />
+          </div>
+          <div>
+            <h4 className="text-xs font-semibold text-[#1E2D24]">{ritual.name}</h4>
+            <p className="text-[10px] font-mono text-[#1E2D24]/50 mt-0.5">{ritual.location}</p>
+            {/* Tags */}
+            <div className="flex gap-1.5 mt-2 flex-wrap">
+              {ritual.tags.map((tag) => (
+                <span key={tag} className="text-[8px] tracking-wide text-[#1E2D24]/60 bg-[#FBFBFA] py-0.5 px-2 rounded border border-[#1E2D24]/5 uppercase font-medium">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* State Switching Arrow Button */}
+        <button
+          onClick={() => setIsExpanded(!isExpanded)}
+          className="w-10 h-10 rounded-full bg-[#1E2D24]/5 hover:bg-[#10B981] text-[#1E2D24] hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer shrink-0 ml-4 group shadow-sm"
+          aria-label={isExpanded ? "Show less review text" : "Show full review text"}
+          title={isExpanded ? "Show Less" : "Read Full Review"}
+        >
+          {isExpanded ? (
+            <ChevronUp size={16} className="transition-transform duration-300" />
+          ) : (
+            <ChevronDown size={16} className="transition-transform duration-300 group-hover:translate-y-0.5" />
+          )}
+        </button>
+      </div>
+    </motion.div>
   );
 }

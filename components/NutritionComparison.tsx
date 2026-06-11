@@ -79,7 +79,7 @@ export default function NutritionComparison() {
   return (
     <section
       id="oria-nutrition-comparison"
-      className="py-24 sm:py-32 bg-white border-t border-brand-green/5 relative overflow-hidden"
+      className="py-24 sm:py-32 bg-[#E2D7E5] border-t border-brand-green/5 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-10">
         
