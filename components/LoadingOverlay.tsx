@@ -23,7 +23,7 @@ export default function LoadingOverlay() {
           initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.6, ease: 'easeInOut' }}
-          className="fixed inset-0 z-[100] bg-[#FBFBFA] flex flex-col items-center justify-center pointer-events-auto"
+          className="fixed inset-0 z-[100] bg-[#E2D7E5] flex flex-col items-center justify-center pointer-events-auto"
         >
           <div className="relative flex flex-col items-center space-y-6">
             {/* Pulsing architectural ring background */}
@@ -45,7 +45,7 @@ export default function LoadingOverlay() {
               transition={{ duration: 1, ease: 'easeOut' }}
               className="relative z-10 flex flex-col items-center"
             >
-              <OriaLogo layout="vertical" className="w-28 h-auto text-[#1E2D24]" />
+              <OriaLogo layout="vertical" className="text-[#1E2D24]" />
             </motion.div>
           </div>
         </motion.div>

@@ -107,7 +107,6 @@ export default function Home() {
       <Header />
       <CartDrawer />
       <CheckoutFlow />
-      <BottomStickyBar />
 
       {/* Narrative Section Sequence */}
       <Hero />
@@ -300,7 +299,7 @@ export default function Home() {
           >
             <button
               onClick={scrollToTop}
-              className="p-4 rounded-full bg-[#1E2D24] hover:bg-[#10B981] text-[#FBFBFA] shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer border border-[#FBFBFA]/10 group"
+              className="p-4 rounded-full bg-[#E2D7E5] hover:bg-[#10B981] text-black shadow-xl hover:shadow-2xl hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer border border-[#FBFBFA]/10 group"
               aria-label="Scroll to top of Oria page"
             >
               <ArrowUp size={20} className="group-hover:-translate-y-0.5 transition-transform duration-300" />

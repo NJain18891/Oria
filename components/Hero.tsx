@@ -12,9 +12,6 @@ const SLIDES = [
     headline: "Absolute Ease. <br className=\"hidden sm:inline\" /><span class=\"italic text-[#10B981]\">Active Ritual.</span>",
     subheading: "Simply unwrap or blend in 30 seconds. Balanced, whole-food nutrition designed for busy, high-intensity days.",
     imageUrl: "https://images.unsplash.com/photo-1600718374662-0483d2b9da44?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    floatingBadgeEmoji: "⏰",
-    floatingBadgeTitle: "Effortless Prep",
-    floatingBadgeText: "No shaker clumping, no blender cleanup. Truly instant.",
     primaryCta: { text: "Explore Shakes", href: "#shop" },
     secondaryCta: { text: "Learn Process", href: "#story" },
     valueProps: [
@@ -29,9 +26,6 @@ const SLIDES = [
     headline: "Pure Grain. <br className=\"hidden sm:inline\" /><span class=\"italic text-[#10B981]\">Sustained Energy.</span>",
     subheading: "Ancient organic millets refined for deep focus and zero metabolic crash.",
     imageUrl: "https://plus.unsplash.com/premium_photo-1726767418821-769d675129d9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    floatingBadgeEmoji: "🌾",
-    floatingBadgeTitle: "Millet Nutrition",
-    floatingBadgeText: "Ancient grains, grown sustainably. Clean energy, just add water.",
     primaryCta: { text: "Start Your Morning", href: "#shop" },
     secondaryCta: { text: "Our Story", href: "#story" },
     valueProps: [
@@ -46,9 +40,6 @@ const SLIDES = [
     headline: "Sustained Curve. <br className=\"hidden sm:inline\" /><span class=\"italic text-[#10B981]\">Zero Crash.</span>",
     subheading: "Millets digest slowly, maintaining flat insulin levels and calm cognitive focus for 5+ clean hours.",
     imageUrl: "https://images.unsplash.com/photo-1515942400420-2b98fed1f515?q=80&w=1200&auto=format&fit=crop",
-    floatingBadgeEmoji: "🔋",
-    floatingBadgeTitle: "Metabolic Range",
-    floatingBadgeText: "Flat glycemic response prevents afternoon energy slump.",
     primaryCta: { text: "Find Your Blend", href: "#shop" },
     secondaryCta: { text: "View Science", href: "#oria-nutrition-comparison" },
     valueProps: [
@@ -63,9 +54,6 @@ const SLIDES = [
     headline: "Clean. Organic. <br className=\"hidden sm:inline\" /><span class=\"italic text-[#10B981]\">Bioavailable.</span>",
     subheading: "Naturally rich in iron, zinc, and fiber. Our unrefined plant protein is silky-smooth, highly digestible, and lightweight.",
     imageUrl: "https://images.unsplash.com/photo-1517093602195-b40af9688b46?q=80&w=1200&auto=format&fit=crop",
-    floatingBadgeEmoji: "🧬",
-    floatingBadgeTitle: "Pure Absorption",
-    floatingBadgeText: "Sprouted grain breaks down phytates for clean assimilation.",
     primaryCta: { text: "Shop Wellness", href: "#shop" },
     secondaryCta: { text: "Purity Assays", href: "#oria-nutrition-comparison" },
     valueProps: [
@@ -111,8 +99,20 @@ export default function Hero() {
     <section
       id="oria-hero-section"
       ref={scrollRef}
-      className="relative min-h-[95vh] sm:min-h-screen flex items-center justify-center bg-[#FBFBFA] pt-28 pb-20 overflow-hidden"
+      className="relative min-h-[95vh] sm:min-h-screen flex items-center justify-center bg-[#261c29] pt-28 pb-8 overflow-hidden"
     >
+      {/* ─── INSERT THE GLOSSY FINISH OVERLAY HERE ─── */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+        {/* 1. Specular Highlight (The overhead curved glare reflection) */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.12),transparent_55%)]" />
+
+        {/* 2. Linear Glass Flare (The sharp diagonal sheen) */}
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.01] to-white/[0.06] mix-blend-overlay" />
+
+        {/* 3. Fine Polish Line (Crisp light edge running along the very top border) */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+      </div>
+  
       {/* Decorative background grids */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-40">
         <div className="absolute top-0 left-[15%] w-px h-full bg-gradient-to-b from-brand-green/10 via-transparent to-brand-green/5" />
@@ -140,9 +140,9 @@ export default function Hero() {
               {/* Subtle brand tag */}
               <div
                 id="hero-brand-badge"
-                className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-brand-green/5 border border-brand-green/10 text-brand-purple text-[10px] sm:text-[11px] font-bold uppercase tracking-widest"
+                className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-white border border-brand-green/10 text-brand-green text-[10px] sm:text-[11px] font-bold uppercase tracking-widest"
               >
-                <Sparkles size={11} className="text-brand-sprout animate-pulse" />
+                <Sparkles size={14} className="text-brand-green animate-pulse" />
                 <span>{activeSlide.tag}</span>
               </div>
 
@@ -150,13 +150,13 @@ export default function Hero() {
               <div className="space-y-4">
                 <h1
                   id="hero-headline"
-                  className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-brand-green leading-[1.08] tracking-tight"
+                  className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-white leading-[1.08] tracking-tight"
                   dangerouslySetInnerHTML={{ __html: activeSlide.headline }}
                 />
                 
                 <p
                   id="hero-subheader"
-                  className="text-base sm:text-lg text-brand-green/80 font-sans max-w-xl leading-relaxed font-light"
+                  className="text-base sm:text-lg text-white/100 font-sans max-w-xl leading-relaxed font-light"
                 >
                   {activeSlide.subheading}
                 </p>
@@ -179,7 +179,7 @@ export default function Hero() {
                 <a
                   id="hero-cta-secondary"
                   href={activeSlide.secondaryCta.href}
-                  className="inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-full border border-brand-green/10 text-brand-green font-sans font-semibold text-xs uppercase tracking-widest hover:bg-brand-green/5 hover:border-brand-green hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 animate-fade-in"
+                  className="group inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-full bg-[#FBFBFA] text-[#10B981] font-sans font-semibold text-xs uppercase tracking-widest hover:bg-white transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-md shadow-brand-sprout/15"
                 >
                   <span>{activeSlide.secondaryCta.text}</span>
                 </a>
@@ -195,7 +195,7 @@ export default function Hero() {
                     <span className="font-display text-sm font-semibold text-[#10B981] flex items-center gap-1.5">
                       {idx === 0 && prop.top.includes("%") && <Feather size={12} className="text-brand-sprout" />} {prop.top}
                     </span>
-                    <span className="text-[10px] text-brand-green/60 uppercase tracking-widest font-bold mt-1 leading-snug">
+                    <span className="text-[10px] text-white uppercase tracking-widest font-bold mt-1 leading-snug">
                       {prop.bottom}
                     </span>
                   </div>
@@ -218,7 +218,7 @@ export default function Hero() {
                 <Image
                   id="hero-macro-photo"
                   src={activeSlide.imageUrl}
-                  alt={activeSlide.floatingBadgeTitle}
+                  alt={""}
                   fill
                   sizes="(max-w-7xl) 40vw, 500px"
                   className="object-cover group-hover:scale-105 transition-transform duration-1000 ease-out"
@@ -226,23 +226,6 @@ export default function Hero() {
                   priority
                 />
                 <div className="absolute inset-0 bg-brand-green/5 mix-blend-multiply opacity-15 pointer-events-none" />
-                
-                {/* Floating dynamic info badge */}
-                <motion.div
-                  id="hero-floating-badge"
-                  initial={{ y: 15, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                  className="absolute bottom-6 left-6 right-6 p-4 sm:p-5 rounded-2xl bg-[#FBFBFA]/90 backdrop-blur-md border border-brand-green/5 text-left flex items-center space-x-4 shadow-lg z-20"
-                >
-                  <div className="w-10 h-10 rounded-full bg-brand-sprout/10 flex items-center justify-center text-brand-sprout flex-shrink-0 text-lg animate-bounce">
-                    {activeSlide.floatingBadgeEmoji}
-                  </div>
-                  <div>
-                    <h4 className="font-serif text-sm font-medium text-brand-green">{activeSlide.floatingBadgeTitle}</h4>
-                    <p className="text-[11px] text-brand-green/70 leading-normal">{activeSlide.floatingBadgeText}</p>
-                  </div>
-                </motion.div>
               </div>
             </motion.div>
           </motion.div>
@@ -258,7 +241,7 @@ export default function Hero() {
                 key={slide.id}
                 onClick={() => setCurrent(idx)}
                 className={`h-2.5 rounded-full transition-all duration-300 ${
-                  current === idx ? 'w-8 bg-[#10B981]' : 'w-2.5 bg-brand-green/15 hover:bg-brand-green/30'
+                  current === idx ? 'w-8 bg-[#10B981]' : 'w-2.5 bg-white hover:bg-[#10B981]/70'
                 }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -274,14 +257,14 @@ export default function Hero() {
             <div className="flex items-center gap-2">
               <button
                 onClick={handlePrev}
-                className="w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-brand-green/5 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all"
+                className="w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-[#10b981] hover:scale-110 active:scale-95 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all"
                 aria-label="Previous slide"
               >
                 <ChevronLeft size={16} />
               </button>
               <button
                 onClick={handleNext}
-                className="w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-brand-green/5 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all"
+                className="w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-[#10b981] hover:scale-110 active:scale-95 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all"
                 aria-label="Next slide"
               >
                 <ChevronRight size={16} />

@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
-import { ShoppingBag, Star, RefreshCw, ChevronRight } from 'lucide-react';
+import { ShoppingBag, Star, RefreshCw, ChevronRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 interface Product {
@@ -197,7 +197,7 @@ function ProductCard({
         {/* Footer and Actions */}
         <div className="pt-4 border-t border-brand-green/5 space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-[10px] text-brand-green/50 uppercase tracking-widest font-mono">
+            <span className="text-[12px] text-brand-green uppercase tracking-widest font-mono">
               {product.sizeDesc}
             </span>
             <div className="flex items-center space-x-1">
@@ -375,33 +375,24 @@ export default function ProductCatalog() {
     <section
       id="shop"
       ref={sectionRef}
-      className="w-full min-h-screen py-24 sm:py-32 relative overflow-hidden bg-[#1E2D24]"
+      className="w-full min-h-screen pt-8 pb-8 relative overflow-hidden bg-[#261c29]"
     >
-      {/* Dynamic Parallax Background Watermarks */}
-      <div 
-        className="absolute -left-12 top-1/4 text-[12vw] font-serif font-black text-brand-green/[0.015] select-none pointer-events-none tracking-tighter transition-transform ease-out duration-100"
-        style={{ transform: `translateY(${scrollProgress * -70}px)` }}
-      >
-        METABOLIC
-      </div>
-      <div 
-        className="absolute -right-12 bottom-1/4 text-[12vw] font-serif font-black text-brand-purple/[0.015] select-none pointer-events-none tracking-tighter transition-transform ease-out duration-100"
-        style={{ transform: `translateY(${scrollProgress * 50}px)` }}
-      >
-        BIO-RITUAL
-      </div>
-
+      
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
         
         {/* Section Intro Heading */}
         <div className="max-w-3xl mx-auto text-center mb-16 sm:mb-24">
-          <p className="text-[11px] font-bold uppercase tracking-widest text-[#FBFBFA]/60 mb-3">
-            Oria Daily Essentials Catalog
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-serif text-[#FBFBFA] leading-tight">
+          <div className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-white border border-brand-green/10 text-brand-green text-[10px] sm:text-[11px] font-bold uppercase tracking-widest"
+          >          
+            <Sparkles size={14} className="text-brand-green animate-pulse" />
+            <p className="text-[12px] font-bold uppercase tracking-widest">
+              Oria Daily Essentials Catalog
+            </p>
+          </div>
+          <h2 className="pt-8 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-white leading-tight">
             The Daily Protagonists
           </h2>
-          <p className="text-lg text-[#FBFBFA]/60 max-w-2xl mx-auto mt-6 font-light">
+          <p className="text-lg text-white/100 max-w-2xl mx-auto mt-6 font-light">
             Formulated to respect cellular health, eliminate morning friction, and supply exquisite, sustained metabolic energy throughout your entire day.
           </p>
         </div>
@@ -428,14 +419,14 @@ export default function ProductCatalog() {
               <RefreshCw size={14} />
             </span>
             <div>
-              <h4 className="text-xs font-semibold text-[#FBFBFA] uppercase tracking-wider">Flexible subscription options</h4>
-              <p className="text-[11px] text-[#FBFBFA]/70">Subscribe to lock in recurring breakfast deliveries at 15% discount. Pause/cancel any cycle.</p>
+              <h4 className="text-[14px] font-semibold text-[#10B981] uppercase tracking-wider">Flexible subscription options</h4>
+              <p className="text-[11px] text-[#FBFBFA]">Subscribe to lock in recurring breakfast deliveries at 15% discount. Pause/cancel any cycle.</p>
             </div>
           </div>
           <button
             id="sub-learn-more"
             onClick={() => setShowSubDetails(true)}
-            className="px-5 py-2.5 rounded-full border border-[#FBFBFA]/20 text-[#FBFBFA] text-[10px] font-semibold uppercase tracking-wider hover:bg-[#FBFBFA] hover:text-[#1E2D24] transition-colors cursor-pointer text-center"
+            className="px-5 py-2.5 rounded-full border border-[#E2D7E5] text-[#FBFBFA] text-[10px] font-semibold uppercase tracking-wider hover:bg-[#10B981] hover:text-[#1E2D24] transition-colors cursor-pointer text-center"
           >
             Learn More
           </button>

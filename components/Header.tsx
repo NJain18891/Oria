@@ -72,8 +72,8 @@ export default function Header() {
         id="oria-header"
         className={`fixed top-0 left-0 w-full z-40 transition-all duration-500 border-b ${
           scrolled
-            ? 'bg-brand-cream/80 backdrop-blur-md border-brand-green/5 py-4 shadow-sm'
-            : 'bg-transparent border-transparent py-6'
+            ? 'bg-[#E2D7E5] backdrop-blur-md border-brand-green/5 py-4 shadow-sm'
+            : 'bg-[#E2D7E5] border-transparent py-6'
         }`}
       >
         <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 flex items-center justify-between h-12">
@@ -98,12 +98,12 @@ export default function Header() {
                   href={link.href}
                   className={`text-xs font-semibold uppercase tracking-widest transition-colors duration-300 relative group py-1 ${
                     isActive
-                      ? 'text-[#10B981] font-bold'
-                      : 'text-brand-green/70 hover:text-brand-green'
+                      ? 'text-[#0a6e4d] font-bold'
+                      : 'text-[$#0a6e4d] hover:text-brand-green'
                   }`}
                 >
                   {link.name}
-                  <span className={`absolute bottom-0 left-0 h-0.5 bg-brand-sprout transition-all duration-300 ${
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-[#0a6e4d] transition-all duration-300 ${
                     isActive ? 'w-full' : 'w-0 group-hover:w-full'
                   }`} />
                 </a>

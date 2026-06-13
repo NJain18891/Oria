@@ -38,13 +38,25 @@ export default function OriaLogo({
       {...props}
     >
       <Image
-        src="/oria_logo.png"
+        src="/oria_logo_2.png"
         alt="Oria Wellness"
-        width={400}
-        height={400}
-        className={`max-h-full max-w-full w-auto h-auto object-contain transition-all duration-300 ${isWhite ? 'brightness-0 invert' : ''}`}
+        width={60}
+        height={60}
+        className={`max-h-full max-w-full object-contain transition-all duration-300 ${isWhite ? 'brightness-0 invert' : ''}`}
         priority
       />
+
+      {showText && !iconOnly && (
+        <span 
+          className="font-serif text-xl sm:text-2xl font-medium lowercase tracking-tight transition-colors duration-300 relative select-none opacity-95"
+          style={{ 
+            // Ensures optical center-alignment with the circular geometry of your icon
+            transform: 'translateY(45%)' 
+          }}
+        >
+          ria
+        </span>
+      )}
     </div>
   );
 }

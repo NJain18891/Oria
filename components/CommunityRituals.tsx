@@ -93,42 +93,50 @@ export default function CommunityRituals() {
   return (
     <section
       id="community-rituals-section"
-      className="py-24 bg-[#38293C] border-t border-brand-green/5 overflow-hidden"
+      className="pt-28 pb-8 bg-[#261c29] border-t border-brand-green/5 relative overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto px-6 sm:px-12">
-        {/* Header Block */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-16 gap-6">
-          <div className="max-w-2xl">
-            <span className="text-[11px] font-bold uppercase tracking-widest text-[#10B981] mb-3 flex items-center gap-1.5">
-              <Sparkles size={12} className="text-brand-sprout animate-pulse" /> Community Rituals
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 mb-12">
+        
+        {/* Corrected Header Block: Restructured into a clean centralized stack */}
+        <div className="flex flex-col items-center text-center max-w-3xl mx-auto mb-4 gap-4">
+          
+          {/* Badge Pill */}
+          <div className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-white border border-brand-green/10 text-brand-green text-[10px] sm:text-[11px] font-bold uppercase tracking-widest">
+            <Sparkles size={14} className="text-brand-green animate-pulse" />
+            <span className="text-[12px] font-bold uppercase tracking-widest">
+              Community Rituals
             </span>
-            <h2 className="font-serif text-3xl sm:text-4xl text-[#FBFBFA] font-medium leading-[1.15] tracking-tight">
-              Honest Feedback from our Morning Collective
-            </h2>
-            <p className="mt-4 text-xs sm:text-sm text-[#FBFBFA]/70 leading-relaxed font-sans max-w-lg">
-              Hear from global creators, modern leaders, and wellness pioneers who trust Oria’s raw millet cellular energy baseline.
-            </p>
           </div>
+          
+          {/* Main Headline */}
+          <h2 className="pt-8 font-serif text-4xl sm:text-5xl text-[#FBFBFA] font-medium leading-tight tracking-tight max-w-4xl">
+            Honest Feedback from our Morning Collective
+          </h2>
+          
+          {/* Subtitle description adjusted to max-w-xl for clean editorial tracking balance */}
+          <p className="pt-4 text-xs sm:text-sm text-[#FBFBFA]/70 leading-relaxed font-sans max-w-xl">
+            Hear from global creators, modern leaders, and wellness pioneers who trust Oria’s raw millet cellular energy baseline.
+          </p>
+        </div>
 
-          {/* Carousel Arrows */}
-          <div className="flex items-center gap-3">
-            <button
-              id="slider-control-left"
-              onClick={() => scroll('left')}
-              className="w-11 h-11 rounded-full border border-[#FBFBFA]/10 flex items-center justify-center text-[#FBFBFA] hover:bg-[#FBFBFA] hover:text-[#38293C] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-              aria-label="Scroll left"
-            >
-              <ArrowLeft size={16} />
-            </button>
-            <button
-              id="slider-control-right"
-              onClick={() => scroll('right')}
-              className="w-11 h-11 rounded-full border border-[#FBFBFA]/10 flex items-center justify-center text-[#FBFBFA] hover:bg-[#FBFBFA] hover:text-[#38293C] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
-              aria-label="Scroll right"
-            >
-              <ArrowRight size={16} />
-            </button>
-          </div>
+        {/* Carousel Arrows */}
+        <div className="flex items-center gap-3 mb-6 justify-end">
+          <button
+            id="slider-control-left"
+            onClick={() => scroll('left')}
+            className="w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-[#10b981] hover:scale-110 active:scale-95 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all cursor-pointer"
+            aria-label="Scroll left"
+          >
+            <ArrowLeft size={16} />
+          </button>
+          <button
+            id="slider-control-right"
+            onClick={() => scroll('right')}
+            className="w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-[#10b981] hover:scale-110 active:scale-95 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all cursor-pointer"
+            aria-label="Scroll right"
+          >
+            <ArrowRight size={16} />
+          </button>
         </div>
 
         {/* Horizontal Scroll Layout */}
@@ -137,7 +145,7 @@ export default function CommunityRituals() {
             id="rituals-carousel-container"
             ref={containerRef}
             onScroll={handleScroll}
-            className="flex gap-6 sm:gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-none items-start"
+            className="flex gap-6 sm:gap-8 overflow-x-auto pb-8 snap-x snap-mandatory scrollbar-none items-start text-center transition-all duration-300"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
           >
             {RITUALS.map((ritual) => (
@@ -159,12 +167,12 @@ export default function CommunityRituals() {
             />
           </div>
         </div>
+
       </div>
     </section>
   );
 }
 
-// Sub-component for individual card state control
 function RitualCard({ ritual }: { ritual: Ritual }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -172,7 +180,7 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
     <motion.div
       layout
       id={`ritual-card-${ritual.id}`}
-      className="flex-none w-[320px] sm:w-[460px] snap-start bg-[#FBFBFA] rounded-[32px] p-6 sm:p-8 border-[3px] border-[#10B981] hover:border-[#059669] shadow-sm transition-colors duration-300 hover:shadow-md flex flex-col justify-between"
+      className="flex-none w-[320px] sm:w-[460px] snap-start bg-[#FBFBFA] rounded-[32px] px-4 py-4 sm:px-4 sm:py-4 border-[3px] border-[#10B981] hover:border-[#059669] shadow-sm transition-colors duration-300 hover:shadow-md flex flex-col justify-between"
       transition={{ type: 'spring', stiffness: 300, damping: 30 }}
     >
       <div>
@@ -183,7 +191,7 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
               <Star key={i} size={14} className="fill-[#10B981] text-[#10B981]" />
             ))}
           </div>
-          <span className="text-[10px] font-mono font-medium uppercase px-3 py-1 bg-[#1E2D24]/5 text-[#1E2D24] rounded-full">
+          <span className="text-[12px] font-mono font-bold uppercase px-3 py-1 bg-[#1E2D24]/5 text-[#1E2D24] rounded-full">
             {ritual.energyChange}
           </span>
         </div>
@@ -191,21 +199,19 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
         {/* Master Flex Container */}
         <div className="flex gap-5 sm:gap-6 items-center justify-between mb-6">
           
-          {/* Left Side Container: Dynamic text column adjustments */}
+          {/* Left Side Container */}
           <motion.div layout="position" className="flex-1 relative">
             <Quote className="absolute -top-3 -left-2 text-[#1E2D24]/10 w-8 h-8 -z-0" />
-            
-            {/* Swapping classes dynamically to shift weight and layout size instantly */}
             <p className={`text-[#1E2D24]/85 leading-relaxed font-sans italic relative z-10 pr-1 transition-all duration-300 ${
               isExpanded 
-                ? 'text-base sm:text-lg font-medium text-[#1E2D24]' 
-                : 'text-xs sm:text-sm'
+                ? 'text-base text-4xl font-medium text-[#1E2D24]' 
+                : 'text-xl font-bold'
             }`}>
               &ldquo;{isExpanded ? ritual.fullQuote : ritual.shortQuote}&rdquo;
             </p>
           </motion.div>
 
-          {/* Right Side Container: Ultra-Prominent Layout Lifestyle Media */}
+          {/* Right Side Container */}
           <AnimatePresence mode="popLayout">
             {!isExpanded && (
               <motion.div
@@ -253,7 +259,6 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
           </div>
         </div>
 
-        {/* State Switching Arrow Button */}
         <button
           onClick={() => setIsExpanded(!isExpanded)}
           className="w-10 h-10 rounded-full bg-[#1E2D24]/5 hover:bg-[#10B981] text-[#1E2D24] hover:text-white flex items-center justify-center transition-all duration-300 cursor-pointer shrink-0 ml-4 group shadow-sm"
