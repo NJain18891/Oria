@@ -120,6 +120,8 @@ export default function Home() {
       {/* 1. Custom Interactive Daily Habit Matcher Quiz */}
       <FindYourRitualQuiz />
 
+      <ValueBentoGrid />
+
       {/* 6. Social Proof Collective Stories */}
       <CommunityRituals />
 

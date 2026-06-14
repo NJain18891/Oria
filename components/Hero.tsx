@@ -27,7 +27,7 @@ const SLIDES = [
     subheading: "Ancient organic millets refined for deep focus and zero metabolic crash.",
     imageUrl: "https://plus.unsplash.com/premium_photo-1726767418821-769d675129d9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     primaryCta: { text: "Start Your Morning", href: "#shop" },
-    secondaryCta: { text: "Our Story", href: "#oria-nutrition-comparison" },
+    secondaryCta: { text: "Our Story", href: "#oria-values-bento" },
     valueProps: [
       { top: "100%", bottom: "Whole-Food" },
       { top: "Ancient Millets", bottom: "Sustained Energy" },
@@ -55,7 +55,7 @@ const SLIDES = [
     subheading: "Naturally rich in iron, zinc, and fiber. Our unrefined plant protein is silky-smooth, highly digestible, and lightweight.",
     imageUrl: "https://images.unsplash.com/photo-1517093602195-b40af9688b46?q=80&w=1200&auto=format&fit=crop",
     primaryCta: { text: "Shop Wellness", href: "#shop" },
-    secondaryCta: { text: "Purity Assays", href: "#oria-nutrition-comparison" },
+    secondaryCta: { text: "Purity Assays", href: "#oria-values-bento" },
     valueProps: [
       { top: "Non-GMO", bottom: "Ancient Seed" },
       { top: "Alkaline", bottom: "Hypoallergenic" },

@@ -63,6 +63,7 @@ export default function Header() {
   const navLinks = [
     { name: 'Shop Nutrition', href: '#shop' },
     { name: 'Micro-nutrients', href: '#oria-nutrition-comparison' },
+    { name: 'Our Story', href: '#oria-values-bento' },
     { name: 'Our Testimonials', href: '#community-rituals-section' },
   ];
 

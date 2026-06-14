@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronDown, ArrowRight, ShieldCheck } from 'lucide-react';
+import { ChevronDown, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface BentoPillar {
   id: string;
@@ -223,7 +223,7 @@ export default function ValueBentoGrid() {
   return (
     <section
       id="oria-values-bento"
-      className="py-24 bg-[#FBFBFA] border-t border-brand-green/5 relative overflow-hidden"
+      className="w-full min-h-screen pt-50 pb-42 relative overflow-hidden bg-[#261c29]"
     >
       {/* Decorative botanical blueprint coordinate background */}
       <div className="absolute top-0 left-0 w-full h-full pointer-events-none opacity-[0.02]">
@@ -242,13 +242,17 @@ export default function ValueBentoGrid() {
         
         {/* Small introductory banner details */}
         <div className="max-w-xl mx-auto text-center mb-16 space-y-3">
-          <span className="text-[10px] uppercase font-serif tracking-widest text-[#10B981] font-bold">
-            Essential Values
-          </span>
-          <h3 className="font-serif text-2xl sm:text-3xl text-brand-green font-medium">
-            Architectural Commitments
+          <div className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-white border border-brand-green/10 text-brand-green text-[10px] sm:text-[11px] font-bold uppercase tracking-widest"
+          >          
+            <Sparkles size={14} className="text-brand-green animate-pulse" />
+            <p className="text-[12px] font-bold uppercase tracking-widest">
+              Essential Values
+            </p>
+          </div>
+          <h3 className="pt-8 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-white leading-tight">
+            Our Story
           </h3>
-          <p className="text-xs text-brand-green/70 leading-relaxed font-serif font-light">
+          <p className="text-lg text-white/100 max-w-2xl mx-auto mt-6 font-light">
             Behind our minimalist brand lies an uncompromised scientific discipline. Click on any card below to reveal the complete technical deep dive.
           </p>
         </div>
@@ -303,11 +307,11 @@ export default function ValueBentoGrid() {
 
                   {/* Text Header Content */}
                   <div>
-                    <h4 className="font-serif text-lg text-brand-green font-medium group-hover:text-brand-purple transition-colors flex items-center gap-2">
+                    <h4 className="font-serif text-xl text-[#1E2D24]/85 font-bold group-hover:text-brand-purple transition-colors flex items-center gap-2">
                       {pillar.title}
                     </h4>
                     
-                    <p className="text-xs text-brand-green/75 leading-relaxed font-light mt-3">
+                    <p className="text-sm text-black leading-relaxed font-light mt-3">
                       {pillar.summary}
                     </p>
                   </div>
@@ -338,7 +342,7 @@ export default function ValueBentoGrid() {
 
                 {/* Micro Expand Tip on Bottom Margin */}
                 <div className="mt-5 pt-3 border-t border-brand-green/[0.03] flex items-center justify-between">
-                  <span className="text-[9px] font-serif uppercase tracking-wider text-brand-green/40 group-hover:text-brand-green/60">
+                  <span className="text-[9px] font-serif uppercase tracking-wider text-black group-hover:text-[#10B981] transition-colors font-bold">
                     {isExpanded ? '[ Click to close ]' : '[ Click to inspect ]'}
                   </span>
                   <ArrowRight size={10} className="text-brand-green/30 group-hover:text-[#10B981] group-hover:translate-x-1.5 transition-all" />
