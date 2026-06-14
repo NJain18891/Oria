@@ -15,7 +15,6 @@ import {
   Coffee, 
   Sun, 
   X, 
-  MessageCircle,
   Sliders
 } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
@@ -107,57 +106,84 @@ const QUIZ_QUESTIONS: Question[] = [
         value: "hydration",
         description: "Restore trace minerals.",
         icon: Dumbbell,
-        bgImage: "https://images.unsplash.com/photo-1555133742-2fd74db76a26?q=80&w=400&auto=format&fit=crop",
+        bgImage: "https://plus.unsplash.com/premium_photo-1661512226839-c421e047b86f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fGRyaW5raW5nJTIwd2F0ZXJ8ZW58MHx8MHx8fDA%3D",
       }
     ]
   }
 ];
 
 interface QuizRecommendation {
-  productId: string;
+  id: string;
   name: string;
   subtitle: string;
   price: number;
-  image: string;
-  description: string;
-  matchReason: string;
   sizeDesc: string;
+  description: string;
+  image: string;
+  video?: string;
+  nutrients: { label: string; val: string }[];
+  accentText: string;
+  urgencyTag?: string;
+
+  matchReason: string;
 }
 
+// 1. SYNCED PRODUCT CATALOG
 const PRODUCTS_MAP: Record<string, QuizRecommendation> = {
   bar: {
-    productId: 'oria-morning-fuel-bar',
-    name: 'Morning Fuel Bar',
+    id: 'oria-morning-fuel-bar',
+    name: 'ORIA Morning Fuel Bar',
     subtitle: 'Ancient Millet & Cardamom Pods',
     price: 28,
-    image: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=600&auto=format&fit=crop",
     sizeDesc: 'Box of 12 Gourmet Bars',
-    description: 'Sustainably harvested whole-food millet grains refined with cardamom, lavender, and cold-pressed honey.',
+    description: 'A dense, satisfying solid bar combining rolled organic millet grains, cold-extracted almond oil, raw botanical lavender, and wild honey.',
+    image: "/Millet Product Photo.png",
+    video: "/Millet Product vid.mp4",
+    nutrients: [{ label: 'Whole Protein', val: '15g' },
+        { label: 'Dietary Fiber', val: '6g' },
+        { label: 'Insulin Impact', val: 'Minimal' }],
+    accentText: 'Most Popular',
+    urgencyTag: 'Limited Harvest',
     matchReason: 'A slow-digesting, slow-release fiber structure that prevents mid-morning cognitive fatigue and keeps your glucose stable.'
   },
   shake: {
-    productId: 'oria-rise-blend-shake',
-    name: 'Rise Blend Shake',
-    subtitle: 'Cardamom Vanilla & Ashwagandha',
-    price: 34,
-    image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
-    sizeDesc: '15 Servings Recyclable Jar',
-    description: 'A sophisticated organic shake with 10 ancient whole grains and powerful ashwagandha.',
+    id: 'oria-rise-blend-shake',
+      name: 'Rise Blend Shake',
+      subtitle: 'Cardamom Vanilla & Ashwagandha',
+      price: 34,
+      sizeDesc: '15 Servings Recyclable Jar',
+      description: 'Sleek botanical shake formulation featuring 10 ancient whole millet species supercharged with adaptogens to manage stress and sustain energy.',
+      image: "/Millet Shake Photo.png",
+      video: "/Millet Shake vid.mp4",
+      accentText: 'Wellness Pick',
+      urgencyTag: 'Low Stock - 14 Jars Left',
+      nutrients: [
+        { label: 'Organic Protein', val: '22g' },
+        { label: 'Active Adaptogen', val: '600mg' },
+        { label: 'Prebiotic Fibers', val: '4g' }
+      ],
     matchReason: 'Crafted with essential adaptogens and sustainable protein to naturally control stress while providing clean energy.'
   },
-  water: {
-    productId: 'oria-hydra-protein-water',
-    name: 'Hydra-Protein Water',
-    subtitle: 'Sprout-Green & Coconut Marine',
-    price: 32,
-    image: "https://images.unsplash.com/photo-1523362628745-0c100150b504?q=80&w=600&auto=format&fit=crop",
-    sizeDesc: 'Pack of 12 Glass Bottles',
-    description: 'Isotonic coconut water reinforced with botanical proteins and 72 trace volcanic minerals.',
-    matchReason: 'Instantly delivers marine minerals and easily absorbable organic proteins to support physical replenishment.'
+  shards: {
+    id: 'oria-millet-shards',
+      name: 'Ancient Grain Shards',
+      subtitle: 'Smoked Sea Salt & Toasted Cumin',
+      price: 28,
+      sizeDesc: 'Box of 6 Stay-Fresh Pouches',
+      description: 'Stone-ground millet and popped grain crisps, light baked in cold-pressed avocado oil and finished with a pinch of fire-smoked hand-harvested sea salt.',
+      image: "/Millet Crackers Photo.png",
+      video: "/Millet Crackers vid.mp4",
+      accentText: 'Best Seller',
+      urgencyTag: 'Stone-Ground Harvest',
+      nutrients: [
+        { label: 'Slow Carbs / Fiber', val: '5g' },
+        { label: 'Plant Protein', val: '6g' },
+        { label: 'Trans-Fats / Sugars', val: '0g' }
+      ],
+    matchReason: 'Instantly delivers essential sea salt minerals and easily absorbable slow carbs to support physical replenishment and deep hydration balance.'
   }
 };
 
-// Client-side secure dynamic confetti builder using Framer Motion
 function ConfettiEffect() {
   const [pieces, setPieces] = useState<Array<{ id: number; left: number; delay: number; duration: number; size: number; color: string; isRound: boolean; rotateTarget: number }>>([]);
   
@@ -220,7 +246,6 @@ function ConfettiEffect() {
   );
 }
 
-// Client-side premium Web Audio chime synthesizer
 const playChime = (type: 'navigate' | 'complete') => {
   if (typeof window === 'undefined') return;
   try {
@@ -230,11 +255,10 @@ const playChime = (type: 'navigate' | 'complete') => {
     
     if (type === 'navigate') {
       const now = ctx.currentTime;
-      // Gentle dual-frequency organic soft chime (C5 -> E5)
       const osc1 = ctx.createOscillator();
       const gain1 = ctx.createGain();
       osc1.type = 'sine';
-      osc1.frequency.setValueAtTime(523.25, now); // C5
+      osc1.frequency.setValueAtTime(523.25, now);
       osc1.frequency.exponentialRampToValueAtTime(659.25, now + 0.12);
       
       gain1.gain.setValueAtTime(0, now);
@@ -247,7 +271,6 @@ const playChime = (type: 'navigate' | 'complete') => {
       osc1.stop(now + 0.32);
     } else if (type === 'complete') {
       const now = ctx.currentTime;
-      // Beautiful ascending chord: E5, G5, B5, E6 (peaceful premium major 7th feel)
       const freqs = [659.25, 783.99, 987.77, 1318.51];
       freqs.forEach((freq, idx) => {
         const osc = ctx.createOscillator();
@@ -274,20 +297,12 @@ const playChime = (type: 'navigate' | 'complete') => {
 export default function FindYourRitualQuiz() {
   const { addToCart } = useCart();
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const [currentStep, setCurrentStep] = useState<number>(0); // 0: Welcome, 1, 2, 3: Questions, 4: Results
+  const [currentStep, setCurrentStep] = useState<number>(0); 
   const [answers, setAnswers] = useState<Record<number, string>>({});
   const [addedPrompt, setAddedPrompt] = useState<boolean>(false);
 
   const startQuiz = () => {
     setCurrentStep(1);
-    setAnswers({});
-    setAddedPrompt(false);
-    playChime('navigate');
-  };
-
-  const openAndStartQuiz = () => {
-    setIsOpen(true);
-    setCurrentStep(0); // Clicking the launch button will ALWAYS open the quiz to the very first page (introduction step)
     setAnswers({});
     setAddedPrompt(false);
     playChime('navigate');
@@ -304,7 +319,6 @@ export default function FindYourRitualQuiz() {
       playChime('navigate');
     }
 
-    // Automatically advance to the next step with a subtle delay
     setTimeout(() => {
       setCurrentStep(nextStep);
     }, 250);
@@ -317,27 +331,25 @@ export default function FindYourRitualQuiz() {
     }
   };
 
-  // Safe weighted engine for recommendation calculating
+  // 2. UPDATED RECOMMENDATION ENGINE
   const calculateRecommendation = (): QuizRecommendation => {
-    const energyStyle = answers[1]; // physical, cognitive, mindful
-    const flowStyle = answers[2];   // grab, shake
-    const mainGoal = answers[3];    // glycemic, stress, hydration
+    const energyStyle = answers[1]; 
+    const flowStyle = answers[2];   
+    const mainGoal = answers[3];    
 
-    // Strongly prioritize grab convenience to recommend bar
     if (flowStyle === 'grab') {
       return PRODUCTS_MAP.bar;
     }
-    // Strongly prioritize active physical workflow or hydration to recommend Hydra Protein Water
+    // Updated to map "hydration" or "physical" directly to the new Shards product
     if (energyStyle === 'physical' || mainGoal === 'hydration') {
-      return PRODUCTS_MAP.water;
+      return PRODUCTS_MAP.shards;
     }
-    // Default or mindfulness adaptogenic focus to recommend Rise Blend
+    
     return PRODUCTS_MAP.shake;
   };
 
   const recommendedProduct = calculateRecommendation();
 
-  // Selected Option Labels Helper for Dynamic Matching Insights
   const getSelectedLabel = (questionId: number): string => {
     const val = answers[questionId];
     if (!val) return '';
@@ -348,7 +360,6 @@ export default function FindYourRitualQuiz() {
 
   return (
     <>
-      {/* 2. Global Chatbot-Style Circular Launcher (Bottom Left) */}
       <div 
         id="oria-quiz-chatbot-launcher"
         className="fixed bottom-6 left-6 sm:bottom-8 sm:left-8 z-45"
@@ -356,7 +367,7 @@ export default function FindYourRitualQuiz() {
         <button
           onClick={() => {
             setIsOpen(true);
-            setCurrentStep(0); // Clicking launcher will ALWAYS open the quiz to the very first page of the popup (introduction step)
+            setCurrentStep(0); 
             setAnswers({});
             setAddedPrompt(false);
             playChime('navigate');
@@ -364,24 +375,17 @@ export default function FindYourRitualQuiz() {
           className="relative group p-4 rounded-full bg-[#10B981] text-white shadow-xl hover:shadow-2xl shadow-[#10B981]/20 hover:scale-110 active:scale-95 transition-all duration-300 flex items-center justify-center cursor-pointer border border-[#059669]/20"
           aria-label="Open morning ritual quiz chatbot"
         >
-          {/* Pulsating glowing wave background */}
           <span className="absolute inset-0 rounded-full bg-[#10B981] opacity-35 animate-ping group-hover:animate-none scale-105 pointer-events-none" />
-          
           <Sliders size={20} className="relative z-10 group-hover:rotate-12 transition-transform duration-300" />
-          
-          {/* Subtle green notification/identity mark */}
           <span className="absolute top-0.5 right-0.5 w-3 h-3 bg-brand-purple border-2 border-white rounded-full flex items-center justify-center">
             <span className="w-1 h-1 bg-white rounded-full animate-ping" />
           </span>
-
-          {/* Floating label that peaks out on hover to the right */}
           <span className="absolute left-14 bg-[#1E2D24] text-white text-[10px] uppercase tracking-widest font-bold py-1.5 px-3 rounded-full opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 shadow-md whitespace-nowrap hidden sm:inline">
             Ritual Engine
           </span>
         </button>
       </div>
 
-      {/* 3. Popup Quiz Dialog Modal Component */}
       <AnimatePresence>
         {isOpen && (
           <div 
@@ -393,7 +397,6 @@ export default function FindYourRitualQuiz() {
             }}
             className="fixed inset-0 bg-brand-green/45 backdrop-blur-md z-50 flex items-center justify-center p-4 sm:p-6"
           >
-            {/* Modal Box */}
             <motion.div
               initial={{ scale: 0.95, opacity: 0, y: 15 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
@@ -402,10 +405,8 @@ export default function FindYourRitualQuiz() {
               className="bg-white rounded-[32px] sm:rounded-[40px] border border-brand-green/10 shadow-2xl max-w-4xl w-full max-h-[85vh] overflow-y-auto relative scrollbar-none"
             >
               
-              {/* Confetti Animation Triggered on Step 4 */}
               {currentStep === 4 && <ConfettiEffect />}
 
-              {/* Absolute Close Action button */}
               <button
                 onClick={() => setIsOpen(false)}
                 className="absolute top-6 right-6 p-2 rounded-full border border-brand-green/15 bg-white text-brand-green hover:bg-brand-green/5 transition-all z-50 cursor-pointer"
@@ -416,18 +417,13 @@ export default function FindYourRitualQuiz() {
 
               <div className="p-6 sm:p-10 md:p-12 text-center md:text-left relative">
                 
-                {/* 4. HIGH-END SEGMENTED STEP INDICATOR & PROGRESS BAR */}
                 <div id="quiz-stepper-progress" className="mb-10 max-w-xl mx-auto">
                   <div className="flex items-center justify-between relative">
-                    {/* Background track */}
                     <div className="absolute left-0 top-1/2 -translate-y-1/2 w-full h-[3px] bg-[#1E2D24]/5 rounded-full z-0 pointer-events-none" />
-                    
-                    {/* Active progress bar filling */}
                     <div 
                       className="absolute left-0 top-1/2 -translate-y-1/2 h-[3px] bg-[#10B981] rounded-full z-0 transition-all duration-500 ease-out pointer-events-none"
                       style={{ width: `${(currentStep / 4) * 100}%` }}
                     />
-
                     {[
                       { step: 0, label: "Intro" },
                       { step: 1, label: "Routine" },
@@ -464,11 +460,7 @@ export default function FindYourRitualQuiz() {
                           </div>
                           <span 
                             className={`absolute top-9 whitespace-nowrap text-[9px] font-bold uppercase tracking-widest transition-colors duration-300 hidden sm:inline ${
-                              isActive
-                                ? 'text-[#10B981]' 
-                                : isCompleted 
-                                ? 'text-[#1E2D24]' 
-                                : 'text-brand-green/30'
+                              isActive ? 'text-[#10B981]' : isCompleted ? 'text-[#1E2D24]' : 'text-brand-green/30'
                             }`}
                           >
                             {item.label}
@@ -477,15 +469,11 @@ export default function FindYourRitualQuiz() {
                       );
                     })}
                   </div>
-                  {/* Visual block offset for SM labels */}
                   <div className="h-4 sm:h-7" />
                 </div>
                 
-                {/* Welcome Screen inside Popup (Step 0) */}
                 {currentStep === 0 && (
                   <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center text-left animate-fadeIn">
-                    
-                    {/* Left Column: Interactive Explanation & Narrative */}
                     <div className="lg:col-span-7 space-y-6">
                       <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-widest text-[#10B981] bg-[#10B981]/5 px-3.5 py-1.5 rounded-full">
                         <Sparkles size={11} className="animate-pulse text-[#10B981]" /> Biometric Calibration Engine
@@ -505,7 +493,6 @@ export default function FindYourRitualQuiz() {
                         </p>
                       </div>
 
-                      {/* Pill style features / metrics explanation */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                         <div className="p-3.5 rounded-2xl bg-brand-cream/40 border border-brand-green/5 space-y-1">
                           <h4 className="text-[11px] font-bold uppercase tracking-widest text-brand-green flex items-center gap-1.5">
@@ -515,7 +502,6 @@ export default function FindYourRitualQuiz() {
                             Calibrating slow-release nutrients to sustain neurotransmitter health without afternoon fatigue spikes.
                           </p>
                         </div>
-
                         <div className="p-3.5 rounded-2xl bg-brand-cream/40 border border-brand-green/5 space-y-1">
                           <h4 className="text-[11px] font-bold uppercase tracking-widest text-brand-green flex items-center gap-1.5">
                             <Sparkles size={12} className="text-[#10B981]" /> 2. Glycemic Curve
@@ -524,7 +510,6 @@ export default function FindYourRitualQuiz() {
                             Adjusting the unrefined whole-grain fiber buffer to maintain flat insulin and steady energy curves.
                           </p>
                         </div>
-
                         <div className="p-3.5 rounded-2xl bg-brand-cream/40 border border-brand-green/5 space-y-1">
                           <h4 className="text-[11px] font-bold uppercase tracking-widest text-brand-green flex items-center gap-1.5">
                             <Dumbbell size={12} className="text-[#10B981]" /> 3. Hydration Needs
@@ -533,7 +518,6 @@ export default function FindYourRitualQuiz() {
                             Calculating essential trace elements and mineral replenishment rates for active or restorative routines.
                           </p>
                         </div>
-
                         <div className="p-3.5 rounded-2xl bg-brand-cream/40 border border-brand-green/5 space-y-1">
                           <h4 className="text-[11px] font-bold uppercase tracking-widest text-brand-green flex items-center gap-1.5">
                             <Flame size={12} className="text-[#10B981]" /> 4. Preparation Pace
@@ -556,7 +540,6 @@ export default function FindYourRitualQuiz() {
                       </div>
                     </div>
 
-                    {/* Right Column: Dynamic Editorial Backdrop Graphic */}
                     <div className="lg:col-span-5 relative aspect-[4/5] w-full rounded-2xl sm:rounded-3xl overflow-hidden bg-brand-cream border border-brand-green/5 shadow-inner hidden lg:block">
                       <Image
                         src="https://images.unsplash.com/photo-1517093602195-b40af9688b46?q=80&w=800&auto=format&fit=crop"
@@ -568,7 +551,6 @@ export default function FindYourRitualQuiz() {
                       />
                       <div className="absolute inset-0 bg-brand-green/5 mix-blend-multiply opacity-25" />
                       
-                      {/* Interactive Floating Info overlay */}
                       <div className="absolute bottom-5 left-5 right-5 p-4 rounded-xl bg-white/90 backdrop-blur-md border border-brand-green/10 text-left">
                         <h4 className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#10B981]">
                           Purity Index Standard
@@ -582,11 +564,8 @@ export default function FindYourRitualQuiz() {
                   </div>
                 )}
 
-                {/* Interactive Questions Screen in Popup (Step 1, 2, 3) */}
                 {currentStep >= 1 && currentStep <= 3 && (
                   <div className="space-y-8 animate-fadeIn">
-                    
-                    {/* Question Texts */}
                     <div className="text-left">
                       <span className="text-[9px] font-mono text-brand-purple uppercase tracking-widest font-bold">
                         Pillar {currentStep} under Evaluation
@@ -599,7 +578,6 @@ export default function FindYourRitualQuiz() {
                       </p>
                     </div>
 
-                    {/* Option Toggles */}
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch text-left">
                       {QUIZ_QUESTIONS[currentStep - 1].options.map((opt) => {
                         const OptIcon = opt.icon;
@@ -610,7 +588,6 @@ export default function FindYourRitualQuiz() {
                             onClick={() => handleSelectOption(currentStep, opt.value)}
                             className="p-4 rounded-[28px] border border-brand-green/10 bg-[#FBFBFA] hover:border-[#10B981] hover:bg-white text-left transition-all duration-300 flex flex-col justify-between space-y-4 group cursor-pointer hover:shadow-xl hover:shadow-brand-green/5 overflow-hidden"
                           >
-                            {/* Option Image Background Header */}
                             <div className="relative w-full aspect-[16/10] rounded-[20px] overflow-hidden bg-brand-cream border border-brand-green/5">
                               <Image
                                 src={opt.bgImage}
@@ -641,7 +618,6 @@ export default function FindYourRitualQuiz() {
                       })}
                     </div>
 
-                    {/* Back Link */}
                     <div className="flex items-center justify-start border-t border-brand-green/5 pt-4">
                       <button
                         onClick={goBack}
@@ -655,7 +631,6 @@ export default function FindYourRitualQuiz() {
                   </div>
                 )}
 
-                {/* Results Screen in Popup (Step 4) */}
                 {currentStep === 4 && (() => {
                   const q1 = answers[1] || 'cognitive';
                   const q2 = answers[2] || 'shake';
@@ -699,10 +674,8 @@ export default function FindYourRitualQuiz() {
                         </p>
                       </div>
 
-                      {/* Result Recommendation Card */}
                       <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center bg-brand-cream/30 p-6 sm:p-8 rounded-[36px] border border-brand-green/5 relative">
                         
-                        {/* Left Column product image wrapper */}
                         <div className="md:col-span-4 relative aspect-square w-full rounded-[24px] overflow-hidden bg-white border border-brand-green/5">
                           <Image
                             src={recommendedProduct.image}
@@ -719,7 +692,6 @@ export default function FindYourRitualQuiz() {
                           </div>
                         </div>
 
-                        {/* Right Column details */}
                         <div className="md:col-span-8 space-y-4 flex flex-col justify-between h-full">
                           <div className="space-y-3">
                             <div className="flex justify-between items-baseline">
@@ -743,7 +715,6 @@ export default function FindYourRitualQuiz() {
                               {recommendedProduct.matchReason}
                             </p>
 
-                            {/* Dynamic Matching Insight Parameters aligned with ProductCatalog IDs */}
                             <div className="p-4 rounded-2xl bg-white border border-brand-green/5 space-y-2 text-xs font-light text-brand-green/75 mt-3">
                               <h5 className="text-[9px] font-bold uppercase tracking-widest text-brand-purple">
                                 Biometric Calibration Inputs:
@@ -762,13 +733,12 @@ export default function FindYourRitualQuiz() {
                             </div>
                           </div>
 
-                          {/* Integrated Add to Cart workflow */}
                           <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-4 border-t border-brand-green/5">
                             <button
                               id="popup-add-to-cart-btn"
                               onClick={() => {
                                 addToCart({
-                                  id: recommendedProduct.productId,
+                                  id: recommendedProduct.id,
                                   name: recommendedProduct.name,
                                   price: recommendedProduct.price,
                                   subtitle: recommendedProduct.subtitle,

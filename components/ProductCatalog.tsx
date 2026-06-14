@@ -6,7 +6,7 @@ import { useCart } from '@/context/CartContext';
 import { ShoppingBag, Star, RefreshCw, ChevronRight, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-interface Product {
+export interface Product {
   id: string;
   name: string;
   subtitle: string;
@@ -19,6 +19,60 @@ interface Product {
   accentText: string;
   urgencyTag?: string;
 }
+
+export const products: Product[] = [
+    {
+      id: 'oria-morning-fuel-bar',
+      name: 'ORIA Morning Fuel Bar',
+      subtitle: 'Ancient Millet & Cardamom Pods',
+      price: 28,
+      sizeDesc: 'Box of 12 Gourmet Bars',
+      description: 'A dense, satisfying solid bar combining rolled organic millet grains, cold-extracted almond oil, raw botanical lavender, and wild honey.',
+      image: "/Millet Product Photo.png",
+      video: "/Millet Product vid.mp4",
+      accentText: 'Most Popular',
+      urgencyTag: 'Limited Harvest',
+      nutrients: [
+        { label: 'Whole Protein', val: '15g' },
+        { label: 'Dietary Fiber', val: '6g' },
+        { label: 'Insulin Impact', val: 'Minimal' }
+      ]
+    },
+    {
+      id: 'oria-rise-blend-shake',
+      name: 'Rise Blend Shake',
+      subtitle: 'Cardamom Vanilla & Ashwagandha',
+      price: 34,
+      sizeDesc: '15 Servings Recyclable Jar',
+      description: 'Sleek botanical shake formulation featuring 10 ancient whole millet species supercharged with adaptogens to manage stress and sustain energy.',
+      image: "/Millet Shake Photo.png",
+      video: "/Millet Shake vid.mp4",
+      accentText: 'Wellness Pick',
+      urgencyTag: 'Low Stock - 14 Jars Left',
+      nutrients: [
+        { label: 'Organic Protein', val: '22g' },
+        { label: 'Active Adaptogen', val: '600mg' },
+        { label: 'Prebiotic Fibers', val: '4g' }
+      ]
+    },
+    {
+      id: 'oria-millet-shards',
+      name: 'Ancient Grain Shards',
+      subtitle: 'Smoked Sea Salt & Toasted Cumin',
+      price: 28,
+      sizeDesc: 'Box of 6 Stay-Fresh Pouches',
+      description: 'Stone-ground millet and popped grain crisps, light baked in cold-pressed avocado oil and finished with a pinch of fire-smoked hand-harvested sea salt.',
+      image: "/Millet Crackers Photo.png",
+      video: "/Millet Crackers vid.mp4", // Be sure to update your Canva clip name here if different!
+      accentText: 'Best Seller',
+      urgencyTag: 'Stone-Ground Harvest',
+      nutrients: [
+        { label: 'Slow Carbs / Fiber', val: '5g' },
+        { label: 'Plant Protein', val: '6g' },
+        { label: 'Trans-Fats / Sugars', val: '0g' }
+      ]
+    }
+  ];
 
 // Custom parallax media (image/video) dynamic viewport tracking component
 function ParallaxMedia({ src, videoSrc, alt }: { src: string; videoSrc?: string; alt: string }) {
@@ -316,60 +370,6 @@ export default function ProductCatalog() {
       setToasts((prev) => prev.filter((t) => t.id !== id));
     }, 3500);
   };
-
-  const products: Product[] = [
-    {
-      id: 'oria-morning-fuel-bar',
-      name: 'Morning Fuel Bar',
-      subtitle: 'Ancient Millet & Cardamom Pods',
-      price: 28,
-      sizeDesc: 'Box of 12 Gourmet Bars',
-      description: 'A dense, satisfying solid bar combining rolled organic millet grains, cold-extracted almond oil, raw botanical lavender, and wild honey.',
-      image: "https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?q=80&w=600&auto=format&fit=crop",
-      video: "/Millet Product vid.mp4",
-      accentText: 'Most Popular',
-      urgencyTag: 'Limited Harvest',
-      nutrients: [
-        { label: 'Whole Protein', val: '15g' },
-        { label: 'Dietary Fiber', val: '6g' },
-        { label: 'Insulin Impact', val: 'Minimal' }
-      ]
-    },
-    {
-      id: 'oria-rise-blend-shake',
-      name: 'Rise Blend Shake',
-      subtitle: 'Cardamom Vanilla & Ashwagandha',
-      price: 34,
-      sizeDesc: '15 Servings Recyclable Jar',
-      description: 'Sleek botanical shake formulation featuring 10 ancient whole millet species supercharged with adaptogens to manage stress and sustain energy.',
-      image: "https://images.unsplash.com/photo-1556910103-1c02745aae4d?q=80&w=600&auto=format&fit=crop",
-      video: "/Millet Shake vid.mp4",
-      accentText: 'Wellness Pick',
-      urgencyTag: 'Low Stock - 14 Jars Left',
-      nutrients: [
-        { label: 'Organic Protein', val: '22g' },
-        { label: 'Active Adaptogen', val: '600mg' },
-        { label: 'Prebiotic Fibers', val: '4g' }
-      ]
-    },
-    {
-      id: 'oria-millet-shards',
-      name: 'Ancient Grain Shards',
-      subtitle: 'Smoked Sea Salt & Toasted Cumin',
-      price: 28,
-      sizeDesc: 'Box of 6 Stay-Fresh Pouches',
-      description: 'Stone-ground millet and popped grain crisps, light baked in cold-pressed avocado oil and finished with a pinch of fire-smoked hand-harvested sea salt.',
-      image: "https://images.unsplash.com/photo-1599490659213-e2b9527bb087?q=80&w=600&auto=format&fit=crop", // A premium crisp/cracker Unsplash image placeholder
-      video: "/Millet Crackers vid.mp4", // Be sure to update your Canva clip name here if different!
-      accentText: 'Best Seller',
-      urgencyTag: 'Stone-Ground Harvest',
-      nutrients: [
-        { label: 'Slow Carbs / Fiber', val: '5g' },
-        { label: 'Plant Protein', val: '6g' },
-        { label: 'Trans-Fats / Sugars', val: '0g' }
-      ]
-    }
-  ];
 
   return (
     <section
