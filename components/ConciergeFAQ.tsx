@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ChevronDown, HelpCircle, ArrowRight } from 'lucide-react';
+import { ChevronDown, HelpCircle, ArrowRight, Sparkles } from 'lucide-react';
 
 interface FAQItem {
   id: string;
@@ -54,18 +54,22 @@ export default function ConciergeFAQ() {
   return (
     <section
       id="concierge-faq-section"
-      className="py-24 bg-[#E2D7E5] border-t border-brand-green/5"
+      className="w-full min-h-screen pt-8 pb-8 relative overflow-hidden bg-[#261c29]"
     >
-      <div className="max-w-4xl mx-auto px-6 sm:px-12">
+      <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
         {/* Label Block */}
         <div className="text-center mb-16">
-          <span className="text-[11px] font-bold uppercase tracking-widest text-[#10B981] mb-3 inline-flex items-center gap-1.5 justify-center">
-            <HelpCircle size={12} className="text-brand-sprout" /> Oria Concierge
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl text-[#1E2D24] font-medium leading-none tracking-tight">
+          <div className="inline-flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-white border border-brand-green/10 text-brand-green text-[10px] sm:text-[11px] font-bold uppercase tracking-widest"
+          >          
+            <Sparkles size={14} className="text-brand-green animate-pulse" />
+            <p className="text-[12px] font-bold uppercase tracking-widest">
+              Oria Concierge
+            </p>
+          </div>
+          <h2 className="pt-8 text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-serif text-white leading-tight">
             Frequently Asked Questions
           </h2>
-          <p className="mt-4 text-xs sm:text-sm text-brand-green/70 leading-relaxed font-sans max-w-md mx-auto">
+          <p className="text-lg text-white/100 max-w-2xl mx-auto mt-6 font-light font-serif">
             Everything you need to know about our organic, high-nutrition sprouted millet, shelf life, and sustainable distribution.
           </p>
         </div>
@@ -80,8 +84,8 @@ export default function ConciergeFAQ() {
                 id={`faq-item-card-${item.id}`}
                 className={`rounded-[24px] border transition-all duration-300 overflow-hidden ${
                   isOpen
-                    ? 'bg-[#1E2D24] border-brand-green/15 shadow-sm text-white font-mono'
-                    : 'bg-[#1E2D24] border-brand-green/5 hover:border-brand-green/10 text-white font-mono'
+                    ? 'bg-[#E2D7E5] border-brand-green/15 shadow-sm text-black font-serif'
+                    : 'bg-[#E2D7E5] border-brand-green/5 hover:border-brand-green/10 text-black font-serif'
                 }`}
               >
                 {/* Header/Trigger */}
@@ -91,10 +95,10 @@ export default function ConciergeFAQ() {
                   className="w-full flex items-center justify-between p-6 sm:p-7 text-left gap-4 cursor-pointer group"
                 >
                   <div className="flex flex-col gap-1.5">
-                    <span className="text-[9px] font-mono tracking-widest uppercase text-white/50 font-semibold">
+                    <span className="text-[12px] font-serif tracking-widest uppercase text-black/50 font-semibold">
                       {item.topic}
                     </span>
-                    <h3 className="text-xs sm:text-sm font-serif font-medium text-white group-hover:text-[#10B981] transition-colors duration-250">
+                    <h3 className="text-md sm:text-lg font-serif font-medium text-black group-hover:text-[#10B981] transition-colors duration-250">
                       {item.question}
                     </h3>
                   </div>
@@ -126,7 +130,7 @@ export default function ConciergeFAQ() {
                       transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                       style={{ overflow: 'hidden' }}
                     >
-                      <div className="px-6 pb-7 sm:px-7 sm:pb-8 text-sm text-green/15 leading-relaxed font-mono border-t border-brand-green/15 pt-4">
+                      <div className="px-6 pb-7 sm:px-7 sm:pb-8 text-md text-green/15 leading-relaxed font-serif border-t border-brand-green/15 pt-4">
                         {item.answer}
                       </div>
                     </motion.div>
@@ -138,19 +142,19 @@ export default function ConciergeFAQ() {
         </div>
 
         {/* Call to action card */}
-        <div className="mt-16 bg-[#1E2D24] rounded-[28px] p-8 text-white relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="mt-16 bg-[#E2D7E5] rounded-[28px] p-8 text-black relative overflow-hidden flex flex-col sm:flex-row items-center justify-between gap-6">
           {/* Subtle decoration */}
           <div className="absolute right-0 top-0 w-32 h-32 bg-brand-sprout/5 rounded-full blur-2xl" />
 
           <div>
             <h4 className="font-serif text-lg font-medium">Still have questions about our grains?</h4>
-            <p className="text-[11px] text-white/50 font-mono tracking-wider mt-1.5">
+            <p className="text-[14px] text-black font-serif tracking-wider mt-2">
               Speak with a certified bio-nutritionist on our concierge desk
             </p>
           </div>
           <a
             href="mailto:concierge@oriawellness.com"
-            className="flex-shrink-0 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest bg-[#10B981] text-white hover:bg-neutral-100 hover:text-[#1E2D24] active:scale-95 transition-all duration-300 px-6 py-3.5 rounded-full"
+            className="flex-shrink-0 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest bg-[#10B981] text-black hover:bg-[#261c29] hover:text-[#10B981] active:scale-95 transition-all duration-300 px-6 py-3.5 rounded-full"
           >
             Ask Oria Support <ArrowRight size={12} />
           </a>
