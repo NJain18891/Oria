@@ -148,7 +148,7 @@ export default function Home() {
                 Sustainably crafted whole-food morning rituals. Reclaiming human nutrition with the ancient, enduring intelligence of organic millets.
               </p>
               
-              <div className="flex items-center space-x-3 text-xs text-[#FBFBFA]/50 uppercase tracking-widest font-mono pt-2">
+              <div className="flex items-center space-x-3 text-xs text-[#FBFBFA]/50 uppercase tracking-widest font-serif pt-2">
                 <Compass size={14} className="text-[#10B981] animate-spin-slow" />
                 <span>Indus Valley • Organic Co-Op Harvest</span>
               </div>
@@ -270,7 +270,7 @@ export default function Home() {
                 )}
               </div>
               <div className="flex-1">
-                <p className="text-xs font-sans leading-relaxed text-[#FBFBFA]/90">
+                <p className="text-xs font-serif leading-relaxed text-[#FBFBFA]/90">
                   {notification.msg}
                 </p>
               </div>

@@ -242,13 +242,13 @@ export default function ValueBentoGrid() {
         
         {/* Small introductory banner details */}
         <div className="max-w-xl mx-auto text-center mb-16 space-y-3">
-          <span className="text-[10px] uppercase font-mono tracking-widest text-[#10B981] font-bold">
+          <span className="text-[10px] uppercase font-serif tracking-widest text-[#10B981] font-bold">
             Essential Values
           </span>
           <h3 className="font-serif text-2xl sm:text-3xl text-brand-green font-medium">
             Architectural Commitments
           </h3>
-          <p className="text-xs text-brand-green/70 leading-relaxed font-sans font-light">
+          <p className="text-xs text-brand-green/70 leading-relaxed font-serif font-light">
             Behind our minimalist brand lies an uncompromised scientific discipline. Click on any card below to reveal the complete technical deep dive.
           </p>
         </div>
@@ -323,10 +323,10 @@ export default function ValueBentoGrid() {
                         className="overflow-hidden border-t border-brand-green/5 pt-4 text-left"
                       >
                         <div className="bg-[#FAF9F5]/80 p-4.5 rounded-2xl border border-[#10B981]/15 space-y-3">
-                          <span className="text-[9px] uppercase tracking-widest font-mono text-[#10B981] font-bold block flex items-center gap-1">
+                          <span className="text-[9px] uppercase tracking-widest font-serif text-[#10B981] font-bold block flex items-center gap-1">
                             <ShieldCheck size={11} /> LABORATORY DOSSIER // TECHNICAL DOSAGE
                           </span>
-                          <p className="text-[11px] text-brand-green/90 leading-relaxed font-sans font-normal">
+                          <p className="text-[11px] text-brand-green/90 leading-relaxed font-serif font-normal">
                             {pillar.deepDive}
                           </p>
                         </div>
@@ -338,7 +338,7 @@ export default function ValueBentoGrid() {
 
                 {/* Micro Expand Tip on Bottom Margin */}
                 <div className="mt-5 pt-3 border-t border-brand-green/[0.03] flex items-center justify-between">
-                  <span className="text-[9px] font-mono uppercase tracking-wider text-brand-green/40 group-hover:text-brand-green/60">
+                  <span className="text-[9px] font-serif uppercase tracking-wider text-brand-green/40 group-hover:text-brand-green/60">
                     {isExpanded ? '[ Click to close ]' : '[ Click to inspect ]'}
                   </span>
                   <ArrowRight size={10} className="text-brand-green/30 group-hover:text-[#10B981] group-hover:translate-x-1.5 transition-all" />

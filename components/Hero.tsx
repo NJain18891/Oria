@@ -156,7 +156,7 @@ export default function Hero() {
                 
                 <p
                   id="hero-subheader"
-                  className="text-base sm:text-lg text-white/100 font-sans max-w-xl leading-relaxed font-light"
+                  className="text-base sm:text-lg text-white/100 font-serif max-w-xl leading-relaxed font-light"
                 >
                   {activeSlide.subheading}
                 </p>
@@ -170,7 +170,7 @@ export default function Hero() {
                 <a
                   id="hero-cta-primary"
                   href={activeSlide.primaryCta.href}
-                  className="group inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-full bg-[#10B981] text-[#FBFBFA] font-sans font-semibold text-xs uppercase tracking-widest hover:bg-[#059669] transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-md shadow-brand-sprout/15"
+                  className="group inline-flex items-center justify-center space-x-3 px-8 py-4 rounded-full bg-[#10B981] text-[#FBFBFA] font-serif font-semibold text-xs uppercase tracking-widest hover:bg-[#059669] transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-md shadow-brand-sprout/15"
                 >
                   <span>{activeSlide.primaryCta.text}</span>
                   <ArrowRight size={14} className="group-hover:translate-x-1.5 transition-transform duration-300" />
@@ -179,7 +179,7 @@ export default function Hero() {
                 <a
                   id="hero-cta-secondary"
                   href={activeSlide.secondaryCta.href}
-                  className="group inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-full bg-[#FBFBFA] text-[#10B981] font-sans font-semibold text-xs uppercase tracking-widest hover:bg-white transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-md shadow-brand-sprout/15"
+                  className="group inline-flex items-center justify-center space-x-2 px-8 py-4 rounded-full bg-[#FBFBFA] text-[#10B981] font-serif font-semibold text-xs uppercase tracking-widest hover:bg-white transform hover:-translate-y-0.5 active:translate-y-0 transition-all duration-300 shadow-md shadow-brand-sprout/15"
                 >
                   <span>{activeSlide.secondaryCta.text}</span>
                 </a>
@@ -250,7 +250,7 @@ export default function Hero() {
 
           {/* Time indicator pill & arrow navigations */}
           <div className="flex items-center gap-4">
-            <span className="text-[10px] font-mono text-brand-green/40 uppercase tracking-widest max-sm:order-1">
+            <span className="text-[10px] font-serif text-brand-green/40 uppercase tracking-widest max-sm:order-1">
               Auto-rotating every 10s
             </span>
 

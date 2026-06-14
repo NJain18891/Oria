@@ -58,7 +58,7 @@ export default function BottomStickyBar() {
             {/* Middle decorative text */}
             <div className="hidden lg:block h-5 w-px bg-brand-green/10" />
             <div className="hidden lg:block text-left">
-              <p className="text-[10px] text-brand-green/50 uppercase tracking-widest font-mono">Formula 01</p>
+              <p className="text-[10px] text-brand-green/50 uppercase tracking-widest font-serif">Formula 01</p>
               <p className="text-[10px] text-[#4A3B4E] font-semibold uppercase tracking-wider">100% Ancient Grains</p>
             </div>
 

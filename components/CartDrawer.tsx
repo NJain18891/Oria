@@ -71,7 +71,7 @@ export default function CartDrawer() {
             <div className="p-6 border-b border-brand-green/10 flex items-center justify-between bg-brand-green/5">
               <div>
                 <h3 className="font-serif text-lg sm:text-xl text-brand-green font-medium">Your Morning Reserve</h3>
-                <p className="text-[10px] text-brand-green/50 uppercase tracking-widest font-mono mt-0.5">
+                <p className="text-[10px] text-brand-green/50 uppercase tracking-widest font-serif mt-0.5">
                   {cartCount} Items Selected
                 </p>
               </div>
@@ -154,7 +154,7 @@ export default function CartDrawer() {
                           >
                             <Minus size={10} />
                           </button>
-                          <span className="text-xs font-semibold font-mono text-brand-green min-w-[18px] text-center">
+                          <span className="text-xs font-semibold font-serif text-brand-green min-w-[18px] text-center">
                             {item.quantity}
                           </span>
                           <button
@@ -200,7 +200,7 @@ export default function CartDrawer() {
 
                   <div className="flex justify-between items-center text-brand-green/70">
                     <span>Carbon-Neutral Shipping:</span>
-                    <span className="text-[#10B981] font-bold uppercase tracking-wider text-[9px] flex items-center gap-1 font-mono">
+                    <span className="text-[#10B981] font-bold uppercase tracking-wider text-[9px] flex items-center gap-1 font-serif">
                       <Leaf size={10} /> Complimentary
                     </span>
                   </div>
@@ -226,7 +226,7 @@ export default function CartDrawer() {
                     <span>Proceed to Checkout</span>
                   </button>
 
-                  <div className="flex justify-center items-center space-x-2 text-[9px] text-brand-green/35 uppercase tracking-widest font-mono">
+                  <div className="flex justify-center items-center space-x-2 text-[9px] text-brand-green/35 uppercase tracking-widest font-serif">
                     <span>256-Bit SSL Secured</span>
                     <span>•</span>
                     <span>Batched Fresh</span>

@@ -54,7 +54,7 @@ export default function ConciergeFAQ() {
   return (
     <section
       id="concierge-faq-section"
-      className="w-full min-h-screen pt-8 pb-8 relative overflow-hidden bg-[#261c29]"
+      className="w-full min-h-screen pt-8 pb-30 relative overflow-hidden bg-[#261c29]"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
         {/* Label Block */}

@@ -103,18 +103,18 @@ export default function NutritionComparison() {
             {/* Table Header */}
             <div className="grid grid-cols-12 items-stretch border-b-2 border-brand-green/15 text-left bg-brand-green/[0.02]">
               <div className="col-span-3 pt-2 px-6 flex flex-col justify-center items-center text-center border-r border-brand-green/15">
-                <span className="text-sm font-sans font-extrabold text-brand-green/90 uppercase tracking-wider block">Metric Comparison</span>
+                <span className="text-sm font-serif font-extrabold text-brand-green/90 uppercase tracking-wider block">Metric Comparison</span>
               </div>
               <div className="col-span-3 bg-[#10B981]/5 pt-1 px-6 flex flex-col items-center justify-start text-center relative border-r-2 border-[#10B981]/20">
                 <OriaLogo showText={true} iconOnly={false} className="h-16 w-auto" />
               </div>
               <div className="col-span-3 text-center flex flex-col items-center justify-start pt-4 px-6 border-r border-brand-green/15">
-                <span className="text-sm font-sans font-extrabold text-brand-green/90 uppercase tracking-wider block">Synthetic Powders</span>
-                <span className="text-xs sm:text-[13px] text-brand-green/80 mt-2 font-sans font-bold tracking-wide">Standard Whey / Isolates</span>
+                <span className="text-sm font-serif font-extrabold text-brand-green/90 uppercase tracking-wider block">Synthetic Powders</span>
+                <span className="text-xs sm:text-[13px] text-brand-green/80 mt-2 font-serif font-bold tracking-wide">Standard Whey / Isolates</span>
               </div>
               <div className="col-span-3 text-center flex flex-col items-center justify-start pt-4 px-6">
-                <span className="text-sm font-sans font-extrabold text-brand-green/90 uppercase tracking-wider block">Sugary Bars</span>
-                <span className="text-xs sm:text-[13px] text-brand-green/80 mt-2 font-sans font-bold tracking-wide">Commercial Oats / Wheat</span>
+                <span className="text-sm font-serif font-extrabold text-brand-green/90 uppercase tracking-wider block">Sugary Bars</span>
+                <span className="text-xs sm:text-[13px] text-brand-green/80 mt-2 font-serif font-bold tracking-wide">Commercial Oats / Wheat</span>
               </div>
             </div>
 
@@ -125,7 +125,7 @@ export default function NutritionComparison() {
                   
                   {/* Metric Name */}
                   <div className="col-span-3 p-6 flex items-center justify-center text-center border-r border-brand-green/15 bg-brand-green/[0.01]">
-                    <span className="text-xs sm:text-sm font-bold text-brand-green uppercase tracking-wider block font-sans w-full text-center">
+                    <span className="text-xs sm:text-sm font-bold text-brand-green uppercase tracking-wider block font-serif w-full text-center">
                       {row.name}
                     </span>
                   </div>
@@ -173,7 +173,7 @@ export default function NutritionComparison() {
                         >
                           {row.oriaValue}%
                         </motion.span>
-                        <span className="text-[10px] font-mono font-extrabold text-[#10B981]/90 uppercase tracking-widest mt-1">Optimal</span>
+                        <span className="text-[10px] font-serif font-extrabold text-[#10B981]/90 uppercase tracking-widest mt-1">Optimal</span>
                       </div>
  
                       {/* Synthetic score */}
@@ -187,7 +187,7 @@ export default function NutritionComparison() {
                         >
                           {row.syntheticValue}%
                         </motion.span>
-                        <span className="text-[9px] font-mono font-bold text-brand-green/45 uppercase tracking-widest mt-1">Muted</span>
+                        <span className="text-[9px] font-serif font-bold text-brand-green/45 uppercase tracking-widest mt-1">Muted</span>
                       </div>
  
                       {/* Sugary score */}
@@ -201,7 +201,7 @@ export default function NutritionComparison() {
                         >
                           {row.sugaryValue}%
                         </motion.span>
-                        <span className="text-[9px] font-mono font-bold text-brand-green/45 uppercase tracking-widest mt-1">Muted</span>
+                        <span className="text-[9px] font-serif font-bold text-brand-green/45 uppercase tracking-widest mt-1">Muted</span>
                       </div>
                     </>
                   )}

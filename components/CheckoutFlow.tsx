@@ -133,7 +133,7 @@ export default function CheckoutFlow() {
           {/* Header */}
           <div className="p-6 sm:p-8 border-b border-brand-green/10 flex justify-between items-center bg-brand-green/5">
             <div>
-              <span className="text-[10px] font-mono font-bold text-brand-sprout uppercase tracking-widest">
+              <span className="text-[10px] font-serif font-bold text-brand-sprout uppercase tracking-widest">
                 Oria Ritual Dispatcher
               </span>
               <h2 className="font-serif text-xl sm:text-2xl text-brand-green font-medium mt-1">
@@ -163,7 +163,7 @@ export default function CheckoutFlow() {
                 <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${step >= 1 ? 'bg-[#10B981] text-white' : 'bg-brand-green/10 text-brand-green/50'}`}>
                   1
                 </div>
-                <span className={`text-[10px] uppercase tracking-widest font-mono font-semibold ${step === 1 ? 'text-[#10B981]' : 'text-brand-green/40'}`}>
+                <span className={`text-[10px] uppercase tracking-widest font-serif font-semibold ${step === 1 ? 'text-[#10B981]' : 'text-brand-green/40'}`}>
                   Shipping
                 </span>
               </div>
@@ -172,7 +172,7 @@ export default function CheckoutFlow() {
                 <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${step >= 2 ? 'bg-[#10B981] text-white' : 'bg-brand-green/10 text-brand-green/40'}`}>
                   2
                 </div>
-                <span className={`text-[10px] uppercase tracking-widest font-mono font-semibold ${step === 2 ? 'text-[#10B981]' : 'text-brand-green/40'}`}>
+                <span className={`text-[10px] uppercase tracking-widest font-serif font-semibold ${step === 2 ? 'text-[#10B981]' : 'text-brand-green/40'}`}>
                   Payment
                 </span>
               </div>
@@ -196,12 +196,12 @@ export default function CheckoutFlow() {
                   className="space-y-6"
                 >
                   <div className="space-y-4">
-                    <h3 className="text-xs font-bold uppercase tracking-widest text-[#1E2D24]/40 font-mono border-b border-brand-green/5 pb-2">
+                    <h3 className="text-xs font-bold uppercase tracking-widest text-[#1E2D24]/40 font-serif border-b border-brand-green/5 pb-2">
                       Sourcing Consignee Details
                     </h3>
 
                     <div>
-                      <label htmlFor="shipping-name" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                      <label htmlFor="shipping-name" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                         Recipient Name *
                       </label>
                       <input
@@ -216,7 +216,7 @@ export default function CheckoutFlow() {
                     </div>
 
                     <div>
-                      <label htmlFor="shipping-address" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                      <label htmlFor="shipping-address" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                         Delivery Address *
                       </label>
                       <input
@@ -232,7 +232,7 @@ export default function CheckoutFlow() {
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="shipping-city" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                        <label htmlFor="shipping-city" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                           City *
                         </label>
                         <input
@@ -246,7 +246,7 @@ export default function CheckoutFlow() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="shipping-postal" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                        <label htmlFor="shipping-postal" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                           Postal Code *
                         </label>
                         <input
@@ -262,7 +262,7 @@ export default function CheckoutFlow() {
                     </div>
 
                     <div>
-                      <label htmlFor="shipping-phone" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                      <label htmlFor="shipping-phone" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                         Phone Number *
                       </label>
                       <input
@@ -307,7 +307,7 @@ export default function CheckoutFlow() {
                 >
                   <div className="space-y-6">
                     <div>
-                      <h3 className="text-xs font-bold uppercase tracking-widest text-[#1E2D24]/40 font-mono border-b border-brand-green/5 pb-2 mb-4">
+                      <h3 className="text-xs font-bold uppercase tracking-widest text-[#1E2D24]/40 font-serif border-b border-brand-green/5 pb-2 mb-4">
                         Intracellular Sourcing Alignment
                       </h3>
                       
@@ -324,7 +324,7 @@ export default function CheckoutFlow() {
                         >
                           <div className="flex items-center space-x-3">
                             <CreditCard size={16} className={paymentForm.paymentMethod === 'card' ? 'text-[#10B981]' : 'text-brand-green/50'} />
-                            <span className="text-xs font-bold font-mono tracking-wider uppercase">Credit Card</span>
+                            <span className="text-xs font-bold font-serif tracking-wider uppercase">Credit Card</span>
                           </div>
                           {paymentForm.paymentMethod === 'card' && <div className="w-2.5 h-2.5 rounded-full bg-[#10B981]" />}
                         </button>
@@ -340,7 +340,7 @@ export default function CheckoutFlow() {
                         >
                           <div className="flex items-center space-x-3">
                             <Sparkles size={16} className={paymentForm.paymentMethod === 'upi' ? 'text-[#10B981]' : 'text-brand-green/50'} />
-                            <span className="text-xs font-bold font-mono tracking-wider uppercase">UPI Gateway</span>
+                            <span className="text-xs font-bold font-serif tracking-wider uppercase">UPI Gateway</span>
                           </div>
                           {paymentForm.paymentMethod === 'upi' && <div className="w-2.5 h-2.5 rounded-full bg-[#10B981]" />}
                         </button>
@@ -359,7 +359,7 @@ export default function CheckoutFlow() {
                           className="space-y-4"
                         >
                           <div>
-                            <label htmlFor="card-number" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                            <label htmlFor="card-number" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                               Card Number *
                             </label>
                             <input
@@ -377,7 +377,7 @@ export default function CheckoutFlow() {
 
                           <div className="grid grid-cols-2 gap-4">
                             <div>
-                              <label htmlFor="card-expiry" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                              <label htmlFor="card-expiry" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                                 Expiry Date (MM/YY) *
                               </label>
                               <input
@@ -397,7 +397,7 @@ export default function CheckoutFlow() {
                               />
                             </div>
                             <div>
-                              <label htmlFor="card-cvv" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                              <label htmlFor="card-cvv" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                                 CVV / Secure Code *
                               </label>
                               <input
@@ -424,7 +424,7 @@ export default function CheckoutFlow() {
                           className="space-y-4"
                         >
                           <div>
-                            <label htmlFor="upi-id" className="block text-[10px] uppercase tracking-wider font-mono font-bold text-brand-green/60 mb-2">
+                            <label htmlFor="upi-id" className="block text-[10px] uppercase tracking-wider font-serif font-bold text-brand-green/60 mb-2">
                               Unified Payment ID / UPI Address *
                             </label>
                             <input
@@ -516,7 +516,7 @@ export default function CheckoutFlow() {
                   </div>
 
                   <div className="max-w-md mx-auto space-y-3">
-                    <span className="text-[10px] font-mono font-bold text-[#10B981] uppercase tracking-widest">
+                    <span className="text-[10px] font-serif font-bold text-[#10B981] uppercase tracking-widest">
                       Ritual Registered & Locked
                     </span>
                     <h3 className="font-serif text-2xl sm:text-3xl text-brand-green font-medium">
@@ -539,7 +539,7 @@ export default function CheckoutFlow() {
                     </div>
                     <div className="flex justify-between text-brand-green/60 border-t border-brand-green/5 pt-2">
                       <span>Dispatch Window:</span>
-                      <span className="font-medium text-brand-sprout uppercase tracking-widest text-[9px] font-mono">Carbon Neutral (48h)</span>
+                      <span className="font-medium text-brand-sprout uppercase tracking-widest text-[9px] font-serif">Carbon Neutral (48h)</span>
                     </div>
                   </div>
 
@@ -560,7 +560,7 @@ export default function CheckoutFlow() {
 
           {/* Secure SSL Shield indicator on step 1 & 2 */}
           {step < 3 && (
-            <div className="p-4 bg-brand-green/5 border-t border-brand-green/10 flex items-center justify-center space-x-2 text-[10px] font-mono text-brand-green/40 uppercase tracking-widest">
+            <div className="p-4 bg-brand-green/5 border-t border-brand-green/10 flex items-center justify-center space-x-2 text-[10px] font-serif text-brand-green/40 uppercase tracking-widest">
               <ShieldCheck size={11} className="text-[#10B981]" />
               <span>Indus Sourcing Gateway Protected • 256-Bit SSL</span>
             </div>
@@ -602,7 +602,7 @@ function RecentOrdersAndHistory({
   return (
     <div className="mt-8 pt-8 border-t border-brand-green/10 space-y-6 text-left">
       <div className="flex items-center justify-between">
-        <h4 className="text-[10px] uppercase font-mono tracking-widest text-[#1E2D24]/40 font-bold">
+        <h4 className="text-[10px] uppercase font-serif tracking-widest text-[#1E2D24]/40 font-bold">
           Recent Orders & History
         </h4>
         <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
@@ -611,7 +611,7 @@ function RecentOrdersAndHistory({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Recent Orders Side Column */}
         <div className="space-y-3">
-          <span className="text-[9px] uppercase tracking-widest font-mono text-brand-green/60 font-semibold block">
+          <span className="text-[9px] uppercase tracking-widest font-serif text-brand-green/60 font-semibold block">
             Recent Orders
           </span>
           {recentOrders.length > 0 ? (
@@ -622,7 +622,7 @@ function RecentOrdersAndHistory({
                   className="bg-white rounded-2xl border border-brand-green/10 p-4 flex flex-col space-y-1.5 shadow-sm"
                 >
                   <div className="flex justify-between items-center">
-                    <span className="font-mono text-[9px] text-brand-purple font-semibold">{order.orderId}</span>
+                    <span className="font-serif text-[9px] text-brand-purple font-semibold">{order.orderId}</span>
                     <span className="text-[9px] text-[#10B981] bg-[#10B981]/5 px-2.5 py-0.5 rounded-full font-bold">{order.date}</span>
                   </div>
                   <div className="text-[11px] text-[#1E2D24]/80 flex flex-wrap gap-x-1">
@@ -647,7 +647,7 @@ function RecentOrdersAndHistory({
 
         {/* Recently Viewed Side Column */}
         <div className="space-y-3">
-          <span className="text-[9px] uppercase tracking-widest font-mono text-brand-green/60 font-semibold block">
+          <span className="text-[9px] uppercase tracking-widest font-serif text-brand-green/60 font-semibold block">
             Recently Viewed
           </span>
           {recentlyViewed.length > 0 ? (
@@ -675,7 +675,7 @@ function RecentOrdersAndHistory({
                     </p>
                   </div>
                   <div className="text-right flex-shrink-0 flex flex-col justify-end">
-                    <span className="text-[10px] font-semibold text-brand-green font-mono">${item.price}</span>
+                    <span className="text-[10px] font-semibold text-brand-green font-serif">${item.price}</span>
                   </div>
                 </div>
               ))}

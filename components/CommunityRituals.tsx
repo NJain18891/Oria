@@ -93,7 +93,7 @@ export default function CommunityRituals() {
   return (
     <section
       id="community-rituals-section"
-      className="pt-28 pb-8 bg-[#261c29] border-t border-brand-green/5 relative overflow-hidden"
+      className="pt-42 pb-42 bg-[#261c29] border-t border-brand-green/5 relative overflow-hidden"
     >
       <div className="max-w-7xl mx-auto px-6 sm:px-12 mb-12">
         
@@ -114,7 +114,7 @@ export default function CommunityRituals() {
           </h2>
           
           {/* Subtitle description adjusted to max-w-xl for clean editorial tracking balance */}
-          <p className="pt-4 text-xs sm:text-sm text-[#FBFBFA]/70 leading-relaxed font-sans max-w-xl">
+          <p className="pt-4 text-xs sm:text-sm text-[#FBFBFA]/70 leading-relaxed font-serif max-w-xl">
             Hear from global creators, modern leaders, and wellness pioneers who trust Oria’s raw millet cellular energy baseline.
           </p>
         </div>
@@ -191,7 +191,7 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
               <Star key={i} size={14} className="fill-[#10B981] text-[#10B981]" />
             ))}
           </div>
-          <span className="text-[12px] font-mono font-bold uppercase px-3 py-1 bg-[#1E2D24]/5 text-[#1E2D24] rounded-full">
+          <span className="text-[12px] font-serif font-bold uppercase px-3 py-1 bg-[#1E2D24]/5 text-[#1E2D24] rounded-full">
             {ritual.energyChange}
           </span>
         </div>
@@ -202,7 +202,7 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
           {/* Left Side Container */}
           <motion.div layout="position" className="flex-1 relative">
             <Quote className="absolute -top-3 -left-2 text-[#1E2D24]/10 w-8 h-8 -z-0" />
-            <p className={`text-[#1E2D24]/85 leading-relaxed font-sans italic relative z-10 pr-1 transition-all duration-300 ${
+            <p className={`text-[#1E2D24]/85 leading-relaxed font-serif italic relative z-10 pr-1 transition-all duration-300 ${
               isExpanded 
                 ? 'text-base text-4xl font-medium text-[#1E2D24]' 
                 : 'text-xl font-bold'
@@ -247,7 +247,7 @@ function RitualCard({ ritual }: { ritual: Ritual }) {
           </div>
           <div>
             <h4 className="text-xs font-semibold text-[#1E2D24]">{ritual.name}</h4>
-            <p className="text-[10px] font-mono text-[#1E2D24]/50 mt-0.5">{ritual.location}</p>
+            <p className="text-[10px] font-serif text-[#1E2D24]/50 mt-0.5">{ritual.location}</p>
             {/* Tags */}
             <div className="flex gap-1.5 mt-2 flex-wrap">
               {ritual.tags.map((tag) => (

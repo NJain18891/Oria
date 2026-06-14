@@ -448,7 +448,7 @@ export default function FindYourRitualQuiz() {
                           title={item.label}
                         >
                           <div 
-                            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[10px] font-mono font-bold transition-all duration-500 ${
+                            className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-[10px] font-serif font-bold transition-all duration-500 ${
                               isActive
                                 ? 'bg-[#10B981] text-white ring-4 ring-[#10B981]/20 scale-105 shadow-md shadow-[#10B981]/10'
                                 : isCompleted
@@ -484,7 +484,7 @@ export default function FindYourRitualQuiz() {
                         <span className="italic text-brand-purple">Biochemical Demand.</span>
                       </h2>
 
-                      <div className="space-y-4 text-xs sm:text-sm text-brand-green/70 leading-relaxed font-sans font-light">
+                      <div className="space-y-4 text-xs sm:text-sm text-brand-green/70 leading-relaxed font-serif font-light">
                         <p>
                           Every morning routine possesses its own distinct metabolic response. Rather than generic single-form supplements or processing-heavy isolates, Oria aligns with your natural endocrine cycle.
                         </p>
@@ -552,7 +552,7 @@ export default function FindYourRitualQuiz() {
                       <div className="absolute inset-0 bg-brand-green/5 mix-blend-multiply opacity-25" />
                       
                       <div className="absolute bottom-5 left-5 right-5 p-4 rounded-xl bg-white/90 backdrop-blur-md border border-brand-green/10 text-left">
-                        <h4 className="text-[10px] font-mono font-bold uppercase tracking-widest text-[#10B981]">
+                        <h4 className="text-[10px] font-serif font-bold uppercase tracking-widest text-[#10B981]">
                           Purity Index Standard
                         </h4>
                         <p className="text-[10px] text-brand-green/70 leading-normal mt-1">
@@ -567,7 +567,7 @@ export default function FindYourRitualQuiz() {
                 {currentStep >= 1 && currentStep <= 3 && (
                   <div className="space-y-8 animate-fadeIn">
                     <div className="text-left">
-                      <span className="text-[9px] font-mono text-brand-purple uppercase tracking-widest font-bold">
+                      <span className="text-[9px] font-serif text-brand-purple uppercase tracking-widest font-bold">
                         Pillar {currentStep} under Evaluation
                       </span>
                       <h3 className="font-serif text-xl sm:text-2xl text-[#1E2D24] font-medium leading-tight mt-1">
@@ -664,7 +664,7 @@ export default function FindYourRitualQuiz() {
                           <span className="inline-flex items-center gap-1 px-3 py-1 bg-brand-sprout/10 rounded-full text-[10px] font-bold text-brand-purple uppercase tracking-widest">
                             <CheckCircle size={10} className="text-[#10B981]" /> Calibration Complete
                           </span>
-                          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#10B981]/10 rounded-full text-[10px] font-bold text-[#10B981] uppercase tracking-widest font-mono">
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#10B981]/10 rounded-full text-[10px] font-bold text-[#10B981] uppercase tracking-widest font-serif">
                             System Biometric Score: {baseScore}/100 — {label}
                           </span>
                         </div>
@@ -686,7 +686,7 @@ export default function FindYourRitualQuiz() {
                             referrerPolicy="no-referrer"
                           />
                           <div className="absolute top-3 left-3 z-10">
-                            <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest bg-brand-purple text-white font-bold font-mono">
+                            <span className="px-2.5 py-1 rounded-full text-[9px] uppercase tracking-widest bg-brand-purple text-white font-bold font-serif">
                               Optimal Match
                             </span>
                           </div>
@@ -707,11 +707,11 @@ export default function FindYourRitualQuiz() {
                               {recommendedProduct.subtitle}
                             </p>
 
-                            <p className="text-xs text-brand-green/60 uppercase tracking-widest font-mono">
+                            <p className="text-xs text-brand-green/60 uppercase tracking-widest font-serif">
                               {recommendedProduct.sizeDesc}
                             </p>
 
-                            <p className="text-xs text-brand-green/80 mt-3 leading-relaxed font-sans italic border-l-2 border-[#10B981] pl-3 py-0.5">
+                            <p className="text-xs text-brand-green/80 mt-3 leading-relaxed font-serif italic border-l-2 border-[#10B981] pl-3 py-0.5">
                               {recommendedProduct.matchReason}
                             </p>
 

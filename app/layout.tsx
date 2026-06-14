@@ -5,7 +5,7 @@ import './globals.css'; // Global styles
 
 const inter = Inter({
   subsets: ['latin'],
-  variable: '--font-sans',
+  variable: '--font-serif',
 });
 
 const playfairDisplay = Playfair_Display({

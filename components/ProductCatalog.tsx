@@ -209,7 +209,7 @@ function ProductCard({
           </p>
 
           {product.urgencyTag && (
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 text-[10px] uppercase font-mono font-bold tracking-wider mb-3">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/10 text-amber-700 text-[10px] uppercase font-serif font-bold tracking-wider mb-3">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-600 animate-pulse" />
               <span>{product.urgencyTag}</span>
             </div>
@@ -251,7 +251,7 @@ function ProductCard({
         {/* Footer and Actions */}
         <div className="pt-4 border-t border-brand-green/5 space-y-4">
           <div className="flex justify-between items-center">
-            <span className="text-[12px] text-brand-green uppercase tracking-widest font-mono">
+            <span className="text-[12px] text-brand-green uppercase tracking-widest font-serif">
               {product.sizeDesc}
             </span>
             <div className="flex items-center space-x-1">
@@ -375,7 +375,7 @@ export default function ProductCatalog() {
     <section
       id="shop"
       ref={sectionRef}
-      className="w-full min-h-screen pt-8 pb-8 relative overflow-hidden bg-[#261c29]"
+      className="w-full min-h-screen pt-50 pb-42 relative overflow-hidden bg-[#261c29]"
     >
       
       <div className="max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 relative z-10">
@@ -446,7 +446,7 @@ export default function ProductCatalog() {
             >
               <div className="flex justify-between items-start">
                 <div>
-                  <span className="text-[9px] uppercase font-mono tracking-widest text-[#10B981] font-bold">Oria Auto-Shipment</span>
+                  <span className="text-[9px] uppercase font-serif tracking-widest text-[#10B981] font-bold">Oria Auto-Shipment</span>
                   <h3 className="font-serif text-xl text-[#FBFBFA] font-medium mt-1">Sustenence Orchestrator</h3>
                 </div>
                 <button
@@ -461,7 +461,7 @@ export default function ProductCatalog() {
                 <p className="leading-relaxed">
                   Our subscription delivers raw-grain fresh nutritional batches to your residence at a lock-in <strong className="text-[#10B981]">15% reduction</strong>. 
                 </p>
-                <div className="bg-[#FBFBFA]/5 p-5 rounded-2xl border border-[#FBFBFA]/10 space-y-3 font-mono text-[11px] text-[#FBFBFA]/80">
+                <div className="bg-[#FBFBFA]/5 p-5 rounded-2xl border border-[#FBFBFA]/10 space-y-3 font-serif text-[11px] text-[#FBFBFA]/80">
                   <div className="flex gap-2">
                     <span className="text-[#10B981]">✔</span>
                     <span>Standard ships every 30 days</span>
@@ -510,7 +510,7 @@ export default function ProductCatalog() {
             >
               <div className="w-2.5 h-2.5 rounded-full bg-[#10B981] animate-pulse shrink-0" />
               <div className="flex-1 flex flex-col items-start text-left">
-                <span className="text-[9px] text-[#10B981] uppercase tracking-widest font-mono font-bold">Added to Ritual</span>
+                <span className="text-[9px] text-[#10B981] uppercase tracking-widest font-serif font-bold">Added to Ritual</span>
                 <span className="text-xs font-serif font-medium mt-1">{toast.itemName} has been reserved.</span>
               </div>
             </motion.div>
