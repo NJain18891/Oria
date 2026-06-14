@@ -1,4 +1,4 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import { Inter, Playfair_Display, Space_Grotesk } from 'next/font/google';
 import { CartProvider } from '@/context/CartContext';
 import './globals.css'; // Global styles
@@ -18,12 +18,18 @@ const spaceGrotesk = Space_Grotesk({
   variable: '--font-display',
 });
 
+// Added the icons configuration here
 export const metadata: Metadata = {
   title: 'Oria | Morning Rituals, Redefined by Nature',
   description: 'Sophisticated, organic, whole-food breakfast nutrition powered by ancient millets and natural clean-label proteins. Reclaim your mornings.',
+  icons: {
+    icon: '/oria_logo.png',       // Standard browser favicon
+    shortcut: '/oria_logo.png',   // Shortcut icon
+    apple: '/oria_logo.png',      // For Apple mobile devices
+  },
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfairDisplay.variable} ${spaceGrotesk.variable}`}>
       <body className="antialiased" suppressHydrationWarning>
@@ -34,5 +40,3 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     </html>
   );
 }
-
-
