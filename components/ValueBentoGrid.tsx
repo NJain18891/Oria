@@ -3,12 +3,14 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronDown, ArrowRight, ShieldCheck, Sparkles } from 'lucide-react';
+import Image from 'next/image';
 
 interface BentoPillar {
   id: string;
   title: string;
   summary: string;
   deepDive: string;
+  image: string;
   iconType: 'sourcing' | 'synthetic' | 'carbon' | 'digestive';
 }
 
@@ -19,6 +21,8 @@ const PILLARS_DATA: BentoPillar[] = [
     summary: 'We contract harvest every millet batch directly from generational farmers in the ancient Indus soil belts, guaranteeing biological purity.',
     deepDive: 'By bypassing commercial grain exchanges, Oria establishes direct bilateral agreements. We pre-fund up to 60% of crop cycles for 45+ women-led family farms. Each parcel is mapped to precise coordinates, and raw materials are scanned using ICP-MS heavy-metal spectroscopy to guarantee that absolutely no chemical runoff or industrial contaminants enter our mill ecosystem.',
     iconType: 'sourcing',
+    image: 'https://images.unsplash.com/photo-1677222383404-cf4510f7f5d1?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGZhcm1lciUyMGhvbGRpbmd8ZW58MHx8MHx8fDA%3D',
+
   },
   {
     id: 'pillar-2',
@@ -26,6 +30,7 @@ const PILLARS_DATA: BentoPillar[] = [
     summary: 'No artificial emulsifiers, soy, gums, heavy metal isolates, or chalky synthetics. Standardized nutrition cleanly extracted from true food structures.',
     deepDive: 'Most health products rely on cheap industrial binders like xanthan gum or soy lecithin that compromise the intestinal lining. Oria objects to these tricks. Our structural integrity is derived entirely from stone-ground whole seed carbohydrates, sun-dried date fibers, and organic prebiotic banana fruit starches. We sweeten purely using organic native monkfruit extracts.',
     iconType: 'synthetic',
+    image: 'https://plus.unsplash.com/premium_photo-1705207702015-0c1f567a14df?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fG1pbGxldCUyMHJhd3xlbnwwfHwwfHx8MA%3D%3D',
   },
   {
     id: 'pillar-3',
@@ -33,6 +38,7 @@ const PILLARS_DATA: BentoPillar[] = [
     summary: 'Millet crops are exceptionally resilient and carbon-locking, requiring zero global irrigation networks. We offset 120% of distribution gases.',
     deepDive: 'Millets are ancient, climate-hardy C4 photosynthetic grasses. They require up to 90% less water than wheat or rice and absorb massive quantities of subterranean carbon within their extensive, three-meter fibrous root systems. Not only do we operate an irrigation-free growing model, but we also proactively track and purchase certified over-offsets at 120% of our supply-chain footprint.',
     iconType: 'carbon',
+    image: 'https://images.unsplash.com/photo-1523741543316-beb7fc7023d8?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8ZmFybXxlbnwwfHwwfHx8MA%3D%3D',
   },
   {
     id: 'pillar-4',
@@ -40,6 +46,7 @@ const PILLARS_DATA: BentoPillar[] = [
     summary: 'Infused with premium prebiotic fiber strands to nourish the human gut flora, optimize nutrient passage speed, and eliminate bloating.',
     deepDive: 'Our stone-grinding process preserves the natural cellular envelope of the millet grain. Because these walls dissolve slowly, starch is delivered gradually into the gut. Packed with insoluble lignins and prebiotic hemicellulose, Oria acts as a steady fermentation source, stimulating the natural synthesis of short-chain fatty acids (SCFAs) like butyrate to heal the bowel barrier.',
     iconType: 'digestive',
+    image: 'https://plus.unsplash.com/premium_photo-1669741909413-08072ccaedde?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8cml2ZXJ8ZW58MHx8MHx8fDA%3D',
   },
 ];
 
@@ -278,9 +285,9 @@ export default function ValueBentoGrid() {
                   borderColor: 'rgba(16, 185, 129, 0.4)',
                   transition: { duration: 0.2, ease: 'easeOut' }
                 }}
-                className={`p-8 rounded-[28px] border transition-all duration-300 text-left bg-white relative cursor-pointer group shadow-sm flex flex-col justify-between ${
+                className={`p-8 rounded-[28px] border transition-all duration-300 text-left bg-[#E2D7E5] relative cursor-pointer group shadow-sm flex flex-col justify-between ${
                   isExpanded 
-                    ? 'border-[#10B981] lg:col-span-2 shadow-md shadow-brand-green/5' 
+                    ? 'border-[#10B981] shadow-md shadow-brand-green/5' 
                     : 'border-brand-green/5 hover:shadow-lg hover:shadow-brand-green/[0.02]'
                 }`}
               >
@@ -296,6 +303,9 @@ export default function ValueBentoGrid() {
                     <div className="w-14 h-14 rounded-2xl bg-brand-green/[0.03] border border-brand-green/[0.06] flex items-center justify-center group-hover:bg-[#10B981]/5 group-hover:border-[#10B981]/25 transition-colors">
                       <AnimatedBentoIcon type={pillar.iconType} />
                     </div>
+                    <div className="font-serif text-md ml-2 font-bold text-[#1E2D24]/85 group-hover:text-brand-purple transition-colors">
+                      {pillar.title}
+                    </div>
                     
                     {/* Expand/Collapse Chevron Indicator */}
                     <span className={`text-brand-green/40 group-hover:text-[#10B981] transition-colors p-1 rounded-full ${
@@ -308,12 +318,22 @@ export default function ValueBentoGrid() {
                   {/* Text Header Content */}
                   <div>
                     <h4 className="font-serif text-xl text-[#1E2D24]/85 font-bold group-hover:text-brand-purple transition-colors flex items-center gap-2">
-                      {pillar.title}
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9, x: 20 }}
+                        animate={{ opacity: 1, scale: 1, x: 0 }}
+                        exit={{ opacity: 0, scale: 0.85, x: 30, transition: { duration: 0.25 } }}
+                        className="relative w-[130px] h-[150px] sm:w-[210px] sm:h-[220px] rounded-[24px] overflow-hidden shadow-md shrink-0 border border-[#1E2D24]/5"
+                      >
+                        <Image
+                          src={pillar.image}
+                          alt="Personal Story Aesthetic Setup"
+                          fill
+                          sizes="(max-w-640px) 130px, 210px"
+                          className="object-cover transition-transform duration-700 hover:scale-105"
+                        />
+                      </motion.div>
                     </h4>
                     
-                    <p className="text-sm text-black leading-relaxed font-light mt-3">
-                      {pillar.summary}
-                    </p>
                   </div>
 
                   {/* Expandable Technical Deep Dive segment */}
@@ -327,11 +347,8 @@ export default function ValueBentoGrid() {
                         className="overflow-hidden border-t border-brand-green/5 pt-4 text-left"
                       >
                         <div className="bg-[#FAF9F5]/80 p-4.5 rounded-2xl border border-[#10B981]/15 space-y-3">
-                          <span className="text-[9px] uppercase tracking-widest font-serif text-[#10B981] font-bold block flex items-center gap-1">
-                            <ShieldCheck size={11} /> LABORATORY DOSSIER // TECHNICAL DOSAGE
-                          </span>
-                          <p className="text-[11px] text-brand-green/90 leading-relaxed font-serif font-normal">
-                            {pillar.deepDive}
+                          <p className="text-[14px] text-brand-green/90 leading-relaxed font-serif font-normal">
+                            {pillar.summary}
                           </p>
                         </div>
                       </motion.div>

@@ -121,6 +121,20 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 w-full">
+        <button
+          onClick={handlePrev}
+          className="absolute left-1 sm:left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-[#10b981] hover:text-white hover:scale-110 active:scale-95 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all z-30 shadow-md max-sm:hidden"
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={16} />
+        </button>
+        <button
+          onClick={handleNext}
+          className="absolute right-1 sm:right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-[#10b981] hover:text-white hover:scale-110 active:scale-95 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all z-30 shadow-md max-sm:hidden"
+          aria-label="Next slide"
+        >
+          <ChevronRight size={16} />
+        </button>
         
         <AnimatePresence mode="wait">
           <motion.div
@@ -247,31 +261,6 @@ export default function Hero() {
               />
             ))}
           </div>
-
-          {/* Time indicator pill & arrow navigations */}
-          <div className="flex items-center gap-4">
-            <span className="text-[10px] font-serif text-brand-green/40 uppercase tracking-widest max-sm:order-1">
-              Auto-rotating every 10s
-            </span>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={handlePrev}
-                className="w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-[#10b981] hover:scale-110 active:scale-95 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all"
-                aria-label="Previous slide"
-              >
-                <ChevronLeft size={16} />
-              </button>
-              <button
-                onClick={handleNext}
-                className="w-10 h-10 rounded-full border border-brand-green/10 bg-white hover:bg-[#10b981] hover:scale-110 active:scale-95 hover:border-brand-green/20 flex items-center justify-center text-brand-green transition-all"
-                aria-label="Next slide"
-              >
-                <ChevronRight size={16} />
-              </button>
-            </div>
-          </div>
-
         </div>
 
       </div>

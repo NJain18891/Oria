@@ -183,11 +183,11 @@ export default function NutritionComparison() {
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.5, delay: 0.2 }}
-                          className="text-2xl sm:text-3xl font-serif font-bold text-brand-green/60 tracking-tight block"
+                          className="text-2xl sm:text-3xl font-serif font-bold text-black tracking-tight block"
                         >
                           {row.syntheticValue}%
                         </motion.span>
-                        <span className="text-[9px] font-serif font-bold text-brand-green/45 uppercase tracking-widest mt-1">Muted</span>
+                        <span className="text-[9px] font-serif font-bold text-black uppercase tracking-widest mt-1">Muted</span>
                       </div>
  
                       {/* Sugary score */}
@@ -197,11 +197,11 @@ export default function NutritionComparison() {
                           whileInView={{ opacity: 1, scale: 1 }}
                           viewport={{ once: true }}
                           transition={{ duration: 0.5, delay: 0.3 }}
-                          className="text-2xl sm:text-3xl font-serif font-bold text-brand-green/60 tracking-tight block"
+                          className="text-2xl sm:text-3xl font-serif font-bold text-black tracking-tight block"
                         >
                           {row.sugaryValue}%
                         </motion.span>
-                        <span className="text-[9px] font-serif font-bold text-brand-green/45 uppercase tracking-widest mt-1">Muted</span>
+                        <span className="text-[9px] font-serif font-bold text-black uppercase tracking-widest mt-1">Muted</span>
                       </div>
                     </>
                   )}
