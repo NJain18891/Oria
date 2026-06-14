@@ -13,7 +13,7 @@ const SLIDES = [
     subheading: "Simply unwrap or blend in 30 seconds. Balanced, whole-food nutrition designed for busy, high-intensity days.",
     imageUrl: "https://images.unsplash.com/photo-1600718374662-0483d2b9da44?q=80&w=685&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     primaryCta: { text: "Explore Shakes", href: "#shop" },
-    secondaryCta: { text: "Learn Process", href: "#story" },
+    secondaryCta: { text: "Learn Process", href: "#oria-nutrition-comparison" },
     valueProps: [
       { top: "30 Sec", bottom: "Prep Time" },
       { top: "Active Life", bottom: "On-the-go" },
@@ -27,7 +27,7 @@ const SLIDES = [
     subheading: "Ancient organic millets refined for deep focus and zero metabolic crash.",
     imageUrl: "https://plus.unsplash.com/premium_photo-1726767418821-769d675129d9?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     primaryCta: { text: "Start Your Morning", href: "#shop" },
-    secondaryCta: { text: "Our Story", href: "#story" },
+    secondaryCta: { text: "Our Story", href: "#oria-nutrition-comparison" },
     valueProps: [
       { top: "100%", bottom: "Whole-Food" },
       { top: "Ancient Millets", bottom: "Sustained Energy" },

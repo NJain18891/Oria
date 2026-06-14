@@ -201,10 +201,10 @@ export default function Home() {
                   <h5 className="text-[10px] uppercase tracking-widest font-bold text-[#FBFBFA]/40">Explorations</h5>
                 </div>
                 <ul className="space-y-2.5 text-xs font-light text-[#FBFBFA]/75">
-                  <li><a href="#story" className="hover:text-[#10B981] transition-colors">Our Sourcing</a></li>
-                  <li><a href="#ingredients" className="hover:text-[#10B981] transition-colors">Glycemic Science</a></li>
-                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Millet Bar</a></li>
-                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Rise Blend</a></li>
+                  <li><a href="#oria-nutrition-comparison" className="hover:text-[#10B981] transition-colors">Glycemic Science</a></li>
+                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Morning Fuel Bar</a></li>
+                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Rise Blend Shake</a></li>
+                  <li><a href="#shop" className="hover:text-[#10B981] transition-colors">Ancient Grain Shards</a></li>
                 </ul>
               </div>
               <div className="space-y-4 flex flex-col justify-start">
